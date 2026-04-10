@@ -3,6 +3,7 @@
 Last Updated: 2026-04-10
 
 ## Completed
+- [2026-04-10 22:10:00] Fixed Vercel build failure (`vite` permission denied) by adding root ignore rules and updating npm scripts to run Vite via Node directly.
 - [2026-04-10 21:50:40] Replaced the quiz page texture background implementation with the provided transparent SVG gradient overlay (Image.svg) so the question canvas matches the reference while preserving legibility.
 - [2026-04-10 21:40:07] Updated quiz question heading styling so any prompt with a comma renders the second clause on a new line in gold italic to match the provided screen example.
 - [2026-04-10 21:27:49] Changed Shadow Axis to a single final resonance question that shows the four axis-winner philosopher statements and uses one selection to determine the final reveal.
@@ -61,6 +62,7 @@ Last Updated: 2026-04-10
 - Draft visual direction board for dark-academia and aspirational mystery tone.
 
 ## Decisions
+- [2026-04-10] Use `node ./node_modules/vite/bin/vite.js` in npm scripts to avoid executable-bit issues with `.bin/vite` in Linux deploy environments.
 - [2026-04-10] Keep landing secondary CTA as "Go to the Archive" and treat Dashboard as the Archive destination.
 - [2026-04-10] Results summary copy is now condensed into a two-line block so the share action stays visually primary on mobile.
 - [2026-04-10] Results view now prioritizes a three-block UX hierarchy: summary first, deep profile second, social-share card third.
