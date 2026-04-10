@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#f0e0ca",
+                    "tertiary-container": "#181105",
+                    "inverse-on-surface": "#313030",
+                    "secondary-fixed": "#ffdad6",
+                    "inverse-surface": "#e5e2e1",
+                    "on-background": "#e5e2e1",
+                    "on-error": "#690005",
+                    "surface": "#131313",
+                    "on-tertiary": "#382f20",
+                    "outline-variant": "#444748",
+                    "surface-bright": "#3a3939",
+                    "secondary-container": "#802d27",
+                    "on-error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#ffb4ab",
+                    "surface-container": "#201f1f",
+                    "on-primary": "#412d00",
+                    "background": "#131313",
+                    "error": "#ffb4ab",
+                    "outline": "#8e9192",
+                    "tertiary-fixed-dim": "#d3c5af",
+                    "primary-container": "#1a1000",
+                    "secondary": "#ffb4ab",
+                    "on-tertiary-fixed-variant": "#4f4535",
+                    "on-secondary-fixed-variant": "#7d2b25",
+                    "on-primary-container": "#997836",
+                    "on-surface": "#e5e2e1",
+                    "on-tertiary-container": "#887c69",
+                    "surface-dim": "#131313",
+                    "surface-container-low": "#1c1b1b",
+                    "on-primary-fixed": "#261900",
+                    "surface-variant": "#353534",
+                    "on-tertiary-fixed": "#221b0d",
+                    "primary-fixed": "#ffdea5",
+                    "on-secondary-container": "#ff9f94",
+                    "error-container": "#93000a",
+                    "inverse-primary": "#775a19",
+                    "surface-container-highest": "#353534",
+                    "on-secondary-fixed": "#410002",
+                    "surface-container-lowest": "#0e0e0e",
+                    "primary-fixed-dim": "#e9c176",
+                    "on-surface-variant": "#c4c7c7",
+                    "on-secondary": "#5f1411",
+                    "surface-tint": "#e9c176",
+                    "tertiary": "#d3c5af",
+                    "surface-container-high": "#2a2a2a",
+                    "on-primary-fixed-variant": "#5d4201",
+                    "primary": "#e9c176"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Newsreader"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24
+    }
+.grain-overlay {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuBmzH6gLffI8RcZ0L2mp4XPM2aJYBZaZ66uCKK2ZUlTy83BnU_EcPA94E5SQVwb3gWhU1QRA3NC1THcy4aUu9zak7HJQKTugi7tGebjxJ5gQyZlPyBWe7DMOdEl8sYhTYsBCv7ljW1c6Zjavftf593h7D5MMURxvsIAQNN6OnGi6yW7MyJMX6tsKKLFaUHip0VxIQiU_O6V2uVQC0Qh3qIq7XbE6wc-XIlD00t-3tro768otfjNCS90z8jkZix60-raz7lUwalHWUA);
+    opacity: 0.03;
+    pointer-events: none
+    }
+.parchment-glow {
+    background: radial-gradient(circle at center, rgba(233, 193, 118, 0.08) 0%, transparent 70%)
+    }
+.ritual-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #444748 50%, transparent);
+    width: 100%;
+    opacity: 0.3
+    }</style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<div class="fixed inset-0 grain-overlay z-50"></div>
+<!-- Navigation Shell suppressed for Onboarding focused intent as per Rule "Shell Visibility & Relevance" -->
+<!-- However, JSON provided TopAppBar is rendered but simplified for a Gateway experience -->
+<header class="fixed top-0 left-0 w-full z-40 bg-[#0e0e0e]/80 backdrop-blur-xl flex justify-between items-center px-8 py-6 max-w-none transition-colors duration-500">
+<div class="font-['Newsreader'] text-2xl font-light tracking-[0.2em] text-[#e9c176]">THE ARCHIVE</div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-[#444748] cursor-pointer hover:text-[#e9c176] transition-all duration-300" data-icon="history_edu">history_edu</span>
+<span class="material-symbols-outlined text-[#444748] cursor-pointer hover:text-[#e9c176] transition-all duration-300" data-icon="account_circle">account_circle</span>
+</div>
+</header>
+<main class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-6">
+<!-- Background Atmosphere -->
+<div class="absolute inset-0 parchment-glow"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-20">
+<div class="w-full h-full border border-outline-variant/20 rotate-45 animate-pulse"></div>
+<div class="absolute inset-0 border border-outline-variant/10 -rotate-12 scale-125"></div>
+</div>
+<!-- Hero Content Section -->
+<section class="relative z-10 max-w-3xl w-full text-center flex flex-col items-center">
+<!-- Brand Kicker -->
+<div class="mb-12 flex flex-col items-center gap-4">
+<span class="material-symbols-outlined text-primary text-4xl mb-2" data-icon="flare" style="font-variation-settings: 'FILL' 1;">flare</span>
+<div class="ritual-line max-w-[120px]"></div>
+<p class="font-['Inter'] font-light uppercase tracking-[0.4em] text-[10px] text-primary/80">THE ARCHIVE</p>
+</div>
+<!-- Main Title & Asymmetric Subtitle -->
+<div class="mb-16 space-y-8">
+<h1 class="font-headline text-6xl md:text-8xl font-light tracking-tight text-on-surface leading-none italic">
+                    Uncover Your <span class="text-primary not-italic font-bold">Rare Form</span>
+</h1>
+<div class="flex flex-col md:flex-row items-center justify-center gap-8 pt-4">
+<div class="hidden md:block w-px h-24 bg-gradient-to-b from-transparent via-outline-variant/40 to-transparent"></div>
+<p class="max-w-md font-headline text-lg md:text-xl text-on-surface-variant leading-relaxed text-center md:text-left italic opacity-80">
+                        A diagnostic descent into your philosophical archetype. Reveal the shadow self others cannot see.
+                    </p>
+</div>
+</div>
+<!-- Imagery Interlude (Bento-style Fragment) -->
+<div class="w-full max-w-4xl grid grid-cols-12 gap-4 mb-20 opacity-90 grayscale hover:grayscale-0 transition-all duration-1000">
+<div class="col-span-8 h-64 bg-surface-container-highest relative overflow-hidden">
+<img alt="" class="w-full h-full object-cover" data-alt="dramatic cinematic low-angle shot of a gothic library with towering dark wood shelves and dust motes dancing in shafts of light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAu7IS8jfZ1tfyAdBTvQ883-CgZ3ITgYgqWG6nwV5-mBhrrnl4wpNwz6jS9j3PKEL7lv_eftvIZU5wOJom7KjOs4B-5epuhTamlegKBztkjLgZjhnKAO5HgzlMMLq0zCC7qnwtsm2Rz7fnWYyOY2HW6v4m_Wh3Z5d3H_c4UZ-TPZFR4Ov_5FJ1xZGUQtgC2B29UClm755KZfyodrXMT7cXDqQhBivRHGA1zo3fycGJ6MaZbTgJl5HS3Lxv88F7Qb0Ig_Zoi_7PyL3o"/>
+</div>
+<div class="col-span-4 h-64 bg-surface-container-highest relative overflow-hidden">
+<img alt="" class="w-full h-full object-cover" data-alt="macro close-up of aged parchment paper with delicate handwritten occult symbols and ink stains in warm golden lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdA49zO555dEeEgJhd3OR1HYj_PmKVhQ8KGnoN0-XoNJdSDRkVx7HmBGz-EujyJpfnRaIkuRWUXHsF_OBHqw8xXZXcOfd9Kmt1L9mIw_MlxWgW2cWRzuZwkgVWJE-WHWpx9F35eZBR9HR-fIlu2MFhQK4qqnl7s_qE5DkaasOybZMj2nUbzepGL6ERpfIeJ99qk812bkt6TebnhX_nwmQmlr0Cvrk8LN-g0VMXMROzYLrg4YvpQB5b4eVg7T_yXujy8VoIofudteA"/>
+</div>
+</div>
+<!-- Action Cluster -->
+<div class="flex flex-col md:flex-row items-center gap-8 w-full justify-center">
+<button class="group relative px-12 py-5 bg-primary text-on-primary font-body uppercase tracking-widest text-xs font-bold overflow-hidden transition-all duration-300 active:scale-95">
+<span class="relative z-10 flex items-center gap-3">
+                        Begin Initiation
+                        <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</span>
+<div class="absolute inset-0 bg-gradient-to-r from-primary to-[#997836] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</button>
+<button class="font-body uppercase tracking-[0.2em] text-[10px] text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2 group">
+                    Skip to Archive
+                    <span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" data-icon="keyboard_double_arrow_right">keyboard_double_arrow_right</span>
+</button>
+</div>
+</section>
+<!-- Decorative Occult Ornaments -->
+<div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-4 opacity-30">
+<div class="h-[1px] w-32 bg-gradient-to-r from-transparent to-outline"></div>
+<span class="material-symbols-outlined text-xl" data-icon="mediation">mediation</span>
+<div class="h-[1px] w-32 bg-gradient-to-l from-transparent to-outline"></div>
+</div>
+</main>
+<!-- Contextual Aesthetic Accents -->
+<div class="fixed top-1/2 left-8 -translate-y-1/2 hidden lg:flex flex-col gap-12 items-center">
+<span class="font-headline italic text-xs rotate-90 text-outline-variant tracking-widest origin-center">SYSTEM_CORE_IX</span>
+<div class="w-[1px] h-32 bg-outline-variant/30"></div>
+</div>
+<div class="fixed top-1/2 right-8 -translate-y-1/2 hidden lg:flex flex-col gap-12 items-center">
+<div class="w-[1px] h-32 bg-outline-variant/30"></div>
+<span class="font-headline italic text-xs -rotate-90 text-outline-variant tracking-widest origin-center whitespace-nowrap">PHILO_SIFT // GATEWAY</span>
+</div>
+</body></html>

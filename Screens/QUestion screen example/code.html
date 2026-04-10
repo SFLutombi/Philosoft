@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#f0e0ca",
+                    "tertiary-container": "#181105",
+                    "inverse-on-surface": "#313030",
+                    "secondary-fixed": "#ffdad6",
+                    "inverse-surface": "#e5e2e1",
+                    "on-background": "#e5e2e1",
+                    "on-error": "#690005",
+                    "surface": "#131313",
+                    "on-tertiary": "#382f20",
+                    "outline-variant": "#444748",
+                    "surface-bright": "#3a3939",
+                    "secondary-container": "#802d27",
+                    "on-error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#ffb4ab",
+                    "surface-container": "#201f1f",
+                    "on-primary": "#412d00",
+                    "background": "#131313",
+                    "error": "#ffb4ab",
+                    "outline": "#8e9192",
+                    "tertiary-fixed-dim": "#d3c5af",
+                    "primary-container": "#1a1000",
+                    "secondary": "#ffb4ab",
+                    "on-tertiary-fixed-variant": "#4f4535",
+                    "on-secondary-fixed-variant": "#7d2b25",
+                    "on-primary-container": "#997836",
+                    "on-surface": "#e5e2e1",
+                    "on-tertiary-container": "#887c69",
+                    "surface-dim": "#131313",
+                    "surface-container-low": "#1c1b1b",
+                    "on-primary-fixed": "#261900",
+                    "surface-variant": "#353534",
+                    "on-tertiary-fixed": "#221b0d",
+                    "primary-fixed": "#ffdea5",
+                    "on-secondary-container": "#ff9f94",
+                    "error-container": "#93000a",
+                    "inverse-primary": "#775a19",
+                    "surface-container-highest": "#353534",
+                    "on-secondary-fixed": "#410002",
+                    "surface-container-lowest": "#0e0e0e",
+                    "primary-fixed-dim": "#e9c176",
+                    "on-surface-variant": "#c4c7c7",
+                    "on-secondary": "#5f1411",
+                    "surface-tint": "#e9c176",
+                    "tertiary": "#d3c5af",
+                    "surface-container-high": "#2a2a2a",
+                    "on-primary-fixed-variant": "#5d4201",
+                    "primary": "#e9c176"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Newsreader"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>.film-grain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.03;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDRy9-hCa7PfiII_V-eDZoGJEzdstaU84ZQGr536JULYrJmiSnYSCjAQs4_P851b2dO7hPbkjlucPOQEkQzcnOGnpCnA8pIA58_X3zUklhtslbtft1rVmCGuxelnx43ImYUw-lDJJJ8XH-evlrET5CzrA4kOr2KiwhUchi65A0gzs75nuAkNRwSFMn4hp3b15e7ugXXs4v4eWcKpicbRqC8Qi-a-t59040oKMpWUTSvVaRvEdKx7oVP9nFnK57dqbYOHC0ZdnN1jG8)
+    }
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24
+    }</style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30">
+<div class="film-grain"></div>
+<!-- Layout Wrapper -->
+<div class="flex min-h-screen">
+<!-- SideNavBar (Shared Component) -->
+<aside class="bg-[#131313] flex flex-col h-screen fixed left-0 top-0 border-r border-[#444748]/15 w-64 z-50">
+<div class="px-8 py-10">
+<span class="font-['Newsreader'] text-lg italic text-[#e9c176]">THE CURATOR</span>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<a class="flex items-center gap-4 px-4 py-3 text-[#444748] opacity-60 hover:bg-[#1a1a1a] hover:text-[#e9c176] transition-all group" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-['Inter'] font-light uppercase tracking-widest text-[10px]">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 bg-[#353534] text-[#e9c176] font-bold border-r-2 border-[#e9c176] active:scale-95 duration-150 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="auto_fix_high" style="font-variation-settings: 'FILL' 1;">auto_fix_high</span>
+<span class="font-['Inter'] font-light uppercase tracking-widest text-[10px]">Rituals</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#444748] opacity-60 hover:bg-[#1a1a1a] hover:text-[#e9c176] transition-all group" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="font-['Inter'] font-light uppercase tracking-widest text-[10px]">Chronicle</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#444748] opacity-60 hover:bg-[#1a1a1a] hover:text-[#e9c176] transition-all group" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['Inter'] font-light uppercase tracking-widest text-[10px]">Settings</span>
+</a>
+</nav>
+<div class="p-6 mt-auto border-t border-[#444748]/15">
+<div class="flex items-center gap-3 mb-6">
+<img alt="Curator Profile" class="w-10 h-10 object-cover grayscale border border-[#444748]/30" data-alt="portrait of a distinguished man in dark academic attire, moody low key lighting, scholarly aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBv0KKhU30JjwSkE6hvbI5GySG_6YZ1K5WCiOF7MheS1ZsXGFkeRfcbe3zzjoK-1yCSeCPlQGgoV7gqJprx4EOMO9oLog2tRxkFUoX_QYgM8UI5vz4rzlKbbHzx1lH14cll8dcMOc-KmfxXamnPyXk9QMRBkwgx7vYvZHISr9FBMsnEh7kYTbPS3xAat155Ec9EHWtaG5fKaBJWCC56rykER8AsnEITgtRKHG5WtdqAXdLUkqapQ3NXiav4fIH9qQeEe-krmcWfTuo"/>
+<div>
+<div class="font-['Inter'] font-light uppercase tracking-widest text-[10px] text-[#e9c176]">Level IX Initiate</div>
+<div class="font-['Newsreader'] text-sm italic text-on-surface">M. Thorne</div>
+</div>
+</div>
+<button class="w-full py-3 bg-primary text-on-primary font-['Inter'] font-light uppercase tracking-[0.2em] text-[10px] active:scale-95 transition-all">
+                    Begin Ritual
+                </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-64 flex flex-col items-center justify-center relative px-12 py-20">
+<!-- Quiz Progress & Meta -->
+<div class="absolute top-0 left-0 w-full pt-16 px-24">
+<div class="flex justify-between items-end mb-4">
+<div class="space-y-1">
+<span class="font-headline italic text-primary-fixed-dim text-lg">The First Axis: Existence</span>
+<div class="font-label uppercase tracking-[0.3em] text-[9px] text-outline">Initiation Protocol Alpha</div>
+</div>
+<div class="font-headline text-3xl font-light text-primary tracking-tighter">
+                        III <span class="text-outline-variant px-2">/</span> XX
+                    </div>
+</div>
+<!-- Progress Bar -->
+<div class="w-full h-[1px] bg-surface-container-highest relative">
+<div class="absolute top-0 left-0 h-full bg-primary w-[15%] transition-all duration-700"></div>
+</div>
+</div>
+<!-- Ritualistic Question Section -->
+<div class="max-w-3xl w-full">
+<section class="mb-20 stagger-in">
+<h1 class="font-headline text-5xl md:text-6xl text-on-surface leading-tight tracking-tight mb-4">
+                        In the silence of the void, <br/>
+<span class="italic text-primary">what do you hear?</span>
+</h1>
+<div class="w-16 h-[2px] bg-primary/40 mt-8"></div>
+</section>
+<!-- Options Grid: Asymmetric Ritual Selection -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-outline-variant/10">
+<button class="group relative p-10 bg-surface-container-lowest hover:bg-surface-container-low transition-colors duration-500 text-left flex flex-col items-start gap-6 border-b border-r border-outline-variant/15">
+<span class="font-label text-[10px] tracking-[0.4em] text-outline group-hover:text-primary transition-colors">01</span>
+<p class="font-headline text-xl text-on-surface-variant group-hover:text-on-surface transition-colors">The echo of a name I have long forgotten.</p>
+<div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary" data-icon="flare">flare</span>
+</div>
+</button>
+<button class="group relative p-10 bg-surface-container-lowest hover:bg-surface-container-low transition-colors duration-500 text-left flex flex-col items-start gap-6 border-b border-outline-variant/15">
+<span class="font-label text-[10px] tracking-[0.4em] text-outline group-hover:text-primary transition-colors">02</span>
+<p class="font-headline text-xl text-on-surface-variant group-hover:text-on-surface transition-colors">The hum of a clock that never strikes midnight.</p>
+<div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary" data-icon="flare">flare</span>
+</div>
+</button>
+<button class="group relative p-10 bg-surface-container-lowest hover:bg-surface-container-low transition-colors duration-500 text-left flex flex-col items-start gap-6 border-r border-outline-variant/15">
+<span class="font-label text-[10px] tracking-[0.4em] text-outline group-hover:text-primary transition-colors">03</span>
+<p class="font-headline text-xl text-on-surface-variant group-hover:text-on-surface transition-colors">Absolute stillness, heavy as mountain stone.</p>
+<div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary" data-icon="flare">flare</span>
+</div>
+</button>
+<button class="group relative p-10 bg-surface-container-lowest hover:bg-surface-container-low transition-colors duration-500 text-left flex flex-col items-start gap-6">
+<span class="font-label text-[10px] tracking-[0.4em] text-outline group-hover:text-primary transition-colors">04</span>
+<p class="font-headline text-xl text-on-surface-variant group-hover:text-on-surface transition-colors">A whisper that promises everything but says nothing.</p>
+<div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary" data-icon="flare">flare</span>
+</div>
+</button>
+</div>
+<!-- Footer Navigation -->
+<div class="flex justify-between items-center mt-20">
+<button class="group flex items-center gap-4 px-6 py-3 text-outline hover:text-primary transition-all active:opacity-50">
+<span class="material-symbols-outlined text-sm" data-icon="arrow_back">arrow_back</span>
+<span class="font-label uppercase tracking-widest text-[10px]">Previous</span>
+</button>
+<!-- Decorative Geometric Ornament -->
+<div class="flex gap-2">
+<div class="w-1 h-1 bg-primary/20"></div>
+<div class="w-1 h-1 bg-primary/40"></div>
+<div class="w-1 h-1 bg-primary/60"></div>
+<div class="w-1 h-1 bg-primary/40"></div>
+<div class="w-1 h-1 bg-primary/20"></div>
+</div>
+<button class="group flex items-center gap-4 px-10 py-4 bg-primary text-on-primary hover:bg-on-primary-container transition-all active:scale-95">
+<span class="font-label uppercase tracking-widest text-[10px] font-bold">Commence Response</span>
+<span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Background Decorative Element (Abstract Archival Motif) -->
+<div class="fixed bottom-0 right-0 p-12 opacity-10 pointer-events-none">
+<div class="border border-outline-variant w-64 h-64 flex items-center justify-center rotate-45 translate-x-20 translate-y-20">
+<div class="border border-outline-variant w-48 h-48 flex items-center justify-center">
+<span class="material-symbols-outlined text-9xl text-outline-variant" data-icon="all_inclusive">all_inclusive</span>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Atmospheric Overlay Textures -->
+<div class="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
+<div class="absolute top-[-10%] left-[-5%] w-[40%] h-[40%] bg-primary/5 blur-[150px] rounded-full"></div>
+<div class="absolute bottom-[-10%] right-[-5%] w-[40%] h-[40%] bg-secondary/5 blur-[150px] rounded-full"></div>
+</div>
+</body></html>
