@@ -3,6 +3,8 @@
 Last Updated: 2026-04-10
 
 ## Completed
+- [2026-04-12 00:15:43] Restructured the dashboard for mobile so the sidebar hides on small screens and the main CTA appears above the fold on initial load.
+- [2026-04-11 00:00:00] Improved mobile landing spacing and rebuilt the results page into a mobile-first single-column layout without the sidebar.
 - [2026-04-10 22:10:00] Fixed Vercel build failure (`vite` permission denied) by adding root ignore rules and updating npm scripts to run Vite via Node directly.
 - [2026-04-10 21:50:40] Replaced the quiz page texture background implementation with the provided transparent SVG gradient overlay (Image.svg) so the question canvas matches the reference while preserving legibility.
 - [2026-04-10 21:40:07] Updated quiz question heading styling so any prompt with a comma renders the second clause on a new line in gold italic to match the provided screen example.

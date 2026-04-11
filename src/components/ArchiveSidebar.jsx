@@ -9,7 +9,7 @@ const nav = [
 
 export default function ArchiveSidebar({ active = "rituals", showAvatar = false }) {
   return (
-    <aside className="bg-[#131313] flex flex-col h-screen fixed left-0 top-0 border-r border-[#444748]/15 w-64 z-50">
+    <aside className="hidden lg:flex bg-[#131313] flex-col h-screen fixed left-0 top-0 border-r border-[#444748]/15 w-64 z-50">
       <div className="px-8 py-10">
         <span className="font-['Newsreader'] text-lg italic text-[#e9c176]">PHILOSIFT</span>
         <p className="font-['Inter'] font-light uppercase tracking-widest text-[10px] text-[#444748] mt-1">Level IX Initiate</p>

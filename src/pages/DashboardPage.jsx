@@ -2,29 +2,50 @@ import ArchiveSidebar from "../components/ArchiveSidebar";
 
 export default function DashboardPage() {
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="min-h-screen bg-background text-on-surface">
       <div className="grain-overlay fixed inset-0" />
       <ArchiveSidebar active="dashboard" />
 
-      <main className="flex-grow ml-64 p-12 bg-surface">
-        <header className="flex justify-between items-end mb-16">
+      <main className="min-h-screen bg-surface px-4 sm:px-6 lg:ml-64 lg:p-12 pb-10 lg:pb-12 pt-6 lg:pt-12">
+        <header className="mb-6 lg:mb-16 flex items-start justify-between gap-4">
           <div className="max-w-2xl">
-            <span className="font-['Inter'] text-[11px] uppercase tracking-[0.4em] text-outline mb-4 block">The Inner Sanctum</span>
-            <h2 className="font-['Newsreader'] text-6xl font-light leading-none tracking-tighter text-on-surface">Integrating the <br /><span className="italic text-primary">Shadow Self</span></h2>
+            <span className="font-['Inter'] text-[10px] sm:text-[11px] uppercase tracking-[0.35em] sm:tracking-[0.4em] text-outline mb-3 lg:mb-4 block">The Inner Sanctum</span>
+            <h2 className="font-['Newsreader'] text-4xl sm:text-5xl lg:text-6xl font-light leading-[0.95] tracking-tighter text-on-surface">Integrating the <br /><span className="italic text-primary">Shadow Self</span></h2>
           </div>
-          <div className="text-right">
-            <p className="font-['Newsreader'] text-4xl italic text-on-surface">Day 47</p>
-            <p className="font-['Inter'] text-[10px] uppercase tracking-widest text-outline">The Obsidian Cycle</p>
+          <div className="text-right shrink-0">
+            <p className="font-['Newsreader'] text-3xl sm:text-4xl italic text-on-surface">Day 47</p>
+            <p className="font-['Inter'] text-[9px] sm:text-[10px] uppercase tracking-widest text-outline">The Obsidian Cycle</p>
           </div>
         </header>
 
-        <div className="grid grid-cols-12 gap-8">
-          <div className="col-span-8 bg-surface-container-lowest border border-outline-variant/10 p-10 flex flex-col justify-between shadow-glow h-[480px] relative overflow-hidden">
+        <div className="mb-6 lg:mb-8 lg:hidden bg-surface-container-low p-5 sm:p-6 shadow-glow relative overflow-hidden">
+          <div className="relative z-10 flex flex-col gap-4">
+            <div>
+              <h3 className="font-['Newsreader'] text-2xl sm:text-3xl italic text-primary mb-2">Evolution Path: Level X</h3>
+              <p className="font-['Inter'] text-sm text-on-surface-variant leading-relaxed">You are currently traversing the Subterranean Threshold. Achieve 85% alignment to unlock the Tenth Gate.</p>
+            </div>
+            <div>
+              <div className="flex justify-between items-end mb-3">
+                <span className="font-['Inter'] text-[10px] uppercase tracking-widest text-outline">Current Integration</span>
+                <span className="font-['Newsreader'] text-4xl text-primary">74%</span>
+              </div>
+              <div className="w-full h-1 bg-surface-container-highest">
+                <div className="h-full bg-primary" style={{ width: "74%" }} />
+              </div>
+            </div>
+            <button className="w-full border border-primary text-primary px-6 py-3 font-['Inter'] uppercase tracking-widest text-[10px] hover:bg-primary/5 transition-colors">
+              Review Manifestation
+            </button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+          <div className="lg:col-span-8 bg-surface-container-lowest border border-outline-variant/10 p-5 sm:p-7 lg:p-10 flex flex-col justify-between shadow-glow min-h-[24rem] lg:h-[480px] relative overflow-hidden">
             <div className="absolute -right-20 -top-20 w-96 h-96 opacity-10">
               <img className="w-full h-full object-cover mix-blend-lighten" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCoY1J_MymrzoAGhRjCbuRjnjlvsrYEyDSDeriA3fjBEtXlyRiox8PFmuA1i4oJ0PZh4GqTSVXORQmwMIoDxl-UDQS2_zE17lMGGhQGu4HiUuHzg9khZBwd0LAN4qclI4H_vrm6At5tReT4_2ktm1S8LRdVkuN5IKKmOXGpZgJ6okyxsIrcnka4Msjt5AL32h-35BbBv9tNhOf8DsxTAIRh4tqXnhOeXb0LgrvWO-9lHibFf83wrMNDBc3P-ZupKIPfR4HnnNdtRo" />
             </div>
             <div className="relative z-10">
-              <h3 className="font-['Newsreader'] text-3xl italic text-primary mb-2">Evolution Path: Level X</h3>
+              <h3 className="font-['Newsreader'] text-2xl sm:text-3xl italic text-primary mb-2">Evolution Path: Level X</h3>
               <p className="font-['Inter'] text-sm text-on-surface-variant max-w-md leading-relaxed">You are currently traversing the Subterranean Threshold. Achieve 85% alignment to unlock the Tenth Gate.</p>
             </div>
             <div className="mt-auto relative z-10">
@@ -35,13 +56,13 @@ export default function DashboardPage() {
               <div className="w-full h-1 bg-surface-container-highest">
                 <div className="h-full bg-primary" style={{ width: "74%" }} />
               </div>
-              <div className="mt-8 flex gap-4">
+              <div className="mt-8 hidden lg:flex gap-4">
                 <button className="border border-primary text-primary px-8 py-3 font-['Inter'] uppercase tracking-widest text-[10px] hover:bg-primary/5 transition-colors">Review Manifestation</button>
               </div>
             </div>
           </div>
 
-          <div className="col-span-4 space-y-8">
+          <div className="lg:col-span-4 space-y-6 lg:space-y-8">
             <div className="bg-surface-container p-8 border-l-2 border-primary">
               <h4 className="font-['Inter'] text-[10px] uppercase tracking-widest text-outline mb-6">Alignment Matrix</h4>
               <div className="space-y-6">
@@ -79,7 +100,7 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="col-span-5 bg-surface-container-low p-10">
+          <div className="lg:col-span-5 bg-surface-container-low p-8 sm:p-10">
             <h3 className="font-['Newsreader'] text-2xl mb-8">Daily Obligations</h3>
             <div className="space-y-6">
               <label className="flex items-center group cursor-pointer">
@@ -106,7 +127,7 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="col-span-7 bg-surface-container-highest p-10 flex gap-8 items-center overflow-hidden">
+          <div className="lg:col-span-7 bg-surface-container-highest p-8 sm:p-10 flex flex-col sm:flex-row gap-6 lg:gap-8 items-start sm:items-center overflow-hidden">
             <div className="w-1/3 aspect-[3/4] bg-surface-container-lowest shrink-0 border border-outline-variant/10 relative">
               <img className="w-full h-full object-cover opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYT2jydo3A_nYxFTLwRKTxEZ8jdbPLqwuN-wtkXMpYYBq0eZV8FqEJePHZf8rPfUcOvz85uAFTGGDh1R8OscwfIqcVf1LzFuoAXljtChy8mIPFJtCrdOEU8ECtO_LJTjfqMs6q4w9YlTGFRwdBHKSMZRzcvpWnsqpcSlNNos-iPvSUMgfoD_DEBMFJ2Q33Sa8heHvyTh83uXrPYUmek8WUQGIh2KAQ5TIqATej0Pw0_45P9TBtSR-CWLysF3Hm5lcXi61S3KwtJW0" />
               <div className="absolute inset-0 bg-gradient-to-t from-surface-container-highest to-transparent" />
@@ -120,7 +141,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <footer className="mt-20 pt-8 border-t border-outline-variant/10 flex justify-between items-center opacity-40">
+        <footer className="mt-14 lg:mt-20 pt-8 border-t border-outline-variant/10 flex flex-col sm:flex-row gap-6 justify-between items-start sm:items-center opacity-40">
           <div className="flex gap-12">
             <div>
               <p className="font-['Inter'] text-[9px] uppercase tracking-widest">Protocol</p>
