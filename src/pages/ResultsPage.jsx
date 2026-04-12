@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { computeArchetypeProfile, PILLARS, RESULTS_STORAGE_KEY } from "../data/quizData";
+import { buildFlow, computeArchetypeProfile, PILLARS, RESULTS_STORAGE_KEY } from "../data/quizData";
 
 function toPolygonPoints(pillarEntries) {
   return pillarEntries.map((pillar, index) => {
@@ -27,9 +27,10 @@ export default function ResultsPage() {
     if (storedResult?.archetypeProfile?.pillars) return storedResult.archetypeProfile;
 
     return computeArchetypeProfile({
+      answersByQuestionId: storedResult?.answersByQuestionId || {},
+      flow: buildFlow(),
       winners: storedResult?.winners || [],
-      axisScores: storedResult?.axisScores || {},
-      finalPhilosopherId: storedResult?.finalPhilosopher?.id || ""
+      axisScores: storedResult?.axisScores || {}
     });
   }, [storedResult]);
 

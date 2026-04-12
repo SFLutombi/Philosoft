@@ -3,6 +3,10 @@
 Last Updated: 2026-04-10
 
 ## Completed
+- [2026-04-12 22:42:29] Refined archetype names and tone to lean more inward, sharp, civic, and rebellious while keeping answer-driven scoring intact.
+- [2026-04-12 22:39:14] Tuned the archetype engine so each quiz answer contributes question-specific style and pillar scores instead of relying on philosopher-linked weighting.
+- [2026-04-12 22:12:22] Replaced philosopher-based archetype matching with answer-driven style scoring and wired results generation to stored question responses.
+- [2026-04-12 21:43:55] Rewrote quiz prompts and answer text into first person while keeping the original meaning intact.
 - [2026-04-12 03:09:57] Added deterministic combination-based archetypes, real 5-pillar pentagram scoring, and results summaries with three strengths and two weaknesses.
 - [2026-04-12 01:49:09] Removed philosopher names from Shadow Axis answer options and changed the CTA to neutral "Reveal Result" wording.
 - [2026-04-12 00:15:43] Restructured the dashboard for mobile so the sidebar hides on small screens and the main CTA appears above the fold on initial load.

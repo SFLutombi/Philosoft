@@ -112,9 +112,10 @@ export default function QuizPage() {
     if (!finalPhilosopher) return;
 
     const archetypeProfile = computeArchetypeProfile({
+      answersByQuestionId: answers,
+      flow,
       winners,
-      axisScores,
-      finalPhilosopherId: finalPhilosopher.id
+      axisScores
     });
 
     const payload = {
@@ -122,6 +123,7 @@ export default function QuizPage() {
       winners,
       shadowChoice: choiceId,
       axisScores,
+      answersByQuestionId: answers,
       archetypeProfile,
       pillarScores: archetypeProfile.pillars,
       answeredAt: Date.now()
