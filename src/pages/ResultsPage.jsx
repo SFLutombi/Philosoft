@@ -1,6 +1,16 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { RESULTS_STORAGE_KEY } from "../data/quizData";
+import { computeArchetypeProfile, PILLARS, RESULTS_STORAGE_KEY } from "../data/quizData";
+
+function toPolygonPoints(pillarEntries) {
+  return pillarEntries.map((pillar, index) => {
+    const angle = ((-90 + (index * 72)) * Math.PI) / 180;
+    const radius = 16 + ((pillar.score || 0) * 0.34);
+    const x = 50 + (radius * Math.cos(angle));
+    const y = 50 + (radius * Math.sin(angle));
+    return `${x.toFixed(2)},${y.toFixed(2)}`;
+  }).join(" ");
+}
 
 export default function ResultsPage() {
   const storedResult = useMemo(() => {
@@ -12,10 +22,36 @@ export default function ResultsPage() {
     }
   }, []);
 
+  const resolvedProfile = useMemo(() => {
+    if (!storedResult) return null;
+    if (storedResult?.archetypeProfile?.pillars) return storedResult.archetypeProfile;
+
+    return computeArchetypeProfile({
+      winners: storedResult?.winners || [],
+      axisScores: storedResult?.axisScores || {},
+      finalPhilosopherId: storedResult?.finalPhilosopher?.id || ""
+    });
+  }, [storedResult]);
+
   const finalPhilosopher = storedResult?.finalPhilosopher;
-  const displayName = finalPhilosopher?.name || "The Stoic Architect";
-  const displaySummary = finalPhilosopher?.summary || "You build order from chaos, a fortress of the mind. Your consciousness is a blueprint of disciplined geometry amidst the shifting sands of existence.";
-  const displayCardTitle = finalPhilosopher?.title || "THE STOIC ARCHITECT";
+  const displayName = resolvedProfile?.name || finalPhilosopher?.title || "The Lucid Witness";
+  const displaySummary = resolvedProfile?.summary || finalPhilosopher?.summary || "You think with unusual intensity and pattern awareness. Your next step is to pair that gift with steadier execution in uncertain moments.";
+  const displayCardTitle = resolvedProfile?.cardTitle || displayName.toUpperCase();
+  const strengths = resolvedProfile?.strengths?.slice(0, 3) || [
+    "You find signal inside complexity and move toward the core issue quickly.",
+    "You maintain your center in ambiguity and keep others grounded.",
+    "You generate language that helps people make sense of hard choices."
+  ];
+  const weaknesses = resolvedProfile?.weaknesses?.slice(0, 2) || [
+    "You can stay in reflection too long when a rough decision is needed now.",
+    "You can absorb tension from others and mistake it for your own burden."
+  ];
+
+  const pillarEntries = PILLARS.map((pillar) => ({
+    ...pillar,
+    score: resolvedProfile?.pillars?.[pillar.id] ?? 50
+  }));
+  const pentagramPoints = toPolygonPoints(pillarEntries);
 
   const bottomNav = [
     { label: "Home", icon: "home", href: "/landing" },
@@ -87,37 +123,48 @@ export default function ResultsPage() {
                     <polygon points="50,5 95,38 78,92 22,92 5,38" fill="none" stroke="currentColor" strokeWidth="0.5" />
                   </svg>
                   <svg className="absolute inset-0 h-full w-full text-primary" viewBox="0 0 100 100">
-                    <polygon points="50,15 85,45 70,80 30,80 15,45" fill="rgba(233, 193, 118, 0.15)" stroke="currentColor" strokeWidth="1" />
-                    <circle cx="50" cy="15" r="1.5" fill="currentColor" />
-                    <circle cx="85" cy="45" r="1.5" fill="currentColor" />
-                    <circle cx="70" cy="80" r="1.5" fill="currentColor" />
-                    <circle cx="30" cy="80" r="1.5" fill="currentColor" />
-                    <circle cx="15" cy="45" r="1.5" fill="currentColor" />
+                    <polygon points={pentagramPoints} fill="rgba(233, 193, 118, 0.15)" stroke="currentColor" strokeWidth="1" />
+                    {pillarEntries.map((pillar, index) => {
+                      const angle = ((-90 + (index * 72)) * Math.PI) / 180;
+                      const radius = 16 + (pillar.score * 0.34);
+                      const cx = 50 + (radius * Math.cos(angle));
+                      const cy = 50 + (radius * Math.sin(angle));
+                      return <circle key={pillar.id} cx={cx} cy={cy} r="1.5" fill="currentColor" />;
+                    })}
                   </svg>
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 font-label text-[9px] tracking-widest text-primary uppercase">Wisdom</div>
-                  <div className="absolute top-1/4 -right-7 font-label text-[9px] tracking-widest text-on-surface-variant uppercase">Power</div>
-                  <div className="absolute bottom-4 -right-3 font-label text-[9px] tracking-widest text-on-surface-variant uppercase">Chaos</div>
-                  <div className="absolute bottom-4 -left-3 font-label text-[9px] tracking-widest text-on-surface-variant uppercase">Order</div>
-                  <div className="absolute top-1/4 -left-7 font-label text-[9px] tracking-widest text-on-surface-variant uppercase">Void</div>
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 font-label text-[9px] tracking-widest text-primary uppercase">{pillarEntries[0]?.label}</div>
+                  <div className="absolute top-1/4 -right-7 font-label text-[9px] tracking-widest text-on-surface-variant uppercase">{pillarEntries[1]?.label}</div>
+                  <div className="absolute bottom-4 -right-3 font-label text-[9px] tracking-widest text-on-surface-variant uppercase">{pillarEntries[2]?.label}</div>
+                  <div className="absolute bottom-4 -left-3 font-label text-[9px] tracking-widest text-on-surface-variant uppercase">{pillarEntries[3]?.label}</div>
+                  <div className="absolute top-1/4 -left-7 font-label text-[9px] tracking-widest text-on-surface-variant uppercase">{pillarEntries[4]?.label}</div>
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4 sm:gap-5 mt-4 sm:mt-6">
-                <div className="flex flex-col gap-1">
-                  <span className="text-[10px] font-label uppercase tracking-wider text-outline">Logic</span>
-                  <span className="font-headline text-xl italic text-on-surface sm:text-2xl">88%</span>
+                {pillarEntries.map((pillar, index) => (
+                  <div key={pillar.id} className={`flex flex-col gap-1 ${index % 2 === 1 ? "text-right" : ""}`}>
+                    <span className="text-[10px] font-label uppercase tracking-wider text-outline">{pillar.label}</span>
+                    <span className="font-headline text-xl italic text-on-surface sm:text-2xl">{pillar.score}%</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                <div className="bg-surface-container-lowest/80 p-4">
+                  <p className="font-label text-[10px] uppercase tracking-[0.18em] text-primary mb-3">Three Thinking Strengths</p>
+                  <div className="space-y-2">
+                    {strengths.map((item, idx) => (
+                      <p key={`strength-${idx}`} className="text-sm text-on-surface-variant leading-relaxed">{idx + 1}. {item}</p>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex flex-col gap-1 text-right">
-                  <span className="text-[10px] font-label uppercase tracking-wider text-outline">Intuition</span>
-                  <span className="font-headline text-xl italic text-on-surface sm:text-2xl">42%</span>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <span className="text-[10px] font-label uppercase tracking-wider text-outline">Order</span>
-                  <span className="font-headline text-xl italic text-on-surface sm:text-2xl">94%</span>
-                </div>
-                <div className="flex flex-col gap-1 text-right">
-                  <span className="text-[10px] font-label uppercase tracking-wider text-outline">Chaos</span>
-                  <span className="font-headline text-xl italic text-on-surface sm:text-2xl">12%</span>
+                <div className="bg-surface-container-lowest/80 p-4">
+                  <p className="font-label text-[10px] uppercase tracking-[0.18em] text-primary mb-3">Two Blind Spots</p>
+                  <div className="space-y-2">
+                    {weaknesses.map((item, idx) => (
+                      <p key={`weakness-${idx}`} className="text-sm text-on-surface-variant leading-relaxed">{idx + 1}. {item}</p>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -163,31 +210,25 @@ export default function ResultsPage() {
           </div>
         </section>
 
-        <section className="hidden md:grid grid-cols-12 gap-12 mt-12 mb-24">
-          <div className="col-span-12 md:col-span-4 bg-surface-container-high p-10 flex flex-col justify-between min-h-[300px]">
-            <div>
-              <span className="font-label text-[10px] tracking-widest text-primary uppercase mb-4 block">Dominant Virtue</span>
-              <h4 className="font-headline text-4xl mb-4 italic">Iron Will</h4>
-              <p className="text-on-surface-variant text-sm leading-relaxed">Your resolve is not merely a trait, but a structural integrity that maintains the sanctity of your inner sanctum.</p>
-            </div>
-            <span className="material-symbols-outlined text-primary/30 text-4xl">fitness_center</span>
-          </div>
-          <div className="col-span-12 md:col-span-4 bg-surface-container p-10 flex flex-col justify-between min-h-[300px]">
-            <div>
-              <span className="font-label text-[10px] tracking-widest text-primary uppercase mb-4 block">Shadow Resonance</span>
-              <h4 className="font-headline text-4xl mb-4 italic">The Void</h4>
-              <p className="text-on-surface-variant text-sm leading-relaxed">The Architect fears that which cannot be measured. Your shadow dwells in the formless depths of pure chaos.</p>
-            </div>
-            <span className="material-symbols-outlined text-secondary/30 text-4xl">incomplete_circle</span>
-          </div>
-          <div className="col-span-12 md:col-span-4 bg-surface-container-high p-10 flex flex-col justify-between min-h-[300px]">
-            <div>
-              <span className="font-label text-[10px] tracking-widest text-primary uppercase mb-4 block">Archive Record</span>
-              <h4 className="font-headline text-4xl mb-4 italic">No. 11,402</h4>
-              <p className="text-on-surface-variant text-sm leading-relaxed">You are among the 4% of initiates who have achieved the Architect resonance in the current cycle.</p>
-            </div>
-            <span className="material-symbols-outlined text-primary/30 text-4xl">fingerprint</span>
-          </div>
+        <section className="mt-10 mb-16 grid gap-4 md:grid-cols-5">
+          {strengths.map((strength, index) => (
+            <article key={`strength-card-${index}`} className="bg-surface-container-high p-5 sm:p-6 min-h-[190px] flex flex-col justify-between">
+              <div>
+                <span className="font-label text-[10px] tracking-widest text-primary uppercase mb-3 block">Strength {index + 1}</span>
+                <p className="text-on-surface-variant text-sm leading-relaxed">{strength}</p>
+              </div>
+              <span className="material-symbols-outlined text-primary/30 text-3xl">bolt</span>
+            </article>
+          ))}
+          {weaknesses.map((weakness, index) => (
+            <article key={`weakness-card-${index}`} className="bg-surface-container p-5 sm:p-6 min-h-[190px] flex flex-col justify-between">
+              <div>
+                <span className="font-label text-[10px] tracking-widest text-primary uppercase mb-3 block">Weakness {index + 1}</span>
+                <p className="text-on-surface-variant text-sm leading-relaxed">{weakness}</p>
+              </div>
+              <span className="material-symbols-outlined text-secondary/40 text-3xl">incomplete_circle</span>
+            </article>
+          ))}
         </section>
 
         <footer className="w-full flex flex-col items-center py-14 md:py-24 px-4 md:px-12 border-t border-outline-variant/10">

@@ -3,6 +3,8 @@
 Last Updated: 2026-04-10
 
 ## Completed
+- [2026-04-12 03:09:57] Added deterministic combination-based archetypes, real 5-pillar pentagram scoring, and results summaries with three strengths and two weaknesses.
+- [2026-04-12 01:49:09] Removed philosopher names from Shadow Axis answer options and changed the CTA to neutral "Reveal Result" wording.
 - [2026-04-12 00:15:43] Restructured the dashboard for mobile so the sidebar hides on small screens and the main CTA appears above the fold on initial load.
 - [2026-04-11 00:00:00] Improved mobile landing spacing and rebuilt the results page into a mobile-first single-column layout without the sidebar.
 - [2026-04-10 22:10:00] Fixed Vercel build failure (`vite` permission denied) by adding root ignore rules and updating npm scripts to run Vite via Node directly.

@@ -344,3 +344,194 @@ export function computeAxisWinners(answersByQuestionId, flow) {
 
   return { winners, axisScores };
 }
+
+export const PILLARS = [
+  { id: "clarity", label: "Clarity" },
+  { id: "agency", label: "Agency" },
+  { id: "structure", label: "Structure" },
+  { id: "imagination", label: "Imagination" },
+  { id: "depth", label: "Depth" }
+];
+
+const PHILOSOPHER_PILLAR_SIGNATURES = {
+  socrates: { clarity: 0.94, agency: 0.52, structure: 0.67, imagination: 0.58, depth: 0.88 },
+  epictetus: { clarity: 0.78, agency: 0.7, structure: 0.95, imagination: 0.35, depth: 0.62 },
+  nietzsche: { clarity: 0.58, agency: 0.98, structure: 0.34, imagination: 0.9, depth: 0.72 },
+  camus: { clarity: 0.72, agency: 0.68, structure: 0.42, imagination: 0.79, depth: 0.93 },
+  arendt: { clarity: 0.82, agency: 0.86, structure: 0.71, imagination: 0.44, depth: 0.64 },
+  kant: { clarity: 0.86, agency: 0.59, structure: 0.98, imagination: 0.31, depth: 0.56 },
+  de_beauvoir: { clarity: 0.67, agency: 0.84, structure: 0.5, imagination: 0.77, depth: 0.9 },
+  william_james: { clarity: 0.74, agency: 0.87, structure: 0.57, imagination: 0.73, depth: 0.54 }
+};
+
+const PILLAR_COPY = {
+  clarity: {
+    strength: "You cut through noise fast and ask the question that actually matters.",
+    weakness: "You can over-analyze and delay action while chasing the perfect frame."
+  },
+  agency: {
+    strength: "You move ideas into reality and create momentum for people around you.",
+    weakness: "You can push too hard and miss signals that the room needs a different pace."
+  },
+  structure: {
+    strength: "You build dependable systems and keep your thinking coherent under pressure.",
+    weakness: "You can protect order so tightly that useful surprises never get in."
+  },
+  imagination: {
+    strength: "You generate original paths and see possibilities most people skip.",
+    weakness: "You can drift into novelty and lose commitment to one direction."
+  },
+  depth: {
+    strength: "You read emotional and existential layers with unusual honesty.",
+    weakness: "You can get trapped in intensity and carry weight that is not yours to hold."
+  }
+};
+
+const NAME_BANK = {
+  clarity: {
+    adjectives: ["Lucid", "Unclouded", "Silver-Eyed", "Keen"],
+    nouns: ["Seer", "Witness", "Lens", "Cartographer"]
+  },
+  agency: {
+    adjectives: ["Driven", "Catalytic", "Relentless", "Charging"],
+    nouns: ["Forger", "Mover", "Spark", "Pathmaker"]
+  },
+  structure: {
+    adjectives: ["Steady", "Architectural", "Measured", "Iron"],
+    nouns: ["Architect", "Keeper", "Anchor", "Builder"]
+  },
+  imagination: {
+    adjectives: ["Visionary", "Mythic", "Wild", "Luminous"],
+    nouns: ["Dreamer", "Alchemist", "Composer", "Flame"]
+  },
+  depth: {
+    adjectives: ["Abyssal", "Soulward", "Quiet", "Nightbound"],
+    nouns: ["Diver", "Oracle", "Listener", "Mirror"]
+  }
+};
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
+
+function createHash(seed) {
+  return String(seed || "").split("").reduce((acc, char, index) => acc + (char.charCodeAt(0) * (index + 17)), 0);
+}
+
+function normalizeAxisDistribution(axisScoreMap, fallbackCandidates) {
+  const entries = Object.entries(axisScoreMap || {});
+  const safeEntries = entries.length
+    ? entries
+    : (fallbackCandidates || []).map((candidate) => [candidate, 1]);
+  const total = safeEntries.reduce((sum, [, score]) => sum + Math.max(0, Number(score) || 0), 0);
+
+  if (!total) {
+    const equal = 1 / Math.max(1, safeEntries.length);
+    return Object.fromEntries(safeEntries.map(([id]) => [id, equal]));
+  }
+
+  return Object.fromEntries(
+    safeEntries.map(([id, score]) => [id, (Math.max(0, Number(score) || 0) / total)])
+  );
+}
+
+function computePillarScores(axisScores, winners, finalPhilosopherId) {
+  const raw = Object.fromEntries(PILLARS.map((pillar) => [pillar.id, 0]));
+
+  winners.forEach((winner) => {
+    const axis = AXES.find((item) => item.id === winner.axisId);
+    const distribution = normalizeAxisDistribution(axisScores?.[winner.axisId], axis?.candidates || []);
+
+    Object.entries(distribution).forEach(([philosopherId, weight]) => {
+      const signature = PHILOSOPHER_PILLAR_SIGNATURES[philosopherId];
+      if (!signature) return;
+
+      PILLARS.forEach((pillar) => {
+        raw[pillar.id] += signature[pillar.id] * weight;
+      });
+    });
+  });
+
+  const finalSignature = PHILOSOPHER_PILLAR_SIGNATURES[finalPhilosopherId];
+  if (finalSignature) {
+    PILLARS.forEach((pillar) => {
+      raw[pillar.id] = (raw[pillar.id] * 0.82) + (finalSignature[pillar.id] * 0.18);
+    });
+  }
+
+  const rawValues = PILLARS.map((pillar) => raw[pillar.id]);
+  const min = Math.min(...rawValues);
+  const max = Math.max(...rawValues);
+  const spread = Math.max(0.0001, max - min);
+
+  return Object.fromEntries(
+    PILLARS.map((pillar) => {
+      const scaled = 24 + (((raw[pillar.id] - min) / spread) * 70);
+      return [pillar.id, Math.round(clamp(scaled, 10, 98))];
+    })
+  );
+}
+
+function buildArchetypeName(topPillarId, secondPillarId, seedHash) {
+  const primaryBank = NAME_BANK[topPillarId] || NAME_BANK.clarity;
+  const secondaryBank = NAME_BANK[secondPillarId] || NAME_BANK.depth;
+
+  const adjective = primaryBank.adjectives[seedHash % primaryBank.adjectives.length];
+  const noun = secondaryBank.nouns[Math.floor(seedHash / 3) % secondaryBank.nouns.length];
+  return `The ${adjective} ${noun}`;
+}
+
+function buildSummary(topPillarLabel, secondPillarLabel, weakestPillarLabel, seedHash) {
+  const openings = [
+    `You think through ${topPillarLabel.toLowerCase()} first and it gives your voice unusual precision.`,
+    `Your mind is led by ${topPillarLabel.toLowerCase()}, so you notice what others gloss over.`,
+    `Your strongest pattern is ${topPillarLabel.toLowerCase()}, and people feel that steadiness when you speak.`
+  ];
+  const bridges = [
+    `Then ${secondPillarLabel.toLowerCase()} enters and turns reflection into motion.`,
+    `Your ${secondPillarLabel.toLowerCase()} keeps the profile from becoming passive.`,
+    `You pair it with ${secondPillarLabel.toLowerCase()} to move from insight into action.`
+  ];
+  const tensions = [
+    `The pressure point is ${weakestPillarLabel.toLowerCase()}, especially when decisions need flexibility.`,
+    `The blind spot usually appears around ${weakestPillarLabel.toLowerCase()} in high-stakes moments.`,
+    `Growth comes from protecting your gifts while strengthening ${weakestPillarLabel.toLowerCase()}.`
+  ];
+
+  return `${openings[seedHash % openings.length]} ${bridges[Math.floor(seedHash / 5) % bridges.length]} ${tensions[Math.floor(seedHash / 7) % tensions.length]}`;
+}
+
+export function computeArchetypeProfile({ winners = [], axisScores = {}, finalPhilosopherId = "" } = {}) {
+  const safeWinners = Array.isArray(winners) ? winners : [];
+  const pillars = computePillarScores(axisScores, safeWinners, finalPhilosopherId);
+
+  const sorted = [...PILLARS]
+    .map((pillar) => ({
+      id: pillar.id,
+      label: pillar.label,
+      score: pillars[pillar.id]
+    }))
+    .sort((a, b) => b.score - a.score);
+
+  const topThree = sorted.slice(0, 3);
+  const weakestTwo = sorted.slice(-2).sort((a, b) => a.score - b.score);
+  const topPillar = topThree[0] || PILLARS[0];
+  const secondPillar = topThree[1] || PILLARS[1];
+  const weakestPillar = weakestTwo[0] || PILLARS[4];
+
+  const seed = `${finalPhilosopherId}|${safeWinners.map((winner) => winner.philosopherId || winner.axisId).join("-")}`;
+  const seedHash = createHash(seed);
+  const name = buildArchetypeName(topPillar.id, secondPillar.id, seedHash);
+
+  return {
+    id: `archetype-${topPillar.id}-${secondPillar.id}-${seedHash % 997}`,
+    name,
+    cardTitle: name.toUpperCase(),
+    summary: buildSummary(topPillar.label, secondPillar.label, weakestPillar.label, seedHash),
+    strengths: topThree.map((pillar) => PILLAR_COPY[pillar.id].strength),
+    weaknesses: weakestTwo.map((pillar) => PILLAR_COPY[pillar.id].weakness),
+    pillars,
+    topPillars: topThree.map((pillar) => pillar.id),
+    weakPillars: weakestTwo.map((pillar) => pillar.id)
+  };
+}

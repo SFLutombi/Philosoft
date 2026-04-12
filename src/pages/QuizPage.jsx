@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {
   RESULTS_STORAGE_KEY,
   buildFlow,
+  computeArchetypeProfile,
   computeAxisWinners
 } from "../data/quizData";
 
@@ -110,11 +111,19 @@ export default function QuizPage() {
     const finalPhilosopher = selectedFinalist?.philosopher;
     if (!finalPhilosopher) return;
 
+    const archetypeProfile = computeArchetypeProfile({
+      winners,
+      axisScores,
+      finalPhilosopherId: finalPhilosopher.id
+    });
+
     const payload = {
       finalPhilosopher,
       winners,
       shadowChoice: choiceId,
       axisScores,
+      archetypeProfile,
+      pillarScores: archetypeProfile.pillars,
       answeredAt: Date.now()
     };
 
@@ -176,7 +185,7 @@ export default function QuizPage() {
     ? finalists.map((item, idx) => ({
       id: `${item.axisId}-${item.philosopher.id}`,
       label: item.philosopher.statement,
-      kicker: `${String.fromCharCode(65 + idx)} • ${item.philosopher.name}`,
+      kicker: `${String.fromCharCode(65 + idx)}`,
       selected: shadowChoice === `${item.axisId}-${item.philosopher.id}`,
       onSelect: () => onSelectShadowChoice(`${item.axisId}-${item.philosopher.id}`)
     }))
@@ -286,7 +295,7 @@ export default function QuizPage() {
             disabled={inShadowAxis ? !canAdvanceShadow : !canAdvanceQuiz}
             className="group flex items-center gap-3 md:gap-4 px-6 md:px-10 py-3 md:py-4 bg-primary text-on-primary hover:bg-on-primary-container transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <span className="font-label uppercase tracking-widest text-[10px] font-bold">{inShadowAxis ? "Reveal Philosopher" : currentIndex === totalQuestions - 1 ? "Enter Shadow Axis" : "Next"}</span>
+            <span className="font-label uppercase tracking-widest text-[10px] font-bold">{inShadowAxis ? "Reveal Result" : currentIndex === totalQuestions - 1 ? "Enter Shadow Axis" : "Next"}</span>
             <span className="material-symbols-outlined text-sm">arrow_forward</span>
           </button>
         </div>
