@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
+  PHILOSOPHERS,
   RESULTS_STORAGE_KEY,
   buildFlow,
   computeArchetypeProfile,
@@ -77,11 +78,30 @@ export default function QuizPage() {
 
   const { winners, axisScores } = useMemo(() => computeAxisWinners(answers, flow), [answers, flow]);
 
-  const finalists = winners.map((winner) => ({
-    axisId: winner.axisId,
-    axisLabel: winner.axisLabel,
-    philosopher: winner.philosopher
-  })).filter((item) => item.philosopher);
+  const finalists = useMemo(() => {
+    const usedPhilosophers = new Set();
+
+    return winners.map((winner) => {
+      const sortedAxisCandidates = Object.entries(axisScores?.[winner.axisId] || {})
+        .sort((a, b) => b[1] - a[1])
+        .map(([philosopherId]) => philosopherId);
+
+      const pickedId =
+        sortedAxisCandidates.find((philosopherId) => !usedPhilosophers.has(philosopherId))
+        || sortedAxisCandidates[0]
+        || winner.philosopherId;
+
+      if (pickedId) {
+        usedPhilosophers.add(pickedId);
+      }
+
+      return {
+        axisId: winner.axisId,
+        axisLabel: winner.axisLabel,
+        philosopher: PHILOSOPHERS[pickedId] || winner.philosopher
+      };
+    }).filter((item) => item.philosopher);
+  }, [winners, axisScores]);
 
   const canAdvanceQuiz = Boolean(selectedAnswer);
   const canAdvanceShadow = Boolean(shadowChoice);
@@ -272,7 +292,7 @@ export default function QuizPage() {
             >
               <span className={`font-label text-[10px] tracking-[0.4em] transition-colors ${optionCard.selected ? "text-primary" : "text-outline group-hover:text-primary"}`}>{optionCard.kicker}</span>
               <p className={`font-headline text-base md:text-xl leading-snug transition-colors ${optionCard.selected ? "text-on-surface" : "text-on-surface-variant group-hover:text-on-surface"}`}>{optionCard.label}</p>
-              <div className={`absolute bottom-4 right-4 transition-opacity ${optionCard.selected ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
+              <div className={`absolute bottom-4 right-4 transition-opacity ${optionCard.selected ? "opacity-100" : "opacity-0"}`}>
                 <span className="material-symbols-outlined text-primary">check_circle</span>
               </div>
             </button>

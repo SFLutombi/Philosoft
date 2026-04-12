@@ -2,6 +2,17 @@ import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { buildFlow, computeArchetypeProfile, PILLARS, RESULTS_STORAGE_KEY } from "../data/quizData";
 
+const ARCHETYPE_CARD_IMAGES = {
+  inquiry: "/cards/inner-examiner.webp",
+  discipline: "/cards/sharp-steward.webp",
+  self_authorship: "/cards/unbound-maker.webp",
+  existential_courage: "/cards/clear-rebel.webp",
+  civic_responsibility: "/cards/civic-builder.webp",
+  principle_logic: "/cards/principle-blade.webp",
+  freedom_commitment: "/cards/committed-self.webp",
+  pragmatic_adaptation: "/cards/practical-navigator.webp"
+};
+
 function toPolygonPoints(pillarEntries) {
   return pillarEntries.map((pillar, index) => {
     const angle = ((-90 + (index * 72)) * Math.PI) / 180;
@@ -38,6 +49,9 @@ export default function ResultsPage() {
   const displayName = resolvedProfile?.name || finalPhilosopher?.title || "The Lucid Witness";
   const displaySummary = resolvedProfile?.summary || finalPhilosopher?.summary || "You think with unusual intensity and pattern awareness. Your next step is to pair that gift with steadier execution in uncertain moments.";
   const displayCardTitle = resolvedProfile?.cardTitle || displayName.toUpperCase();
+  const cardImageSrc = ARCHETYPE_CARD_IMAGES[resolvedProfile?.primaryStyle] || "/cards/default-archive.webp";
+  const cardImageAlt = `${displayName} tarot-inspired thinker card`;
+  const shareCaption = `${displayName} :: ${displaySummary}`;
   const strengths = resolvedProfile?.strengths?.slice(0, 3) || [
     "You find signal inside complexity and move toward the core issue quickly.",
     "You maintain your center in ambiguity and keep others grounded.",
@@ -90,6 +104,47 @@ export default function ResultsPage() {
       </header>
 
       <main className="mx-auto flex min-h-[100svh] max-w-6xl flex-col px-4 sm:px-6 lg:px-8 pt-24 pb-32 md:pb-20">
+        <section className="artifact-unlock mb-8 md:mb-12">
+          <div className="artifact-unlock__shell p-4 sm:p-6 md:p-8">
+            <div className="mb-5 flex items-start justify-between gap-4 md:mb-6">
+              <div>
+                <span className="font-label text-[10px] uppercase tracking-[0.35em] text-primary/90">Share Artifact</span>
+                <h3 className="font-headline mt-2 text-2xl italic tracking-tight text-on-surface sm:text-3xl">Unlock Complete</h3>
+              </div>
+              <span className="material-symbols-outlined artifact-unlock__sigil text-primary text-3xl">diamond</span>
+            </div>
+
+            <div className="artifact-unlock__card mx-auto max-w-[20rem] p-1 sm:max-w-[22rem]">
+              <div className="artifact-unlock__frame relative aspect-[9/16] overflow-hidden border border-primary/20 bg-surface-container-lowest">
+                <div className="artifact-unlock__beam absolute inset-0" />
+                <img className="absolute inset-0 h-full w-full object-cover opacity-42 mix-blend-luminosity" src={cardImageSrc} alt={cardImageAlt} />
+                <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
+                  <span className="material-symbols-outlined mb-5 text-5xl text-primary occult-glow sm:text-6xl" style={{ fontVariationSettings: "'FILL' 1" }}>architecture</span>
+                  <h4 className="font-headline mb-2 text-[0.7rem] tracking-[0.5em] text-primary uppercase">Archetype</h4>
+                  <h2 className="font-headline mb-5 text-2xl italic leading-none tracking-tighter text-on-surface sm:text-3xl">{displayCardTitle}</h2>
+                  <div className="mb-5 h-px w-8 bg-primary/40" />
+                  <p className="font-body text-[10px] uppercase tracking-widest leading-relaxed text-on-surface/70">Unlocked from your answer pattern.<br />Shadow Axis Confirmed.</p>
+                </div>
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
+                  <span className="font-headline text-sm tracking-[0.2em] text-primary/60">PHILO SIFT</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              <button className="flex w-full items-center justify-center gap-3 bg-primary py-4 font-label text-xs font-bold uppercase tracking-[0.2em] text-on-primary transition-colors hover:bg-on-primary-container">
+                <span className="material-symbols-outlined text-lg">ios_share</span>
+                Share to Story
+              </button>
+              <button className="flex w-full items-center justify-center gap-3 border border-outline-variant/30 py-4 font-label text-xs uppercase tracking-[0.2em] text-on-surface transition-colors hover:bg-surface-container">
+                <span className="material-symbols-outlined text-lg">content_copy</span>
+                Copy Caption
+              </button>
+            </div>
+            <p className="mt-3 text-center font-label text-[10px] uppercase tracking-[0.14em] text-outline">{shareCaption}</p>
+          </div>
+        </section>
+
         <section className="mb-10 text-center md:mb-14">
           <span className="font-label mb-4 block text-xs uppercase tracking-[0.28em] text-primary">Archive Record</span>
           <h2 className="font-headline mb-5 text-4xl italic leading-[0.95] tracking-tighter text-on-surface sm:text-5xl md:text-7xl lg:text-8xl">{displayName}</h2>
@@ -104,7 +159,7 @@ export default function ResultsPage() {
           </div>
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+        <section className="grid gap-6">
           <div className="bg-surface-container-low/95 p-5 sm:p-7 md:p-10 lg:p-12 relative overflow-hidden">
             <div className="absolute top-0 right-0 p-6 sm:p-8 opacity-10 font-headline text-7xl sm:text-8xl md:text-9xl">V</div>
             <div className="relative z-10">
@@ -168,45 +223,6 @@ export default function ResultsPage() {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-6">
-            <div className="bg-[#1a1a1a] p-1 relative shadow-2xl">
-              <div className="w-full px-4 sm:px-6 pt-5 sm:pt-6 flex justify-between items-center mb-5 sm:mb-8">
-                <span className="material-symbols-outlined text-outline text-xs">close</span>
-                <span className="font-label text-[10px] tracking-widest text-outline">STORY PREVIEW</span>
-                <span className="material-symbols-outlined text-outline text-xs">more_vert</span>
-              </div>
-              <div className="relative mx-auto aspect-[9/16] w-full max-w-[18rem] overflow-hidden border border-primary/20 bg-surface-container-lowest">
-                <img className="absolute inset-0 h-full w-full object-cover opacity-40 mix-blend-luminosity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZiAPtY1Kfri-Iw6xxmNShMbZ12FSysFJl6bKYpqSS0c_qbA2Exw99wPZ8ei7YccD0_2Xf6GCCY0KDOt7I2DOH82_lNZVakov6Pl406C0qT4pl8FggDzgBdh0GxuHJU9gRIBjOnWHSYYX3INrHx2j-_eBdEkCoPtQujXIKeAABtL33RfrbPwns30NJOsqx7TMb-NbzNy6CJfhkmcx_0Uu2GJGShuc4hhQ2W0_vo91JhmfP6atrgdiOiCw0X4G4SRsTbeVxJD2RRlg" />
-                <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-                  <span className="material-symbols-outlined mb-5 text-5xl text-primary occult-glow sm:text-6xl" style={{ fontVariationSettings: "'FILL' 1" }}>architecture</span>
-                  <h4 className="font-headline mb-2 text-[0.7rem] tracking-[0.5em] text-primary uppercase">Archetype</h4>
-                  <h2 className="font-headline mb-5 text-2xl italic leading-none tracking-tighter text-on-surface sm:text-3xl">{displayCardTitle}</h2>
-                  <div className="mb-5 h-px w-8 bg-primary/40" />
-                  <p className="font-body text-[10px] uppercase tracking-widest leading-relaxed text-on-surface/70">Philosophical Resonance. <br /> Shadow Axis Confirmed.</p>
-                </div>
-                <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
-                  <span className="font-headline text-sm tracking-[0.2em] text-primary/60">PHILO SIFT</span>
-                </div>
-              </div>
-              <div className="my-6 flex justify-center gap-4 pb-1">
-                <div className="h-2 w-2 rounded-full bg-primary" />
-                <div className="h-2 w-2 rounded-full bg-outline-variant" />
-                <div className="h-2 w-2 rounded-full bg-outline-variant" />
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-4">
-              <button className="flex w-full items-center justify-center gap-3 bg-primary py-4 sm:py-5 font-label text-xs font-bold uppercase tracking-[0.2em] text-on-primary transition-colors hover:bg-on-primary-container">
-                <span className="material-symbols-outlined text-lg">ios_share</span>
-                Share to Shadow
-              </button>
-              <button className="flex w-full items-center justify-center gap-3 border border-outline-variant/30 py-4 sm:py-5 font-label text-xs uppercase tracking-[0.2em] text-on-surface transition-colors hover:bg-surface-container">
-                <span className="material-symbols-outlined text-lg">content_copy</span>
-                Copy Caption
-              </button>
             </div>
           </div>
         </section>

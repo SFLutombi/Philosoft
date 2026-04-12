@@ -51,3 +51,84 @@ body {
 .shadow-glow {
   box-shadow: 0 0 40px -10px rgba(233, 193, 118, 0.15);
 }
+
+.artifact-unlock {
+  position: relative;
+}
+
+.artifact-unlock__shell {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(233, 193, 118, 0.2);
+  background:
+    radial-gradient(circle at 18% 18%, rgba(233, 193, 118, 0.16), rgba(233, 193, 118, 0) 45%),
+    radial-gradient(circle at 85% 70%, rgba(229, 226, 225, 0.08), rgba(229, 226, 225, 0) 48%),
+    linear-gradient(165deg, rgba(25, 24, 23, 0.98), rgba(18, 18, 18, 0.97));
+}
+
+.artifact-unlock__shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.28;
+  background-image:
+    linear-gradient(transparent 92%, rgba(233, 193, 118, 0.2) 93%, transparent 94%),
+    linear-gradient(90deg, transparent 92%, rgba(233, 193, 118, 0.16) 93%, transparent 94%);
+  background-size: 22px 22px;
+}
+
+.artifact-unlock__card {
+  position: relative;
+  border: 1px solid rgba(233, 193, 118, 0.18);
+  background: rgba(15, 15, 15, 0.96);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.38);
+}
+
+.artifact-unlock__frame {
+  animation: artifactFadeIn 650ms ease-out both;
+}
+
+.artifact-unlock__beam {
+  background: linear-gradient(112deg, transparent 26%, rgba(233, 193, 118, 0.34) 48%, transparent 70%);
+  transform: translateX(-130%);
+  animation: artifactSweep 1250ms ease-out 220ms both;
+}
+
+.artifact-unlock__sigil {
+  animation: artifactPulse 2200ms ease-in-out infinite;
+}
+
+@keyframes artifactFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+    filter: saturate(0.72);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: saturate(1);
+  }
+}
+
+@keyframes artifactSweep {
+  0% {
+    transform: translateX(-140%);
+  }
+  100% {
+    transform: translateX(145%);
+  }
+}
+
+@keyframes artifactPulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0 rgba(233, 193, 118, 0.05));
+    opacity: 0.8;
+  }
+  50% {
+    filter: drop-shadow(0 0 16px rgba(233, 193, 118, 0.45));
+    opacity: 1;
+  }
+}

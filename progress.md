@@ -3,6 +3,10 @@
 Last Updated: 2026-04-10
 
 ## Completed
+- [2026-04-13 00:27:35] Added archetype-specific local card image mapping on results and created a tarot-style branded AI prompt pack with exact filenames, sizing, and negative prompts in public/cards/PROMPTS.md.
+- [2026-04-13 00:13:28] Moved results share card to the top as a mobile-first "artifact unlock" hero and added branded reveal animations with share/copy CTA actions.
+- [2026-04-12 23:46:45] Fixed lingering quiz checkmark by removing hover-based tick visibility so only the selected answer shows `check_circle`.
+- [2026-04-12 23:34:19] Fixed duplicate shadow-question statements by enforcing unique philosopher finalists per axis using axis-score leaderboard fallback.
 - [2026-04-12 22:42:29] Refined archetype names and tone to lean more inward, sharp, civic, and rebellious while keeping answer-driven scoring intact.
 - [2026-04-12 22:39:14] Tuned the archetype engine so each quiz answer contributes question-specific style and pillar scores instead of relying on philosopher-linked weighting.
 - [2026-04-12 22:12:22] Replaced philosopher-based archetype matching with answer-driven style scoring and wired results generation to stored question responses.
