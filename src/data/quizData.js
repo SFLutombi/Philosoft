@@ -354,14 +354,70 @@ export const PILLARS = [
 ];
 
 const STYLE_DEFINITIONS = {
-  inquiry: { archetypeName: "The Inner Examiner", feel: "inward, precise, and truth-seeking" },
-  discipline: { archetypeName: "The Sharp Steward", feel: "controlled, exacting, and dependable" },
-  self_authorship: { archetypeName: "The Unbound Maker", feel: "rebellious, self-directed, and transformative" },
-  existential_courage: { archetypeName: "The Clear Rebel", feel: "inward, brave, and defiant under pressure" },
-  civic_responsibility: { archetypeName: "The Civic Builder", feel: "public-minded, responsible, and steady" },
-  principle_logic: { archetypeName: "The Principle Blade", feel: "sharp, coherent, and duty-bound" },
-  freedom_commitment: { archetypeName: "The Committed Self", feel: "authentic, inward, and self-owned" },
-  pragmatic_adaptation: { archetypeName: "The Practical Navigator", feel: "adaptable, grounded, and execution-focused" }
+  inquiry: {
+    archetypeName: "The Inner Examiner",
+    feel: "inward, precise, and truth-seeking",
+    summaryLead: "You spot the hidden assumption before it turns into a decision.",
+    summaryGift: "That makes you sharp at reading your own motives and asking the question nobody else has named.",
+    summaryDaily: "In daily life, it shows up when you slow a rushed choice, rethink a conversation, or choose the clearer truth over the easier one.",
+    summaryTension: "Your edge can narrow into over-checking if you wait for perfect certainty before you move."
+  },
+  discipline: {
+    archetypeName: "The Sharp Steward",
+    feel: "controlled, exacting, and dependable",
+    summaryLead: "You bring order fast when life starts to fray.",
+    summaryGift: "That gives you a steady hand with plans, routines, and the small systems that keep bigger things from slipping.",
+    summaryDaily: "In daily life, it shows up when you keep your word, organize the mess before it spreads, or catch the weak point in a process early.",
+    summaryTension: "Your edge can harden into rigidity if you treat every useful change like a threat."
+  },
+  self_authorship: {
+    archetypeName: "The Unbound Maker",
+    feel: "rebellious, self-directed, and transformative",
+    summaryLead: "You do not just accept the script in front of you.",
+    summaryGift: "You are more likely to reshape it, remix it, or build something that feels more yours.",
+    summaryDaily: "In daily life, it shows up when you redesign a routine, change your mind without guilt, or turn a constraint into a new route forward.",
+    summaryTension: "Your edge can scatter if you keep reaching for the next possibility before you have finished the last one."
+  },
+  existential_courage: {
+    archetypeName: "The Clear Rebel",
+    feel: "inward, brave, and defiant under pressure",
+    summaryLead: "You keep your footing when the ground feels uncertain.",
+    summaryGift: "That gives you a quiet kind of courage when you have to move without guarantees.",
+    summaryDaily: "In daily life, it shows up when you keep going after disappointment, say the hard thing cleanly, or choose dignity over panic.",
+    summaryTension: "Your edge can become isolation if you insist on carrying the pressure alone."
+  },
+  civic_responsibility: {
+    archetypeName: "The Civic Builder",
+    feel: "public-minded, responsible, and steady",
+    summaryLead: "You naturally think beyond yourself.",
+    summaryGift: "That makes you attentive to consequences, shared spaces, and the people affected by your choices.",
+    summaryDaily: "In daily life, it shows up when you think about fairness, coordinate people well, or step into responsibility before anyone asks.",
+    summaryTension: "Your edge can become over-responsibility if you keep absorbing what should be shared."
+  },
+  principle_logic: {
+    archetypeName: "The Principle Blade",
+    feel: "sharp, coherent, and duty-bound",
+    summaryLead: "You cut through fog by asking what is right, not just what is convenient.",
+    summaryGift: "That gives you a strong moral line and little patience for excuses when something should be done properly.",
+    summaryDaily: "In daily life, it shows up when you check whether a choice can hold up under pressure, or when you refuse to trade integrity for speed.",
+    summaryTension: "Your edge can become severe if you let principle outrun the human situation in front of you."
+  },
+  freedom_commitment: {
+    archetypeName: "The Committed Self",
+    feel: "authentic, inward, and self-owned",
+    summaryLead: "You want your life to feel chosen, not inherited.",
+    summaryGift: "That makes you serious about commitment, because you do not want to live as a version of yourself that does not fit.",
+    summaryDaily: "In daily life, it shows up when you protect your values, name what you actually want, or stay loyal to a decision you made with care.",
+    summaryTension: "Your edge can turn inward too sharply if you confuse self-possession with having to prove yourself all the time."
+  },
+  pragmatic_adaptation: {
+    archetypeName: "The Practical Navigator",
+    feel: "adaptable, grounded, and execution-focused",
+    summaryLead: "You are strongest when the map changes and you still have to move.",
+    summaryGift: "That gives you a calm, useful way of making decisions that work in the real world.",
+    summaryDaily: "In daily life, it shows up when you improvise without panicking, choose the workable option, or adjust course before a small problem becomes a bigger one.",
+    summaryTension: "Your edge can get too short-term if you only optimize for the next step and forget the destination."
+  }
 };
 
 const QUESTION_SCORING_RULES = {
@@ -701,24 +757,15 @@ function buildArchetypeName(topPillarId, secondPillarId, seedHash) {
   return `The ${adjective} ${noun}`;
 }
 
-function buildSummary(styleFeel, topPillarLabel, secondPillarLabel, weakestPillarLabel, seedHash) {
-  const openings = [
-    `Your thinking pattern feels ${styleFeel}, with ${topPillarLabel.toLowerCase()} leading the way.`,
-    `You are most yourself when ${topPillarLabel.toLowerCase()} sets the direction of your choices.`,
-    `Your mind tends to center around ${topPillarLabel.toLowerCase()}, and it shapes your decisions early.`
-  ];
-  const bridges = [
-    `${secondPillarLabel} gives the profile its second pulse and keeps it alive in action.`,
-    `${secondPillarLabel} keeps this profile from staying abstract for too long.`,
-    `${secondPillarLabel} helps you turn interpretation into movement.`
-  ];
-  const tensions = [
-    `Your pressure point appears around ${weakestPillarLabel.toLowerCase()}, especially under stress.`,
-    `Most misreads come from ${weakestPillarLabel.toLowerCase()} when the stakes get personal.`,
-    `Your next growth step is strengthening ${weakestPillarLabel.toLowerCase()} without softening your edge.`
-  ];
+function buildSummary(styleId) {
+  const styleCopy = STYLE_DEFINITIONS[styleId] || STYLE_DEFINITIONS.inquiry;
+  const stripTerminalPunctuation = (text) => String(text || "").trim().replace(/[.!?]+$/, "");
+  const lead = stripTerminalPunctuation(styleCopy.summaryLead);
+  const gift = stripTerminalPunctuation(styleCopy.summaryGift);
+  const daily = stripTerminalPunctuation(styleCopy.summaryDaily);
+  const tension = stripTerminalPunctuation(styleCopy.summaryTension).replace(/^your\s+/i, "your ");
 
-  return `${openings[seedHash % openings.length]} ${bridges[Math.floor(seedHash / 5) % bridges.length]} ${tensions[Math.floor(seedHash / 7) % tensions.length]}`;
+  return `${lead}. ${gift} ${daily}. However, ${tension}.`;
 }
 
 function buildDomainPreview(domainId, topPillars, seedHash) {
@@ -771,7 +818,7 @@ export function computeArchetypeProfile({ answersByQuestionId = {}, flow = [], w
     id: `archetype-v2-${primaryStyle}-${seedHash % 997}`,
     name,
     cardTitle: name.toUpperCase(),
-    summary: buildSummary(styleDef.feel, topPillar.label, secondPillar.label, weakestPillar.label, seedHash),
+    summary: buildSummary(primaryStyle),
     strengths: topThree.map((pillar) => PILLAR_COPY[pillar.id].strength),
     weaknesses: weakestTwo.map((pillar) => PILLAR_COPY[pillar.id].weakness),
     pillars,
