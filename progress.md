@@ -3,6 +3,7 @@
 Last Updated: 2026-04-10
 
 ## Completed
+- [2026-04-13 02:42:29] Updated results sharing to attempt image-file sharing first (for better app target matching on mobile, including TikTok where supported) and added a dedicated Download CTA for the archetype card image.
 - [2026-04-13 02:38:20] Implemented placeholder premium scaffolding on results with Personal Growth first, then Career and Relationships, including influential trait teasers while keeping ontological map and explanation free.
 - [2026-04-13 02:19:18] Remapped pillar scores so the low end starts at average territory instead of failure, while strong profiles still climb into the 90s.
 - [2026-04-13 02:09:37] Removed the copy caption CTA from the results card and wired the remaining Share button to the native share sheet with a TikTok-friendly fallback caption.
