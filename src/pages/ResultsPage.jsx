@@ -154,66 +154,80 @@ export default function ResultsPage() {
       const blob = await response.blob();
       const img = new Image();
       img.onload = () => {
-        // Create canvas at 1080x1920 (9:16 aspect ratio)
+        // Create canvas with black margins around the card
+        const CARD_WIDTH = 1080;
+        const CARD_HEIGHT = 1920;
+        const MARGIN = 40; // Black margin around the entire card
+        const CANVAS_WIDTH = CARD_WIDTH + MARGIN * 2;
+        const CANVAS_HEIGHT = CARD_HEIGHT + MARGIN * 2;
+        
         const canvas = document.createElement("canvas");
-        const TARGET_WIDTH = 1080;
-        const TARGET_HEIGHT = 1920;
-        canvas.width = TARGET_WIDTH;
-        canvas.height = TARGET_HEIGHT;
+        canvas.width = CANVAS_WIDTH;
+        canvas.height = CANVAS_HEIGHT;
         const ctx = canvas.getContext("2d");
 
-        // Draw the background image
-        ctx.drawImage(img, 0, 0, TARGET_WIDTH, TARGET_HEIGHT);
+        // Fill entire canvas with black background
+        ctx.fillStyle = "#0a0a0a";
+        ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+        // Draw the card image in the center (with margins)
+        ctx.drawImage(img, MARGIN, MARGIN, CARD_WIDTH, CARD_HEIGHT);
+
+        // Draw gold border around the card
+        ctx.strokeStyle = "rgba(233, 193, 118, 0.2)";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(MARGIN, MARGIN, CARD_WIDTH, CARD_HEIGHT);
 
         // Draw subtle gradient overlay for text legibility (very transparent)
-        const gradientOverlay = ctx.createLinearGradient(0, TARGET_HEIGHT * 0.65, 0, TARGET_HEIGHT);
+        const gradientOverlay = ctx.createLinearGradient(MARGIN, MARGIN + CARD_HEIGHT * 0.65, MARGIN, MARGIN + CARD_HEIGHT);
         gradientOverlay.addColorStop(0, "rgba(10, 10, 10, 0.3)");
         gradientOverlay.addColorStop(0.5, "rgba(10, 10, 10, 0.15)");
         gradientOverlay.addColorStop(1, "rgba(10, 10, 10, 0)");
         ctx.fillStyle = gradientOverlay;
-        ctx.fillRect(0, TARGET_HEIGHT * 0.55, TARGET_WIDTH, TARGET_HEIGHT * 0.45);
+        ctx.fillRect(MARGIN, MARGIN + CARD_HEIGHT * 0.55, CARD_WIDTH, CARD_HEIGHT * 0.45);
 
         // Set up text rendering - Gold color (#e9c176)
         ctx.textAlign = "center";
+        const textCenterX = MARGIN + CARD_WIDTH / 2;
 
         // Draw "ARCHETYPE" label (small, all caps, letter-spaced)
         ctx.fillStyle = "rgba(233, 193, 118, 0.9)";
         ctx.font = "bold 28px sans-serif";
         ctx.letterSpacing = "4px";
-        ctx.fillText("ARCHETYPE", TARGET_WIDTH / 2, TARGET_HEIGHT - 340);
+        ctx.fillText("ARCHETYPE", textCenterX, MARGIN + CARD_HEIGHT - 340);
 
         // Draw archetype name (large, italic)
         ctx.fillStyle = "rgba(229, 226, 225, 1)";
         ctx.font = "italic 72px serif";
         ctx.letterSpacing = "0px";
-        ctx.fillText(displayCardTitle, TARGET_WIDTH / 2, TARGET_HEIGHT - 240);
+        ctx.fillText(displayCardTitle, textCenterX, MARGIN + CARD_HEIGHT - 240);
 
         // Draw separator line 1
         ctx.strokeStyle = "rgba(233, 193, 118, 0.5)";
         ctx.lineWidth = 3;
         ctx.beginPath();
-        ctx.moveTo(TARGET_WIDTH / 2 - 40, TARGET_HEIGHT - 200);
-        ctx.lineTo(TARGET_WIDTH / 2 + 40, TARGET_HEIGHT - 200);
+        ctx.moveTo(textCenterX - 40, MARGIN + CARD_HEIGHT - 200);
+        ctx.lineTo(textCenterX + 40, MARGIN + CARD_HEIGHT - 200);
         ctx.stroke();
 
         // Draw hub icon symbol (◈)
         ctx.fillStyle = "rgba(233, 193, 118, 0.8)";
         ctx.font = "68px sans-serif";
-        ctx.fillText("◈", TARGET_WIDTH / 2, TARGET_HEIGHT - 110);
+        ctx.fillText("◈", textCenterX, MARGIN + CARD_HEIGHT - 110);
 
         // Draw separator line 2
         ctx.strokeStyle = "rgba(233, 193, 118, 0.4)";
         ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.moveTo(TARGET_WIDTH / 2 - 24, TARGET_HEIGHT - 60);
-        ctx.lineTo(TARGET_WIDTH / 2 + 24, TARGET_HEIGHT - 60);
+        ctx.moveTo(textCenterX - 24, MARGIN + CARD_HEIGHT - 60);
+        ctx.lineTo(textCenterX + 24, MARGIN + CARD_HEIGHT - 60);
         ctx.stroke();
 
         // Draw "PHILOSIFT" branding (small, letter-spaced)
         ctx.fillStyle = "rgba(233, 193, 118, 0.7)";
         ctx.font = "bold 22px sans-serif";
         ctx.letterSpacing = "3px";
-        ctx.fillText("PHILOSIFT", TARGET_WIDTH / 2, TARGET_HEIGHT - 20);
+        ctx.fillText("PHILOSIFT", textCenterX, MARGIN + CARD_HEIGHT - 20);
 
         // Convert canvas to blob and download
         canvas.toBlob((canvasBlob) => {
