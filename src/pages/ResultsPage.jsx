@@ -165,52 +165,55 @@ export default function ResultsPage() {
         // Draw the background image
         ctx.drawImage(img, 0, 0, TARGET_WIDTH, TARGET_HEIGHT);
 
-        // Draw gradient overlay for text legibility (matching CSS)
-        const gradientOverlay = ctx.createLinearGradient(0, TARGET_HEIGHT * 0.7, 0, TARGET_HEIGHT);
-        gradientOverlay.addColorStop(0, "rgba(10, 10, 10, 1)");
-        gradientOverlay.addColorStop(0.3, "rgba(26, 26, 26, 0.8)");
-        gradientOverlay.addColorStop(1, "rgba(26, 26, 26, 0)");
+        // Draw subtle gradient overlay for text legibility (very transparent)
+        const gradientOverlay = ctx.createLinearGradient(0, TARGET_HEIGHT * 0.65, 0, TARGET_HEIGHT);
+        gradientOverlay.addColorStop(0, "rgba(10, 10, 10, 0.3)");
+        gradientOverlay.addColorStop(0.5, "rgba(10, 10, 10, 0.15)");
+        gradientOverlay.addColorStop(1, "rgba(10, 10, 10, 0)");
         ctx.fillStyle = gradientOverlay;
-        ctx.fillRect(0, TARGET_HEIGHT * 0.6, TARGET_WIDTH, TARGET_HEIGHT * 0.4);
+        ctx.fillRect(0, TARGET_HEIGHT * 0.55, TARGET_WIDTH, TARGET_HEIGHT * 0.45);
 
-        // Set up text rendering
-        ctx.fillStyle = "#e9c176";
+        // Set up text rendering - Gold color (#e9c176)
         ctx.textAlign = "center";
 
-        // Draw "ARCHETYPE" label
-        ctx.font = "bold 14px sans-serif";
-        ctx.letterSpacing = "2px";
-        ctx.fillText("ARCHETYPE", TARGET_WIDTH / 2, TARGET_HEIGHT - 380);
+        // Draw "ARCHETYPE" label (small, all caps, letter-spaced)
+        ctx.fillStyle = "rgba(233, 193, 118, 0.9)";
+        ctx.font = "bold 28px sans-serif";
+        ctx.letterSpacing = "4px";
+        ctx.fillText("ARCHETYPE", TARGET_WIDTH / 2, TARGET_HEIGHT - 340);
 
-        // Draw archetype name (larger, italic effect with font style)
-        ctx.font = "italic 48px serif";
-        ctx.fillText(displayCardTitle, TARGET_WIDTH / 2, TARGET_HEIGHT - 320);
+        // Draw archetype name (large, italic)
+        ctx.fillStyle = "rgba(229, 226, 225, 1)";
+        ctx.font = "italic 72px serif";
+        ctx.letterSpacing = "0px";
+        ctx.fillText(displayCardTitle, TARGET_WIDTH / 2, TARGET_HEIGHT - 240);
 
-        // Draw separator line
+        // Draw separator line 1
         ctx.strokeStyle = "rgba(233, 193, 118, 0.5)";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(TARGET_WIDTH / 2 - 40, TARGET_HEIGHT - 200);
+        ctx.lineTo(TARGET_WIDTH / 2 + 40, TARGET_HEIGHT - 200);
+        ctx.stroke();
+
+        // Draw hub icon symbol (◈)
+        ctx.fillStyle = "rgba(233, 193, 118, 0.8)";
+        ctx.font = "68px sans-serif";
+        ctx.fillText("◈", TARGET_WIDTH / 2, TARGET_HEIGHT - 110);
+
+        // Draw separator line 2
+        ctx.strokeStyle = "rgba(233, 193, 118, 0.4)";
         ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.moveTo(TARGET_WIDTH / 2 - 30, TARGET_HEIGHT - 280);
-        ctx.lineTo(TARGET_WIDTH / 2 + 30, TARGET_HEIGHT - 280);
+        ctx.moveTo(TARGET_WIDTH / 2 - 24, TARGET_HEIGHT - 60);
+        ctx.lineTo(TARGET_WIDTH / 2 + 24, TARGET_HEIGHT - 60);
         ctx.stroke();
 
-        // Draw hub icon (using text representation of the icon concept)
-        ctx.font = "28px sans-serif";
-        ctx.fillText("◈", TARGET_WIDTH / 2, TARGET_HEIGHT - 180);
-
-        // Draw separator line
-        ctx.strokeStyle = "rgba(233, 193, 118, 0.4)";
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(TARGET_WIDTH / 2 - 15, TARGET_HEIGHT - 150);
-        ctx.lineTo(TARGET_WIDTH / 2 + 15, TARGET_HEIGHT - 150);
-        ctx.stroke();
-
-        // Draw "PHILOSIFT" branding
-        ctx.font = "11px sans-serif";
-        ctx.letterSpacing = "2px";
+        // Draw "PHILOSIFT" branding (small, letter-spaced)
         ctx.fillStyle = "rgba(233, 193, 118, 0.7)";
-        ctx.fillText("PHILOSIFT", TARGET_WIDTH / 2, TARGET_HEIGHT - 100);
+        ctx.font = "bold 22px sans-serif";
+        ctx.letterSpacing = "3px";
+        ctx.fillText("PHILOSIFT", TARGET_WIDTH / 2, TARGET_HEIGHT - 20);
 
         // Convert canvas to blob and download
         canvas.toBlob((canvasBlob) => {
