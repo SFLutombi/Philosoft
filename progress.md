@@ -3,6 +3,8 @@
 Last Updated: 2026-04-10
 
 ## Completed
+- [2026-04-13 02:19:18] Remapped pillar scores so the low end starts at average territory instead of failure, while strong profiles still climb into the 90s.
+- [2026-04-13 02:09:37] Removed the copy caption CTA from the results card and wired the remaining Share button to the native share sheet with a TikTok-friendly fallback caption.
 - [2026-04-13 02:00:08] Added hub icon above PHILOSIFT on archetype cards with centered alignment and divider-line spacing for premium tarot-card footer design.
 - [2026-04-13 01:52:31] Fixed archetype card desaturation by removing mix-blend-luminosity and repositioned text to bottom third with semi-transparent dark gradient for optimal legibility and traditional tarot-card placement.
 - [2026-04-13 00:27:35] Added archetype-specific local card image mapping on results and created a tarot-style branded AI prompt pack with exact filenames, sizing, and negative prompts in public/cards/PROMPTS.md.

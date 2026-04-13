@@ -35,7 +35,9 @@ export default function ResultsPage() {
 
   const resolvedProfile = useMemo(() => {
     if (!storedResult) return null;
-    if (storedResult?.archetypeProfile?.pillars) return storedResult.archetypeProfile;
+    const storedProfile = storedResult?.archetypeProfile;
+    const hasPlaceholderDomains = storedProfile?.personalGrowthPreview && storedProfile?.careerPreview && storedProfile?.relationshipPreview;
+    if (storedProfile?.pillars && hasPlaceholderDomains) return storedProfile;
 
     return computeArchetypeProfile({
       answersByQuestionId: storedResult?.answersByQuestionId || {},
@@ -51,6 +53,7 @@ export default function ResultsPage() {
   const displayCardTitle = resolvedProfile?.cardTitle || displayName.toUpperCase();
   const cardImageSrc = ARCHETYPE_CARD_IMAGES[resolvedProfile?.primaryStyle] || "/cards/default-archive.webp";
   const cardImageAlt = `${displayName} tarot-inspired thinker card`;
+  const rarityPercent = Math.max(1, Math.min(99, Math.round((resolvedProfile?.styleDistribution?.[resolvedProfile?.primaryStyle] ?? 0.5) * 100)));
   const shareCaption = `${displayName} :: ${displaySummary}`;
   const strengths = resolvedProfile?.strengths?.slice(0, 3) || [
     "You find signal inside complexity and move toward the core issue quickly.",
@@ -74,6 +77,48 @@ export default function ResultsPage() {
     { label: "Results", icon: "insights", href: "/results", active: true },
     { label: "Archive", icon: "grid_view", href: "/dashboard" }
   ];
+
+  const premiumPlaceholderSections = [
+    {
+      id: "personal-growth",
+      title: "Your Personal Growth",
+      icon: "self_improvement",
+      preview: resolvedProfile?.personalGrowthPreview
+    },
+    {
+      id: "career-path",
+      title: "Your Career Path",
+      icon: "work",
+      preview: resolvedProfile?.careerPreview
+    },
+    {
+      id: "relationships",
+      title: "Your Relationships",
+      icon: "diversity_3",
+      preview: resolvedProfile?.relationshipPreview
+    }
+  ];
+
+  async function handleShare() {
+    const shareData = {
+      title: "Philosift Result",
+      text: `${shareCaption} #PhiloSift`,
+      url: window.location.href
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        return;
+      } catch {
+        // Fall through to clipboard fallback below.
+      }
+    }
+
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(`${shareCaption} ${window.location.href}`);
+    }
+  }
 
   return (
     <div className="font-body text-on-surface antialiased min-h-[100svh] bg-[#131313]" style={{ backgroundImage: "radial-gradient(#201f1f 0.5px, transparent 0.5px)", backgroundSize: "24px 24px" }}>
@@ -108,8 +153,8 @@ export default function ResultsPage() {
           <div className="artifact-unlock__shell p-4 sm:p-6 md:p-8">
             <div className="mb-5 flex items-start justify-between gap-4 md:mb-6">
               <div>
-                <span className="font-label text-[10px] uppercase tracking-[0.35em] text-primary/90">Share Artifact</span>
-                <h3 className="font-headline mt-2 text-2xl italic tracking-tight text-on-surface sm:text-3xl">Unlock Complete</h3>
+                  <span className="font-label text-[10px] uppercase tracking-[0.35em] text-primary/90">Mental Artefact</span>
+                  <h3 className="font-headline mt-2 text-2xl italic tracking-tight text-on-surface sm:text-3xl">Rarity: {rarityPercent}%</h3>
               </div>
               <span className="material-symbols-outlined artifact-unlock__sigil text-primary text-3xl">diamond</span>
             </div>
@@ -136,17 +181,12 @@ export default function ResultsPage() {
               </div>
             </div>
 
-            <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              <button className="flex w-full items-center justify-center gap-3 bg-primary py-4 font-label text-xs font-bold uppercase tracking-[0.2em] text-on-primary transition-colors hover:bg-on-primary-container">
+            <div className="mt-5 flex justify-center">
+              <button type="button" onClick={handleShare} className="flex w-full items-center justify-center gap-3 bg-primary py-4 font-label text-xs font-bold uppercase tracking-[0.2em] text-on-primary transition-colors hover:bg-on-primary-container sm:max-w-sm">
                 <span className="material-symbols-outlined text-lg">ios_share</span>
-                Share to Story
-              </button>
-              <button className="flex w-full items-center justify-center gap-3 border border-outline-variant/30 py-4 font-label text-xs uppercase tracking-[0.2em] text-on-surface transition-colors hover:bg-surface-container">
-                <span className="material-symbols-outlined text-lg">content_copy</span>
-                Copy Caption
+                Share
               </button>
             </div>
-            <p className="mt-3 text-center font-label text-[10px] uppercase tracking-[0.14em] text-outline">{shareCaption}</p>
           </div>
         </section>
 
@@ -249,6 +289,55 @@ export default function ResultsPage() {
                 <p className="text-on-surface-variant text-sm leading-relaxed">{weakness}</p>
               </div>
               <span className="material-symbols-outlined text-secondary/40 text-3xl">incomplete_circle</span>
+            </article>
+          ))}
+        </section>
+
+        <section className="mb-16 space-y-8">
+          {premiumPlaceholderSections.map((section) => (
+            <article key={section.id} className="border border-outline-variant/20 bg-surface-container-low/80 p-5 sm:p-6 md:p-8">
+              <div className="mb-5 flex items-start justify-between gap-4">
+                <div>
+                  <p className="font-label text-[10px] uppercase tracking-[0.3em] text-primary">Premium Lens</p>
+                  <h3 className="mt-2 font-headline text-2xl italic text-on-surface sm:text-3xl">{section.title}</h3>
+                </div>
+                <span className="material-symbols-outlined text-primary/80">{section.icon}</span>
+              </div>
+
+              <p className="max-w-3xl text-sm leading-relaxed text-on-surface-variant sm:text-base">
+                {section.preview?.intro || "Placeholder: full section analysis will appear here."}
+              </p>
+
+              <div className="mt-5">
+                <p className="font-label mb-3 text-[10px] uppercase tracking-[0.2em] text-primary">Influential Traits</p>
+                <div className="flex flex-wrap gap-2">
+                  {(section.preview?.influentialTraits || []).map((trait) => (
+                    <span key={`${section.id}-${trait}`} className="border border-primary/30 bg-surface-container-lowest/70 px-3 py-2 text-[11px] uppercase tracking-[0.12em] text-on-surface-variant">
+                      {trait}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-6 grid gap-4 md:grid-cols-3">
+                {(section.preview?.lockedCards || []).map((card) => (
+                  <div key={`${section.id}-${card.title}`} className="relative overflow-hidden border border-outline-variant/30 bg-surface-container-high p-4 sm:p-5">
+                    <div className="pointer-events-none absolute inset-0 backdrop-blur-[1.5px]" />
+                    <div className="relative z-10">
+                      <p className="font-label text-[10px] uppercase tracking-[0.2em] text-primary">Locked Insight</p>
+                      <h4 className="mt-2 font-headline text-lg italic text-on-surface">{card.title}</h4>
+                      <p className="mt-3 text-sm leading-relaxed text-on-surface-variant/85">{card.body}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-6 flex justify-center md:justify-start">
+                <button type="button" className="flex items-center gap-3 border border-primary/40 bg-primary/10 px-5 py-3 font-label text-xs uppercase tracking-[0.18em] text-primary transition-colors hover:bg-primary/20">
+                  <span className="material-symbols-outlined text-base">workspace_premium</span>
+                  Unlock Full Results
+                </button>
+              </div>
             </article>
           ))}
         </section>

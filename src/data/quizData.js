@@ -510,6 +510,69 @@ const PILLAR_COPY = {
   }
 };
 
+const DOMAIN_INFLUENTIAL_TRAITS = {
+  personal_growth: {
+    clarity: ["Self-Observation", "Pattern Awareness"],
+    agency: ["Follow-Through", "Self-Direction"],
+    structure: ["Habit Discipline", "Consistency"],
+    imagination: ["Reframing", "Creative Recovery"],
+    depth: ["Emotional Honesty", "Inner Endurance"]
+  },
+  career: {
+    clarity: ["Strategic Judgment", "Decision Hygiene"],
+    agency: ["Initiative", "Execution Drive"],
+    structure: ["Operational Reliability", "Process Thinking"],
+    imagination: ["Innovation", "Concept Building"],
+    depth: ["Meaning Alignment", "Pressure Maturity"]
+  },
+  relationships: {
+    clarity: ["Boundary Clarity", "Direct Communication"],
+    agency: ["Conflict Ownership", "Repair Effort"],
+    structure: ["Relational Stability", "Trust Cadence"],
+    imagination: ["Empathic Imagination", "Playfulness"],
+    depth: ["Emotional Intimacy", "Attachment Awareness"]
+  }
+};
+
+const DOMAIN_PLACEHOLDER_COPY = {
+  personal_growth: {
+    intros: [
+      "Your growth pattern points to a strong inner engine. This section will map how your highest traits can become daily practices without burnout.",
+      "Your profile suggests that growth comes from deliberate friction. This section will translate your top traits into repeatable self-development loops.",
+      "Your next evolution is less about intensity and more about rhythm. This section will decode where discipline, rest, and identity-building should meet."
+    ],
+    lockedCards: [
+      { title: "What Energizes You", body: "Placeholder: six high-leverage growth conditions personalized to your trait profile." },
+      { title: "What Drains You", body: "Placeholder: six recurring energy leaks and how to reduce their impact." },
+      { title: "Growth Protocol", body: "Placeholder: a phased 30-day reflection plan with practical prompts." }
+    ]
+  },
+  career: {
+    intros: [
+      "Your work signature likely rewards roles with strategic ownership and visible impact. This section will map where your profile performs best.",
+      "Your trait blend suggests specific environments where your judgment and drive compound quickly. This section will identify those conditions.",
+      "Your strongest career edge appears in contexts that match your top pillars. This section will turn that edge into role-level direction."
+    ],
+    lockedCards: [
+      { title: "Career Paths You Might Love", body: "Placeholder: ten role paths ranked by fit and long-term satisfaction potential." },
+      { title: "Work Styles That Suit You", body: "Placeholder: six collaboration and workflow modes where you perform best." },
+      { title: "Career Pitfalls", body: "Placeholder: six professional blind spots and mitigation strategies." }
+    ]
+  },
+  relationships: {
+    intros: [
+      "Your relationship pattern balances depth with direction. This section will show where your connection style becomes your strongest advantage.",
+      "Your profile indicates high relational potential when boundaries and honesty stay aligned. This section will unpack that dynamic.",
+      "Your emotional architecture suggests specific attachment strengths and friction points. This section will convert them into practical moves."
+    ],
+    lockedCards: [
+      { title: "Relationship Superpowers", body: "Placeholder: six relational strengths that support trust and long-term stability." },
+      { title: "Relationship Pitfalls", body: "Placeholder: six repeating dynamics that can strain close bonds." },
+      { title: "Repair and Reconnect", body: "Placeholder: tactical scripts for conflict repair and emotional reconnection." }
+    ]
+  }
+};
+
 const NAME_BANK = {
   clarity: {
     adjectives: ["Lucid", "Unclouded", "Silver-Eyed", "Keen"],
@@ -585,8 +648,10 @@ function scalePillarScores(rawScores) {
 
   return Object.fromEntries(
     PILLARS.map((pillar) => {
-      const scaled = 24 + (((rawScores[pillar.id] - min) / spread) * 70);
-      return [pillar.id, Math.round(clamp(scaled, 10, 98))];
+      const normalized = (rawScores[pillar.id] - min) / spread;
+      const eased = Math.pow(clamp(normalized, 0, 1), 0.85);
+      const scaled = 50 + (eased * 48);
+      return [pillar.id, Math.round(clamp(scaled, 50, 98))];
     })
   );
 }
@@ -656,6 +721,19 @@ function buildSummary(styleFeel, topPillarLabel, secondPillarLabel, weakestPilla
   return `${openings[seedHash % openings.length]} ${bridges[Math.floor(seedHash / 5) % bridges.length]} ${tensions[Math.floor(seedHash / 7) % tensions.length]}`;
 }
 
+function buildDomainPreview(domainId, topPillars, seedHash) {
+  const domainTraits = DOMAIN_INFLUENTIAL_TRAITS[domainId] || {};
+  const domainCopy = DOMAIN_PLACEHOLDER_COPY[domainId];
+  const traitPool = topPillars.flatMap((pillarId) => domainTraits[pillarId] || []);
+  const uniqueTraits = [...new Set(traitPool)].slice(0, 4);
+
+  return {
+    intro: domainCopy?.intros?.[seedHash % domainCopy.intros.length] || "Placeholder section",
+    influentialTraits: uniqueTraits,
+    lockedCards: domainCopy?.lockedCards || []
+  };
+}
+
 export function computeArchetypeProfile({ answersByQuestionId = {}, flow = [], winners = [] } = {}) {
   const hasAnswers = Object.keys(answersByQuestionId || {}).length > 0;
   const weightedScores = computeWeightedScoresFromAnswers(answersByQuestionId, flow);
@@ -702,6 +780,9 @@ export function computeArchetypeProfile({ answersByQuestionId = {}, flow = [], w
     primaryStyle,
     styleScores,
     styleDistribution: normalizedStyles,
+    personalGrowthPreview: buildDomainPreview("personal_growth", topThree.map((pillar) => pillar.id), seedHash),
+    careerPreview: buildDomainPreview("career", topThree.map((pillar) => pillar.id), seedHash),
+    relationshipPreview: buildDomainPreview("relationships", topThree.map((pillar) => pillar.id), seedHash),
     totalStyleScore,
     modelVersion: 2
   };
