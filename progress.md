@@ -3,6 +3,7 @@
 Last Updated: 2026-04-10
 
 ## Completed
+- [2026-04-13 02:50:15] Updated download handler to capture card image + text overlay on canvas, so downloaded images include the archetype name, hub icon, and PHILOSIFT branding instead of just the raw background image.
 - [2026-04-13 02:48:46] Fixed mobile share reliability by prioritizing native URL/text share first with resilient fallbacks, and made the Download CTA consistently visible/high-contrast on mobile.
 - [2026-04-13 02:42:29] Updated results sharing to attempt image-file sharing first (for better app target matching on mobile, including TikTok where supported) and added a dedicated Download CTA for the archetype card image.
 - [2026-04-13 02:38:20] Implemented placeholder premium scaffolding on results with Personal Growth first, then Career and Relationships, including influential trait teasers while keeping ontological map and explanation free.

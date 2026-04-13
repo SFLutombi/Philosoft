@@ -147,13 +147,89 @@ export default function ResultsPage() {
     }
   }
 
-  function handleDownloadCard() {
-    const link = document.createElement("a");
-    link.href = cardImageSrc;
-    link.download = `philosift-${resolvedProfile?.primaryStyle || "artefact"}.jpg`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  async function handleDownloadCard() {
+    try {
+      // Fetch the card image
+      const response = await fetch(cardImageSrc);
+      const blob = await response.blob();
+      const img = new Image();
+      img.onload = () => {
+        // Create canvas at 1080x1920 (9:16 aspect ratio)
+        const canvas = document.createElement("canvas");
+        const TARGET_WIDTH = 1080;
+        const TARGET_HEIGHT = 1920;
+        canvas.width = TARGET_WIDTH;
+        canvas.height = TARGET_HEIGHT;
+        const ctx = canvas.getContext("2d");
+
+        // Draw the background image
+        ctx.drawImage(img, 0, 0, TARGET_WIDTH, TARGET_HEIGHT);
+
+        // Draw gradient overlay for text legibility (matching CSS)
+        const gradientOverlay = ctx.createLinearGradient(0, TARGET_HEIGHT * 0.7, 0, TARGET_HEIGHT);
+        gradientOverlay.addColorStop(0, "rgba(10, 10, 10, 1)");
+        gradientOverlay.addColorStop(0.3, "rgba(26, 26, 26, 0.8)");
+        gradientOverlay.addColorStop(1, "rgba(26, 26, 26, 0)");
+        ctx.fillStyle = gradientOverlay;
+        ctx.fillRect(0, TARGET_HEIGHT * 0.6, TARGET_WIDTH, TARGET_HEIGHT * 0.4);
+
+        // Set up text rendering
+        ctx.fillStyle = "#e9c176";
+        ctx.textAlign = "center";
+
+        // Draw "ARCHETYPE" label
+        ctx.font = "bold 14px sans-serif";
+        ctx.letterSpacing = "2px";
+        ctx.fillText("ARCHETYPE", TARGET_WIDTH / 2, TARGET_HEIGHT - 380);
+
+        // Draw archetype name (larger, italic effect with font style)
+        ctx.font = "italic 48px serif";
+        ctx.fillText(displayCardTitle, TARGET_WIDTH / 2, TARGET_HEIGHT - 320);
+
+        // Draw separator line
+        ctx.strokeStyle = "rgba(233, 193, 118, 0.5)";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(TARGET_WIDTH / 2 - 30, TARGET_HEIGHT - 280);
+        ctx.lineTo(TARGET_WIDTH / 2 + 30, TARGET_HEIGHT - 280);
+        ctx.stroke();
+
+        // Draw hub icon (using text representation of the icon concept)
+        ctx.font = "28px sans-serif";
+        ctx.fillText("◈", TARGET_WIDTH / 2, TARGET_HEIGHT - 180);
+
+        // Draw separator line
+        ctx.strokeStyle = "rgba(233, 193, 118, 0.4)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(TARGET_WIDTH / 2 - 15, TARGET_HEIGHT - 150);
+        ctx.lineTo(TARGET_WIDTH / 2 + 15, TARGET_HEIGHT - 150);
+        ctx.stroke();
+
+        // Draw "PHILOSIFT" branding
+        ctx.font = "11px sans-serif";
+        ctx.letterSpacing = "2px";
+        ctx.fillStyle = "rgba(233, 193, 118, 0.7)";
+        ctx.fillText("PHILOSIFT", TARGET_WIDTH / 2, TARGET_HEIGHT - 100);
+
+        // Convert canvas to blob and download
+        canvas.toBlob((canvasBlob) => {
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(canvasBlob);
+          link.download = `philosift-${resolvedProfile?.primaryStyle || "artefact"}.jpg`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(link.href);
+        }, "image/jpeg", 0.95);
+      };
+      img.onerror = () => {
+        console.error("Failed to load card image for download");
+      };
+      img.src = URL.createObjectURL(blob);
+    } catch (error) {
+      console.error("Error downloading card:", error);
+    }
   }
 
   return (
