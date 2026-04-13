@@ -100,33 +100,46 @@ export default function ResultsPage() {
   ];
 
   async function handleShare() {
-    if (navigator.share) {
-      try {
+    const baseShareData = {
+      title: "Philosift Result",
+      text: `${shareCaption} #PhiloSift`,
+      url: window.location.href
+    };
+
+    if (!navigator.share) {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(`${shareCaption} ${window.location.href}`);
+      }
+      return;
+    }
+
+    try {
+      // Most reliable path on mobile browsers.
+      await navigator.share(baseShareData);
+      return;
+    } catch (error) {
+      if (error?.name === "AbortError") return;
+    }
+
+    try {
+      // Optional richer path for apps that prefer receiving an image file.
+      if (navigator.canShare && typeof File !== "undefined") {
         const response = await fetch(cardImageSrc);
         const blob = await response.blob();
         const extension = blob.type === "image/png" ? "png" : "jpg";
         const file = new File([blob], `philosift-${resolvedProfile?.primaryStyle || "artefact"}.${extension}`, { type: blob.type || "image/jpeg" });
 
-        const fileShareData = {
-          title: "Philosift Result",
-          text: `${shareCaption} #PhiloSift`,
-          files: [file]
-        };
-
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          await navigator.share(fileShareData);
+        if (navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            title: "Philosift Result",
+            text: `${shareCaption} #PhiloSift`,
+            files: [file]
+          });
           return;
         }
-
-        await navigator.share({
-          title: "Philosift Result",
-          text: `${shareCaption} #PhiloSift`,
-          url: window.location.href
-        });
-        return;
-      } catch {
-        // Fall through to clipboard fallback below.
       }
+    } catch {
+      // Fall through to clipboard fallback below.
     }
 
     if (navigator.clipboard?.writeText) {
@@ -204,12 +217,12 @@ export default function ResultsPage() {
               </div>
             </div>
 
-            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+            <div className="mt-5 grid grid-cols-2 gap-3">
               <button type="button" onClick={handleShare} className="flex w-full items-center justify-center gap-3 bg-primary py-4 font-label text-xs font-bold uppercase tracking-[0.2em] text-on-primary transition-colors hover:bg-on-primary-container">
                 <span className="material-symbols-outlined text-lg">ios_share</span>
                 Share
               </button>
-              <button type="button" onClick={handleDownloadCard} className="flex w-full items-center justify-center gap-3 border border-outline-variant/30 py-4 font-label text-xs uppercase tracking-[0.2em] text-on-surface transition-colors hover:bg-surface-container">
+              <button type="button" onClick={handleDownloadCard} className="flex w-full items-center justify-center gap-3 border border-primary/50 bg-surface-container-lowest py-4 font-label text-xs uppercase tracking-[0.2em] text-primary transition-colors hover:bg-surface-container">
                 <span className="material-symbols-outlined text-lg">download</span>
                 Download
               </button>
