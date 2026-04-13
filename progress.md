@@ -3,6 +3,7 @@
 Last Updated: 2026-04-10
 
 ## Completed
+- [2026-04-13 02:38:20] Implemented placeholder premium scaffolding on results with Personal Growth first, then Career and Relationships, including influential trait teasers while keeping ontological map and explanation free.
 - [2026-04-13 02:19:18] Remapped pillar scores so the low end starts at average territory instead of failure, while strong profiles still climb into the 90s.
 - [2026-04-13 02:09:37] Removed the copy caption CTA from the results card and wired the remaining Share button to the native share sheet with a TikTok-friendly fallback caption.
 - [2026-04-13 02:00:08] Added hub icon above PHILOSIFT on archetype cards with centered alignment and divider-line spacing for premium tarot-card footer design.
@@ -64,6 +65,7 @@ Last Updated: 2026-04-10
 - [2026-04-10 02:35:00] Added section headers to quiz questions and verified all 20 questions are correctly aligned with their philosophical axes. Updated axis labels to preferred wording (Truth & Knowledge, Ethics & Power, Drive).
 
 ## Ideas / Backlog
+- Replace results-page premium placeholders with real gated content after integrating Clerk auth, Supabase storage, and LemonSqueezy subscription entitlements.
 - Build onboarding quiz with philosophical prompts that map users to a current philosophy archetype and a target rare-self archetype.
 - Generate quiz results that reference historical thinker metaphors (optional toggle).
 - Design shadow-self pet model with growth, decay, and visual stage states.
