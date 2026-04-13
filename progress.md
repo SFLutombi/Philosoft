@@ -3,6 +3,8 @@
 Last Updated: 2026-04-10
 
 ## Completed
+- [2026-04-13 02:00:08] Added hub icon above PHILOSIFT on archetype cards with centered alignment and divider-line spacing for premium tarot-card footer design.
+- [2026-04-13 01:52:31] Fixed archetype card desaturation by removing mix-blend-luminosity and repositioned text to bottom third with semi-transparent dark gradient for optimal legibility and traditional tarot-card placement.
 - [2026-04-13 00:27:35] Added archetype-specific local card image mapping on results and created a tarot-style branded AI prompt pack with exact filenames, sizing, and negative prompts in public/cards/PROMPTS.md.
 - [2026-04-13 00:13:28] Moved results share card to the top as a mobile-first "artifact unlock" hero and added branded reveal animations with share/copy CTA actions.
 - [2026-04-12 23:46:45] Fixed lingering quiz checkmark by removing hover-based tick visibility so only the selected answer shows `check_circle`.

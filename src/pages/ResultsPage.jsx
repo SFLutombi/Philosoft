@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import { buildFlow, computeArchetypeProfile, PILLARS, RESULTS_STORAGE_KEY } from "../data/quizData";
 
 const ARCHETYPE_CARD_IMAGES = {
-  inquiry: "/cards/inner-examiner.webp",
-  discipline: "/cards/sharp-steward.webp",
-  self_authorship: "/cards/unbound-maker.webp",
-  existential_courage: "/cards/clear-rebel.webp",
-  civic_responsibility: "/cards/civic-builder.webp",
-  principle_logic: "/cards/principle-blade.webp",
-  freedom_commitment: "/cards/committed-self.webp",
-  pragmatic_adaptation: "/cards/practical-navigator.webp"
+  inquiry: "/cards/inner-examiner.jpg",
+  discipline: "/cards/sharp-steward.jpg",
+  self_authorship: "/cards/unbound-maker.jpg",
+  existential_courage: "/cards/clear-rebel.jpg",
+  civic_responsibility: "/cards/civic-builder.jpg",
+  principle_logic: "/cards/principle-blade.jpg",
+  freedom_commitment: "/cards/committed-self.jpg",
+  pragmatic_adaptation: "/cards/practical-navigator.jpg"
 };
 
 function toPolygonPoints(pillarEntries) {
@@ -83,7 +83,7 @@ export default function ResultsPage() {
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3">
             <span className="material-symbols-outlined text-[#e9c176]">hub</span>
-            <h1 className="font-headline text-lg sm:text-2xl font-light tracking-[-0.02em] text-[#e9c176] italic">PHILO SIFT</h1>
+            <h1 className="font-headline text-lg sm:text-2xl font-light tracking-[-0.02em] text-[#e9c176] italic">PHILOSIFT</h1>
           </div>
 
           <nav className="hidden md:flex items-center gap-8">
@@ -117,16 +117,21 @@ export default function ResultsPage() {
             <div className="artifact-unlock__card mx-auto max-w-[20rem] p-1 sm:max-w-[22rem]">
               <div className="artifact-unlock__frame relative aspect-[9/16] overflow-hidden border border-primary/20 bg-surface-container-lowest">
                 <div className="artifact-unlock__beam absolute inset-0" />
-                <img className="absolute inset-0 h-full w-full object-cover opacity-42 mix-blend-luminosity" src={cardImageSrc} alt={cardImageAlt} />
-                <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-                  <span className="material-symbols-outlined mb-5 text-5xl text-primary occult-glow sm:text-6xl" style={{ fontVariationSettings: "'FILL' 1" }}>architecture</span>
-                  <h4 className="font-headline mb-2 text-[0.7rem] tracking-[0.5em] text-primary uppercase">Archetype</h4>
-                  <h2 className="font-headline mb-5 text-2xl italic leading-none tracking-tighter text-on-surface sm:text-3xl">{displayCardTitle}</h2>
-                  <div className="mb-5 h-px w-8 bg-primary/40" />
-                  <p className="font-body text-[10px] uppercase tracking-widest leading-relaxed text-on-surface/70">Unlocked from your answer pattern.<br />Shadow Axis Confirmed.</p>
+                <img className="absolute inset-0 h-full w-full object-cover" src={cardImageSrc} alt={cardImageAlt} />
+                
+                {/* Gradient overlay for text legibility */}
+                <div className="artifact-unlock__text-gradient absolute bottom-0 left-0 right-0 h-56 bg-gradient-to-t from-[#0a0a0a] via-[#1a1a1a]/80 to-transparent z-20" />
+                
+                <div className="relative z-30 flex h-full flex-col items-center justify-end px-6 pb-12 text-center">
+                  <h4 className="font-headline mb-2 text-[0.65rem] tracking-[0.5em] text-primary/90 uppercase">Archetype</h4>
+                  <h2 className="font-headline mb-4 text-xl italic leading-none tracking-tighter text-on-surface sm:text-2xl">{displayCardTitle}</h2>
+                  <div className="mb-4 h-px w-6 bg-primary/50" />
                 </div>
-                <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
-                  <span className="font-headline text-sm tracking-[0.2em] text-primary/60">PHILO SIFT</span>
+                
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center justify-center py-4">
+                  <span className="material-symbols-outlined text-primary/80 text-2xl mb-2">hub</span>
+                  <div className="h-px w-5 bg-primary/40 mb-2" />
+                  <span className="font-headline text-xs tracking-[0.2em] text-primary/70">PHILOSIFT</span>
                 </div>
               </div>
             </div>

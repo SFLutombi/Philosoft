@@ -89,6 +89,10 @@ body {
   animation: artifactFadeIn 650ms ease-out both;
 }
 
+.artifact-unlock__text-gradient {
+  animation: gradientFadeIn 800ms ease-out 200ms both;
+}
+
 .artifact-unlock__beam {
   background: linear-gradient(112deg, transparent 26%, rgba(233, 193, 118, 0.34) 48%, transparent 70%);
   transform: translateX(-130%);
@@ -109,6 +113,15 @@ body {
     opacity: 1;
     transform: translateY(0) scale(1);
     filter: saturate(1);
+  }
+}
+
+@keyframes gradientFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
