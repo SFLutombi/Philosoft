@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { buildFlow, computeArchetypeProfile, PILLARS, RESULTS_STORAGE_KEY } from "../data/quizData";
 
@@ -23,7 +23,45 @@ function toPolygonPoints(pillarEntries) {
   }).join(" ");
 }
 
+const PILLAR_TOOLTIP_COPY = {
+  clarity: {
+    high: "Your mind stays sharp under pressure. Even when things get chaotic, you can separate noise from what actually matters.",
+    medium: "You usually think clearly, especially once you get a moment to pause. Slowing down before key decisions helps this trait shine.",
+    low: "Your clarity is still building. In high-pressure moments, simpler next-step thinking can help you cut through mental fog faster."
+  },
+  agency: {
+    high: "You move from insight to action quickly. Once you decide, you trust yourself enough to follow through.",
+    medium: "You act with intention when stakes are clear. A tighter commitment window can make your follow-through more consistent.",
+    low: "You may overthink before acting. Choosing one small move early can build momentum and confidence in your own direction."
+  },
+  structure: {
+    high: "You naturally organize complexity. Plans, systems, and routines help you stay steady when life gets noisy.",
+    medium: "You can build structure when needed. Turning key habits into repeatable rituals will reduce decision fatigue.",
+    low: "Your thinking may feel scattered under load. A simple checklist or decision framework can quickly restore order."
+  },
+  imagination: {
+    high: "You see angles other people miss. New patterns and possibilities come naturally, especially in uncertain situations.",
+    medium: "You balance practical thinking with creative range. Giving yourself deliberate brainstorming time can unlock stronger ideas.",
+    low: "You may default to familiar routes. Exploring one alternative perspective before deciding can expand your options."
+  },
+  depth: {
+    high: "You read the emotional and moral weight beneath the surface. That depth helps you make choices with real integrity.",
+    medium: "You notice deeper layers when you slow down. Reflective checkpoints can help you convert insight into clearer judgment.",
+    low: "You may focus on speed over reflection. Brief pauses to ask what truly matters can add depth without slowing momentum too much."
+  }
+};
+
+function getPillarTooltip(pillarId, score) {
+  const pillarCopy = PILLAR_TOOLTIP_COPY[pillarId];
+  if (!pillarCopy) return "This pillar shapes how you reason under pressure.";
+  if (score >= 70) return pillarCopy.high;
+  if (score >= 45) return pillarCopy.medium;
+  return pillarCopy.low;
+}
+
 export default function ResultsPage() {
+  const [activePillarTooltip, setActivePillarTooltip] = useState(null);
+
   const storedResult = useMemo(() => {
     try {
       const raw = localStorage.getItem(RESULTS_STORAGE_KEY);
@@ -55,6 +93,7 @@ export default function ResultsPage() {
   const cardImageAlt = `${displayName} tarot-inspired thinker card`;
   const rarityPercent = Math.max(1, Math.min(99, Math.round((resolvedProfile?.styleDistribution?.[resolvedProfile?.primaryStyle] ?? 0.5) * 100)));
   const shareCaption = `${displayName} :: ${displaySummary}`;
+  const reasoningTemperament = resolvedProfile?.reasoningTemperament || "Your stable thinking pattern is the way you make sense of uncertainty, choose a direction, and stay coherent when pressure rises. Clarity keeps you honest about what matters, structure keeps your thinking organized, agency turns insight into action, imagination widens the frame, and depth keeps the emotional cost in view. In practice, this pattern helps you read situations early and respond with intention instead of impulse. However, when one weaker trait is stretched too thin, it can narrow your reasoning, slow your judgment, and keep part of your potential out of reach.";
   const strengths = resolvedProfile?.strengths?.slice(0, 3) || [
     "You find signal inside complexity and move toward the core issue quickly.",
     "You maintain your center in ambiguity and keep others grounded.",
@@ -339,12 +378,12 @@ export default function ResultsPage() {
 
         <section className="grid gap-6">
           <div className="bg-surface-container-low/95 p-5 sm:p-7 md:p-10 lg:p-12 relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-6 sm:p-8 opacity-10 font-headline text-7xl sm:text-8xl md:text-9xl">V</div>
+            <div className="absolute top-0 right-0 p-6 sm:p-8 opacity-10 font-headline text-7xl sm:text-8xl md:text-9xl">I</div>
             <div className="relative z-10">
               <div className="flex items-start justify-between gap-4 mb-8 sm:mb-10 md:mb-16">
                 <div>
-                  <h3 className="font-headline text-2xl sm:text-3xl italic mb-1">Ontological Map</h3>
-                  <p className="font-label text-[10px] uppercase tracking-widest text-outline">Psychometric Geometry</p>
+                  <h3 className="font-headline text-2xl sm:text-3xl italic mb-1">Reasoning Temperament</h3>
+                  <p className="font-label text-[10px] uppercase tracking-widest text-outline">Your Stable Thinking Pattern</p>
                 </div>
                 <span className="material-symbols-outlined text-primary text-3xl sm:text-4xl occult-glow">hub</span>
               </div>
@@ -368,7 +407,7 @@ export default function ResultsPage() {
                   </svg>
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 font-label text-[9px] tracking-widest text-primary uppercase">{pillarEntries[0]?.label}</div>
                   <div className="absolute top-1/4 -right-7 font-label text-[9px] tracking-widest text-on-surface-variant uppercase">{pillarEntries[1]?.label}</div>
-                  <div className="absolute bottom-4 -right-3 font-label text-[9px] tracking-widest text-on-surface-variant uppercase">{pillarEntries[2]?.label}</div>
+                  <div className="absolute bottom-2 -right-1 translate-x-1 translate-y-1 font-label text-[9px] tracking-widest text-on-surface-variant uppercase sm:bottom-4 sm:-right-3 sm:translate-x-0 sm:translate-y-0">{pillarEntries[2]?.label}</div>
                   <div className="absolute bottom-4 -left-3 font-label text-[9px] tracking-widest text-on-surface-variant uppercase">{pillarEntries[3]?.label}</div>
                   <div className="absolute top-1/4 -left-7 font-label text-[9px] tracking-widest text-on-surface-variant uppercase">{pillarEntries[4]?.label}</div>
                 </div>
@@ -376,30 +415,36 @@ export default function ResultsPage() {
 
               <div className="grid grid-cols-2 gap-4 sm:gap-5 mt-4 sm:mt-6">
                 {pillarEntries.map((pillar, index) => (
-                  <div key={pillar.id} className={`flex flex-col gap-1 ${index % 2 === 1 ? "text-right" : ""}`}>
-                    <span className="text-[10px] font-label uppercase tracking-wider text-outline">{pillar.label}</span>
+                  <div key={pillar.id} className={`relative flex flex-col gap-1 ${index % 2 === 1 ? "text-right" : ""}`}>
+                    <div className={`flex items-center gap-2 ${index % 2 === 1 ? "justify-end" : ""}`}>
+                      <span className="text-[10px] font-label uppercase tracking-wider text-outline">{pillar.label}</span>
+                      <button
+                        type="button"
+                        onClick={() => setActivePillarTooltip((current) => current === pillar.id ? null : pillar.id)}
+                        className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-primary/35 bg-surface-container-lowest/80 text-primary/90 transition-colors hover:border-primary hover:text-primary"
+                        aria-label={`Explain ${pillar.label}`}
+                        aria-expanded={activePillarTooltip === pillar.id}
+                      >
+                        <span className="material-symbols-outlined text-[14px] leading-none">hub</span>
+                      </button>
+                    </div>
                     <span className="font-headline text-xl italic text-on-surface sm:text-2xl">{pillar.score}%</span>
+
+                    {activePillarTooltip === pillar.id && (
+                      <div className={`absolute z-20 top-0 ${index % 2 === 1 ? "right-0" : "left-0"} -translate-y-[108%] w-56 border border-primary/35 bg-[#171616] p-3 shadow-glow`}>
+                        <p className="font-label text-[9px] uppercase tracking-[0.2em] text-primary/90">{pillar.label} Insight</p>
+                        <p className="mt-2 text-xs leading-relaxed text-on-surface-variant">{getPillarTooltip(pillar.id, pillar.score)}</p>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
 
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                <div className="bg-surface-container-lowest/80 p-4">
-                  <p className="font-label text-[10px] uppercase tracking-[0.18em] text-primary mb-3">Three Thinking Strengths</p>
-                  <div className="space-y-2">
-                    {strengths.map((item, idx) => (
-                      <p key={`strength-${idx}`} className="text-sm text-on-surface-variant leading-relaxed">{idx + 1}. {item}</p>
-                    ))}
-                  </div>
-                </div>
-                <div className="bg-surface-container-lowest/80 p-4">
-                  <p className="font-label text-[10px] uppercase tracking-[0.18em] text-primary mb-3">Two Blind Spots</p>
-                  <div className="space-y-2">
-                    {weaknesses.map((item, idx) => (
-                      <p key={`weakness-${idx}`} className="text-sm text-on-surface-variant leading-relaxed">{idx + 1}. {item}</p>
-                    ))}
-                  </div>
-                </div>
+              <div className="mt-6 bg-surface-container-lowest/80 p-4 sm:p-5">
+                <p className="font-label text-[10px] uppercase tracking-[0.18em] text-primary mb-3">Your Reading</p>
+                <p className="text-sm text-on-surface-variant leading-relaxed sm:text-[0.96rem]">
+                  {reasoningTemperament}
+                </p>
               </div>
             </div>
           </div>

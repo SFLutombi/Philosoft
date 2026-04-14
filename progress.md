@@ -1,8 +1,14 @@
 ﻿# PhiloSift Progress Tracker
 
-Last Updated: 2026-04-13
+Last Updated: 2026-04-14
 
 ## Completed
+- [2026-04-14 12:04:40] Adjusted the mobile Reasoning Temperament pentagram label positioning so Structure no longer clips against the chart.
+- [2026-04-14 12:04:40] Added clickable hub-icon tooltips for each Reasoning Temperament pillar with score-aware explanatory copy (high, medium, low bands) on the results screen.
+- [2026-04-14 11:44:10] Refined stable-thinking copy to avoid pillar terminology in narrative text and emphasize how weak traits constrain reasoning quality and full potential.
+- [2026-04-14 11:23:55] Expanded the reasoning temperament narrative to explain clarity, structure, agency, imagination, and depth directly, and strengthened the final weak-trait limitation sentence.
+- [2026-04-13 23:38:13] Expanded the in-card Reasoning Temperament narrative into a fuller concept explanation and shortened the subsection label to avoid repetitive heading language.
+- [2026-04-13 23:15:07] Replaced the in-card strengths/blind-spots block with a personalized Reasoning Temperament narrative generated for all archetypes from style plus pillar distribution.
 - [2026-04-13 20:54:52] Tuned archetype summary punctuation and sentence flow so the closing weakness line lands as a standalone "However," statement with cleaner grammar.
 - [2026-04-13 20:06:17] Simplified the archetype summary copy into two direct sentences with a clearer daily-life hook and sharper weakness edge.
 - [2026-04-13 18:46:29] Rewrote the main archetype summary copy to speak directly to the user with concrete daily-life meaning and a tighter brand voice.

@@ -768,6 +768,33 @@ function buildSummary(styleId) {
   return `${lead}. ${gift} ${daily}. However, ${tension}.`;
 }
 
+function buildReasoningTemperament(styleId, topPillarLabel, secondPillarLabel, weakestPillarLabel) {
+  const styleCopy = STYLE_DEFINITIONS[styleId] || STYLE_DEFINITIONS.inquiry;
+  const stripTerminalPunctuation = (text) => String(text || "").trim().replace(/[.!?]+$/, "");
+
+  const lead = stripTerminalPunctuation(styleCopy.summaryLead);
+  const gift = stripTerminalPunctuation(styleCopy.summaryGift);
+  const daily = stripTerminalPunctuation(styleCopy.summaryDaily).replace(/^In daily life,\s*/i, "");
+  const weaknessConsequences = {
+    clarity: "you start chasing the perfect frame instead of making the call that is already clear enough",
+    agency: "you push your reasoning so hard that it loses nuance and becomes more force than judgment",
+    structure: "you protect order so tightly that useful surprises cannot enter the thinking process",
+    imagination: "you keep reaching for the next possibility and never fully commit to the one that could actually work",
+    depth: "you carry the weight of meaning so deeply that it slows your best judgment and clouds your options"
+  };
+
+  const weaknessImpact = weaknessConsequences[weakestPillarLabel.toLowerCase()] || "it narrows your reasoning and keeps part of your potential out of reach";
+
+  return [
+    "Your stable thinking pattern is the way you make sense of uncertainty, choose a direction, and stay coherent when pressure rises.",
+    `Clarity keeps you honest about what matters, structure keeps your thinking organized, agency turns insight into action, imagination widens the frame, and depth keeps the emotional cost in view.`,
+    `In your case, ${topPillarLabel.toLowerCase()} and ${secondPillarLabel.toLowerCase()} carry the most weight, so your judgment naturally feels ${styleCopy.feel}.`,
+    `${lead} ${gift}.`,
+    `In practice, ${daily}.`,
+    `However, when ${weakestPillarLabel.toLowerCase()} is stretched too thin, ${weaknessImpact}, which can hold your reasoning back and keep you from reaching the fuller version of your potential.`
+  ].join(" ");
+}
+
 function buildDomainPreview(domainId, topPillars, seedHash) {
   const domainTraits = DOMAIN_INFLUENTIAL_TRAITS[domainId] || {};
   const domainCopy = DOMAIN_PLACEHOLDER_COPY[domainId];
@@ -819,6 +846,7 @@ export function computeArchetypeProfile({ answersByQuestionId = {}, flow = [], w
     name,
     cardTitle: name.toUpperCase(),
     summary: buildSummary(primaryStyle),
+    reasoningTemperament: buildReasoningTemperament(primaryStyle, topPillar.label, secondPillar.label, weakestPillar.label),
     strengths: topThree.map((pillar) => PILLAR_COPY[pillar.id].strength),
     weaknesses: weakestTwo.map((pillar) => PILLAR_COPY[pillar.id].weakness),
     pillars,
