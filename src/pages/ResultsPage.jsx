@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { buildFlow, computeArchetypeProfile, PILLARS, RESULTS_STORAGE_KEY } from "../data/quizData";
+import { PHILOSOPHERS, buildFlow, computeArchetypeProfile, computeAxisWinners, PILLARS, RESULTS_STORAGE_KEY } from "../data/quizData";
+import { computeSubarchetype } from "../data/subarchetypes";
 
 const ARCHETYPE_CARD_IMAGES = {
   inquiry: "/cards/inner-examiner.jpg",
@@ -59,6 +60,36 @@ function getPillarTooltip(pillarId, score) {
   return pillarCopy.low;
 }
 
+const AXIS_MATCH_COPY = {
+  meaning: {
+    headline: "This is your meaning axis.",
+    detail: "It shows what you reach for when life stops feeling self-evident and you have to decide what still deserves your commitment."
+  },
+  ethics: {
+    headline: "This is your ethics axis.",
+    detail: "It shows the kind of moral reasoning you trust when consequences, principles, and responsibility all pull at once."
+  },
+  self: {
+    headline: "This is your self axis.",
+    detail: "It shows how you build identity, ownership, and inner coherence when you are trying to become more fully yourself."
+  },
+  action: {
+    headline: "This is your action axis.",
+    detail: "It shows how you move from judgment into behavior when the moment asks for a decision instead of another reflection."
+  }
+};
+
+function getAxisWinnerInterpretation(axisId, philosopher) {
+  const axisCopy = AXIS_MATCH_COPY[axisId] || AXIS_MATCH_COPY.meaning;
+
+  return {
+    headline: axisCopy.headline,
+    detail: axisCopy.detail,
+    meaning: `${philosopher?.title || philosopher?.name || "This thinker"} suggests that your ${axisId} pattern leans toward clear, deliberate judgment rather than reactive drift.`,
+    philosopherLine: philosopher?.summary || "This match reflects a recognizable pattern in how you orient yourself under pressure."
+  };
+}
+
 export default function ResultsPage() {
   const [activePillarTooltip, setActivePillarTooltip] = useState(null);
 
@@ -86,6 +117,19 @@ export default function ResultsPage() {
   }, [storedResult]);
 
   const finalPhilosopher = storedResult?.finalPhilosopher;
+  const axisWinners = useMemo(() => {
+    if (Array.isArray(storedResult?.winners) && storedResult.winners.length) {
+      return storedResult.winners;
+    }
+
+    const fallbackAnswers = storedResult?.answersByQuestionId || {};
+    return computeAxisWinners(fallbackAnswers, buildFlow()).winners;
+  }, [storedResult]);
+  const resolvedSubarchetype = useMemo(() => {
+    if (!storedResult) return null;
+    if (storedResult?.subarchetype?.id) return storedResult.subarchetype;
+    return computeSubarchetype(storedResult?.answersByQuestionId || {});
+  }, [storedResult]);
   const displayName = resolvedProfile?.name || finalPhilosopher?.title || "The Lucid Witness";
   const displaySummary = resolvedProfile?.summary || finalPhilosopher?.summary || "You think with unusual intensity and pattern awareness. Your next step is to pair that gift with steadier execution in uncertain moments.";
   const displayCardTitle = resolvedProfile?.cardTitle || displayName.toUpperCase();
@@ -94,16 +138,6 @@ export default function ResultsPage() {
   const rarityPercent = Math.max(1, Math.min(99, Math.round((resolvedProfile?.styleDistribution?.[resolvedProfile?.primaryStyle] ?? 0.5) * 100)));
   const shareCaption = `${displayName} :: ${displaySummary}`;
   const reasoningTemperament = resolvedProfile?.reasoningTemperament || "Your stable thinking pattern is the way you make sense of uncertainty, choose a direction, and stay coherent when pressure rises. Clarity keeps you honest about what matters, structure keeps your thinking organized, agency turns insight into action, imagination widens the frame, and depth keeps the emotional cost in view. In practice, this pattern helps you read situations early and respond with intention instead of impulse. However, when one weaker trait is stretched too thin, it can narrow your reasoning, slow your judgment, and keep part of your potential out of reach.";
-  const strengths = resolvedProfile?.strengths?.slice(0, 3) || [
-    "You find signal inside complexity and move toward the core issue quickly.",
-    "You maintain your center in ambiguity and keep others grounded.",
-    "You generate language that helps people make sense of hard choices."
-  ];
-  const weaknesses = resolvedProfile?.weaknesses?.slice(0, 2) || [
-    "You can stay in reflection too long when a rough decision is needed now.",
-    "You can absorb tension from others and mistake it for your own burden."
-  ];
-
   const pillarEntries = PILLARS.map((pillar) => ({
     ...pillar,
     score: resolvedProfile?.pillars?.[pillar.id] ?? 50
@@ -450,26 +484,86 @@ export default function ResultsPage() {
           </div>
         </section>
 
-        <section className="mt-10 mb-16 grid gap-4 md:grid-cols-5">
-          {strengths.map((strength, index) => (
-            <article key={`strength-card-${index}`} className="bg-surface-container-high p-5 sm:p-6 min-h-[190px] flex flex-col justify-between">
-              <div>
-                <span className="font-label text-[10px] tracking-widest text-primary uppercase mb-3 block">Strength {index + 1}</span>
-                <p className="text-on-surface-variant text-sm leading-relaxed">{strength}</p>
-              </div>
-              <span className="material-symbols-outlined text-primary/30 text-3xl">bolt</span>
-            </article>
-          ))}
-          {weaknesses.map((weakness, index) => (
-            <article key={`weakness-card-${index}`} className="bg-surface-container p-5 sm:p-6 min-h-[190px] flex flex-col justify-between">
-              <div>
-                <span className="font-label text-[10px] tracking-widest text-primary uppercase mb-3 block">Weakness {index + 1}</span>
-                <p className="text-on-surface-variant text-sm leading-relaxed">{weakness}</p>
-              </div>
-              <span className="material-symbols-outlined text-secondary/40 text-3xl">incomplete_circle</span>
-            </article>
-          ))}
+        <section className="mb-16">
+          <div className="mb-5 flex items-start justify-between gap-4 sm:mb-6">
+            <div>
+              <p className="font-label text-[10px] uppercase tracking-[0.3em] text-primary">Philosophers with Similar Patterns</p>
+              <h3 className="mt-2 font-headline text-2xl italic text-on-surface sm:text-3xl">Thinkers whose logic mirrors yours</h3>
+            </div>
+            <span className="material-symbols-outlined text-primary/80 text-3xl sm:text-4xl">psychology</span>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {axisWinners.map((winner) => {
+              const philosopher = winner?.philosopher || PHILOSOPHERS[winner?.philosopherId] || null;
+              if (!philosopher) return null;
+
+              const interpretation = getAxisWinnerInterpretation(winner.axisId, philosopher);
+
+              return (
+                <article key={winner.axisId} className="border border-outline-variant/20 bg-surface-container-high p-5 sm:p-6 flex flex-col gap-4 min-h-[220px]">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <span className="font-label text-[10px] uppercase tracking-[0.3em] text-primary">{winner.axisLabel}</span>
+                      <h4 className="mt-2 font-headline text-xl italic text-on-surface sm:text-2xl">{philosopher.name}</h4>
+                    </div>
+                    <span className="material-symbols-outlined text-primary/70 text-2xl">person</span>
+                  </div>
+
+                  <p className="text-sm leading-relaxed text-on-surface-variant">{philosopher.summary}</p>
+
+                  <div className="rounded-lg border border-primary/20 bg-surface-container-lowest/70 p-4">
+                    <p className="font-label text-[9px] uppercase tracking-[0.22em] text-primary/90">What this means</p>
+                    <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">{interpretation.headline} {interpretation.detail} {interpretation.meaning}</p>
+                  </div>
+
+                  <p className="text-[0.82rem] leading-relaxed text-on-surface-variant/90">{interpretation.philosopherLine}</p>
+                </article>
+              );
+            })}
+          </div>
         </section>
+
+        {resolvedSubarchetype?.id && (
+          <section className="mb-16">
+            <article className="border border-primary/30 bg-surface-container-low/90 p-5 sm:p-6 md:p-8">
+              <div className="mb-5 flex items-start justify-between gap-4">
+                <div>
+                  <p className="font-label text-[10px] uppercase tracking-[0.3em] text-primary">Where You Lose Control</p>
+                  <h3 className="mt-2 font-headline text-2xl italic text-on-surface sm:text-3xl">{resolvedSubarchetype.name}</h3>
+                </div>
+                <span className="material-symbols-outlined text-primary/80">hub</span>
+              </div>
+
+              <p className="text-sm leading-relaxed text-on-surface-variant sm:text-base">
+                {resolvedSubarchetype.patternLabel || resolvedSubarchetype.tagline}
+              </p>
+
+              <div className="mt-5 rounded-lg border border-outline-variant/25 bg-surface-container-high/80 p-4 sm:p-5">
+                <p className="font-label text-[9px] uppercase tracking-[0.22em] text-primary/90">How the loop repeats</p>
+                <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">{resolvedSubarchetype.loopExplanation || resolvedSubarchetype.weakness}</p>
+              </div>
+
+              <div className="mt-5 rounded-lg border border-primary/25 bg-primary/10 p-4 sm:p-5">
+                <p className="font-label text-[9px] uppercase tracking-[0.22em] text-primary/90">Where things fall apart</p>
+                <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">{resolvedSubarchetype.consequence || "Without intervention, this cycle repeats and progress fails to compound."}</p>
+              </div>
+
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-sm leading-relaxed text-on-surface-variant sm:max-w-2xl">
+                  PhiloSift turns this pattern into an actionable path by showing what to stop repeating and what to practice next.
+                </p>
+                <button
+                  type="button"
+                  className="inline-flex items-center justify-center gap-2 border border-primary/45 bg-primary/15 px-5 py-3 font-label text-xs uppercase tracking-[0.16em] text-primary transition-colors hover:bg-primary/25"
+                >
+                  <span className="material-symbols-outlined text-base">workspace_premium</span>
+                  {resolvedSubarchetype.cta}
+                </button>
+              </div>
+            </article>
+          </section>
+        )}
 
         <section className="mb-16 space-y-8">
           {premiumPlaceholderSections.map((section) => (

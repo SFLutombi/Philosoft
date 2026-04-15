@@ -115,6 +115,26 @@ export const AXES = [
           { id: "c", label: "A work of authorship.", weights: { nietzsche: 2 } },
           { id: "d", label: "A revolt with dignity.", weights: { camus: 2 } }
         ]
+      },
+      {
+        id: "m6",
+        prompt: "When I encounter an idea that feels potentially meaningful, I tend to...",
+        options: [
+          { id: "a", label: "File it quietly in memory and continue as before.", weights: { socrates: 2 } },
+          { id: "b", label: "Sense that it matters, but not know how to translate it into action.", weights: { epictetus: 2 } },
+          { id: "c", label: "Test it against experience until I can see the underlying structure.", weights: { nietzsche: 2 } },
+          { id: "d", label: "Reorganize my worldview if the insight points toward growth.", weights: { camus: 2 } }
+        ]
+      },
+      {
+        id: "m7",
+        prompt: "When the same problem keeps returning in my life, I most often read it as...",
+        options: [
+          { id: "a", label: "An unresolved issue asking to be understood.", weights: { socrates: 2 } },
+          { id: "b", label: "A pattern I participate in despite knowing better.", weights: { epictetus: 2 } },
+          { id: "c", label: "A problem I keep reinterpreting instead of resolving.", weights: { nietzsche: 2 } },
+          { id: "d", label: "Evidence that I am being blocked below my potential.", weights: { camus: 2 } }
+        ]
       }
     ]
   },
@@ -172,6 +192,26 @@ export const AXES = [
           { id: "b", label: "It holds under universal application.", weights: { kant: 2 } },
           { id: "c", label: "It protects freedom and chosen duty.", weights: { de_beauvoir: 2 } },
           { id: "d", label: "It works in lived reality.", weights: { william_james: 2 } }
+        ]
+      },
+      {
+        id: "e6",
+        prompt: "The promise to myself I break most often is the one that asks me to...",
+        options: [
+          { id: "a", label: "Stop negotiating with habits that harm me.", weights: { arendt: 2 } },
+          { id: "b", label: "Match my standards with disciplined execution.", weights: { kant: 2 } },
+          { id: "c", label: "Act on what I already know is right.", weights: { de_beauvoir: 2 } },
+          { id: "d", label: "Commit to one practical method and remain consistent.", weights: { william_james: 2 } }
+        ]
+      },
+      {
+        id: "e7",
+        prompt: "I feel most responsible to the version of myself that can...",
+        options: [
+          { id: "a", label: "Name its inner pattern clearly and wear it honestly.", weights: { arendt: 2 } },
+          { id: "b", label: "Explain behavior through coherent first principles.", weights: { kant: 2 } },
+          { id: "c", label: "Protect its difference even when misunderstood.", weights: { de_beauvoir: 2 } },
+          { id: "d", label: "Decide and move instead of circling forever.", weights: { william_james: 2 } }
         ]
       }
     ]
@@ -231,6 +271,26 @@ export const AXES = [
           { id: "c", label: "Can surpass itself.", weights: { nietzsche: 2 } },
           { id: "d", label: "Can govern itself.", weights: { epictetus: 2 } }
         ]
+      },
+      {
+        id: "s6",
+        prompt: "When someone asks who I am, the hardest part to explain is the part that...",
+        options: [
+          { id: "a", label: "Operates by a logic I rarely see mirrored around me.", weights: { socrates: 2 } },
+          { id: "b", label: "Wants a precise language for who I am becoming.", weights: { de_beauvoir: 2 } },
+          { id: "c", label: "Still carries a recent fracture I cannot yet name.", weights: { nietzsche: 2 } },
+          { id: "d", label: "Automatically searches for hidden systems in ordinary behavior.", weights: { epictetus: 2 } }
+        ]
+      },
+      {
+        id: "s7",
+        prompt: "One recurring pattern in me is that I...",
+        options: [
+          { id: "a", label: "Know what matters, yet delay living it.", weights: { socrates: 2 } },
+          { id: "b", label: "Undo progress when change starts to feel real.", weights: { de_beauvoir: 2 } },
+          { id: "c", label: "Set bold aims, then lose traction midway.", weights: { nietzsche: 2 } },
+          { id: "d", label: "Stay in reflection too long before acting.", weights: { epictetus: 2 } }
+        ]
       }
     ]
   },
@@ -288,6 +348,26 @@ export const AXES = [
           { id: "b", label: "I am pragmatic.", weights: { william_james: 2 } },
           { id: "c", label: "I am defiant.", weights: { camus: 2 } },
           { id: "d", label: "I am principled.", weights: { kant: 2 } }
+        ]
+      },
+      {
+        id: "a6",
+        prompt: "When a choice asks something of me, I usually...",
+        options: [
+          { id: "a", label: "Think it through until the urgency fades.", weights: { arendt: 2 } },
+          { id: "b", label: "Keep gathering perspective instead of beginning.", weights: { william_james: 2 } },
+          { id: "c", label: "Start hard, then get frustrated when progress is slower than expected.", weights: { camus: 2 } },
+          { id: "d", label: "Choose one manageable practice and begin there.", weights: { kant: 2 } }
+        ]
+      },
+      {
+        id: "a7",
+        prompt: "I trust a method most when it helps me...",
+        options: [
+          { id: "a", label: "Detect the deeper pattern behind my behavior.", weights: { arendt: 2 } },
+          { id: "b", label: "Stop repeating choices that work against me.", weights: { william_james: 2 } },
+          { id: "c", label: "Make sense of emotional turmoil without denying it.", weights: { camus: 2 } },
+          { id: "d", label: "Understand what is distinctive in how I see the world.", weights: { kant: 2 } }
         ]
       }
     ]
@@ -451,6 +531,18 @@ const QUESTION_SCORING_RULES = {
     c: { style: "self_authorship", pillars: { agency: 2, imagination: 1 } },
     d: { style: "existential_courage", pillars: { depth: 2, imagination: 1 } }
   },
+  m6: {
+    a: { style: "inquiry", pillars: { clarity: 2, depth: 1 } },
+    b: { style: "discipline", pillars: { structure: 2, clarity: 1 } },
+    c: { style: "self_authorship", pillars: { agency: 2, imagination: 1 } },
+    d: { style: "existential_courage", pillars: { depth: 2, clarity: 1 } }
+  },
+  m7: {
+    a: { style: "inquiry", pillars: { clarity: 2, depth: 1 } },
+    b: { style: "discipline", pillars: { structure: 2, depth: 1 } },
+    c: { style: "self_authorship", pillars: { depth: 2, imagination: 1 } },
+    d: { style: "existential_courage", pillars: { agency: 2, depth: 1 } }
+  },
   e1: {
     a: { style: "civic_responsibility", pillars: { structure: 1, agency: 2, clarity: 1 } },
     b: { style: "principle_logic", pillars: { structure: 2, clarity: 1 } },
@@ -480,6 +572,18 @@ const QUESTION_SCORING_RULES = {
     b: { style: "principle_logic", pillars: { structure: 2, clarity: 1 } },
     c: { style: "freedom_commitment", pillars: { depth: 1, imagination: 1, agency: 1 } },
     d: { style: "pragmatic_adaptation", pillars: { clarity: 2, agency: 1 } }
+  },
+  e6: {
+    a: { style: "civic_responsibility", pillars: { agency: 2, depth: 1 } },
+    b: { style: "principle_logic", pillars: { structure: 2, clarity: 1 } },
+    c: { style: "freedom_commitment", pillars: { agency: 2, depth: 1 } },
+    d: { style: "pragmatic_adaptation", pillars: { structure: 1, clarity: 2 } }
+  },
+  e7: {
+    a: { style: "civic_responsibility", pillars: { depth: 2, agency: 1 } },
+    b: { style: "principle_logic", pillars: { structure: 2, clarity: 1 } },
+    c: { style: "freedom_commitment", pillars: { imagination: 2, depth: 1 } },
+    d: { style: "pragmatic_adaptation", pillars: { agency: 2, clarity: 1 } }
   },
   s1: {
     a: { style: "inquiry", pillars: { clarity: 2, depth: 1 } },
@@ -511,6 +615,18 @@ const QUESTION_SCORING_RULES = {
     c: { style: "self_authorship", pillars: { agency: 2, imagination: 1 } },
     d: { style: "discipline", pillars: { structure: 2, agency: 1 } }
   },
+  s6: {
+    a: { style: "inquiry", pillars: { depth: 2, clarity: 1 } },
+    b: { style: "freedom_commitment", pillars: { depth: 2, imagination: 1 } },
+    c: { style: "self_authorship", pillars: { imagination: 2, agency: 1 } },
+    d: { style: "discipline", pillars: { clarity: 2, structure: 1 } }
+  },
+  s7: {
+    a: { style: "inquiry", pillars: { clarity: 2, depth: 1 } },
+    b: { style: "freedom_commitment", pillars: { agency: 2, depth: 1 } },
+    c: { style: "self_authorship", pillars: { agency: 2, imagination: 1 } },
+    d: { style: "discipline", pillars: { structure: 2, depth: 1 } }
+  },
   a1: {
     a: { style: "civic_responsibility", pillars: { agency: 2, structure: 1 } },
     b: { style: "pragmatic_adaptation", pillars: { agency: 2, clarity: 1 } },
@@ -540,6 +656,18 @@ const QUESTION_SCORING_RULES = {
     b: { style: "pragmatic_adaptation", pillars: { agency: 2, clarity: 1 } },
     c: { style: "existential_courage", pillars: { depth: 2, agency: 1 } },
     d: { style: "principle_logic", pillars: { structure: 2, clarity: 1 } }
+  },
+  a6: {
+    a: { style: "civic_responsibility", pillars: { clarity: 2, depth: 1 } },
+    b: { style: "pragmatic_adaptation", pillars: { clarity: 2, structure: 1 } },
+    c: { style: "existential_courage", pillars: { agency: 2, depth: 1 } },
+    d: { style: "principle_logic", pillars: { structure: 2, agency: 1 } }
+  },
+  a7: {
+    a: { style: "civic_responsibility", pillars: { clarity: 2, depth: 1 } },
+    b: { style: "pragmatic_adaptation", pillars: { agency: 2, clarity: 1 } },
+    c: { style: "existential_courage", pillars: { depth: 2, clarity: 1 } },
+    d: { style: "principle_logic", pillars: { structure: 2, depth: 1 } }
   }
 };
 

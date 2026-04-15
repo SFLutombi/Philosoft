@@ -1,8 +1,32 @@
 ﻿# PhiloSift Progress Tracker
 
-Last Updated: 2026-04-14
+Last Updated: 2026-04-15
 
 ## Completed
+- [2026-04-15 19:10:25] Started PhiloSift interruption-system MVP implementation: enforced auth redirect consistency to dashboard, replaced legacy dashboard with button-first main app surface, added protected `/interrupt` flow and `/history` screens, introduced Supabase-ready pattern event services with local fallback, and added initial Supabase migration for `pattern_events`.
+- [2026-04-15 18:32:03] Optimized Clerk header auth modals for mobile by adding responsive modal appearance overrides (`rootBox`, `cardBox`, `card`) so Sign Up and Sign In modals fit narrow viewports and scroll safely instead of clipping.
+- [2026-04-15 18:18:14] Fixed post-payment onboarding deadlock when Clerk stayed in loading state: added auth-load timeout fallback CTA on payment completion, tightened redirect logic to avoid waiting forever, and wired ClerkProvider to explicit `VITE_CLERK_PUBLISHABLE_KEY` with a clear missing-key console error.
+- [2026-04-15 18:12:03] Enforced mandatory post-payment account setup by replacing modal auth actions with dedicated onboarding routes (`/onboarding-signup`, `/onboarding-signin`), gating both pages behind payment-complete state, and auto-redirecting signed-out users from payment completion into full-page signup.
+- [2026-04-15 05:45:18] Implemented onboarding flow hardening: payment post-capture now uses explicit Clerk loaded/signed-out/signed-in branches, persisted payment-complete state for refresh resilience, added dashboard route protection with signed-in guard, and added landing returnTo continuation handling for low-friction resume.
+- [2026-04-15 05:31:07] Fixed `/payment` blank-screen runtime crash by removing stale references from the old paywall implementation (`managementUrl`, `handleMonthlyPurchase`, `isLoading`, `monthlyPackage`) after switching to dummy onboarding payment mode.
+- [2026-04-15 05:22:41] Updated onboarding payment test flow so the payment action now skips card-detail validation and jumps directly to the post-payment sign-up step for faster Clerk auth QA.
+- [2026-04-15 05:15:52] Added `.env.local` Clerk configuration with `VITE_CLERK_PUBLISHABLE_KEY` and validated successful production build after environment setup.
+- [2026-04-15 05:08:11] Reworked onboarding payment step for testing: replaced live billing logic with a dummy payment form, enforced flow continuation into Clerk sign up or sign in, and added post-auth continuation to dashboard for end-to-end onboarding QA.
+- [2026-04-15 04:56:44] Added Clerk auth foundation to the Vite app using `@clerk/react`: wrapped root with ClerkProvider, added modern Show-based signed-in and signed-out controls, and replaced landing header account icons with Sign In, Sign Up, and UserButton states.
+- [2026-04-15 04:43:30] Added verification-ready legal policy infrastructure: new Terms of Service, Privacy Policy, and Refund Policy pages with dedicated URL paths, wired routes, and visible policy links on landing, pricing, and payment screens.
+- [2026-04-15 04:31:12] Integrated RevenueCat web SDK support with a shared helper module, anonymous app user persistence, entitlements for Alignment System Access, hosted paywall rendering, monthly package fallback purchase flow, and payment routing from pricing.
+- [2026-04-15 04:18:15] Refined pricing page persuasion hierarchy: sharpened core proof to "interrupts the exact moment you usually fail," shifted benefits from mechanism-focused to real-life behavioral catches, and added subtle 2-layer credibility structure (behavioral psychology + philosophy as secondary support, not primary selling point).
+- [2026-04-15 04:15:42] Fixed pricing page information architecture: moved price to hero position, removed all meta-labels (section numbers), restructured persuasion order to price → tension → context → outcomes → loss-framing → trial clarity → proof → binary CTA, and eliminated feature-list tone for decision-focused psychology.
+- [2026-04-15 03:50:32] Implemented post-misalignment pricing conversion page, wired Start Free Trial routing to /pricing, moved 48-hour social proof to pricing-only placement, and removed prior proof line from misalignment.
+- [2026-04-15 03:29:31] Implemented PhiloSift copy voice-system across subarchetype and misalignment flow: behavior-loop-consequence archetype schema, banned-term replacements, action CTAs, and contradiction-focused misalignment language.
+- [2026-04-15 03:04:35] Updated landing hero copy to the new human-tone messaging and added a small "Takes 2-3 minutes" line beneath the primary CTA.
+- [2026-04-15 02:47:56] Renamed subarchetypes to brand-ready labels, removed all "User" naming, and replaced breakup/emotional-shock terminology with the neutral "Aftershock Witness" profile.
+- [2026-04-15 01:39:49] Inserted a new philosophers carousel stage between results detail and subarchetype, with CTAs to cycle cards and continue to current pattern, then split misalignment warning into its own page after subarchetype.
+- [2026-04-15 01:28:53] Implemented staged PWA-ready flow with brand splash and routed results sequence (/results-card -> /results-description -> /results-subarchetype), added installable manifest/service-worker setup, and resized mobile results-card image footprint to fit app-like viewport behavior.
+- [2026-04-15 00:28:37] Added subarchetype result pipeline (quiz payload + results rendering), inserted a monetization-oriented subarchetype card with weakness + CTA, and renamed philosophers subsection heading to remove axis-winner wording.
+- [2026-04-14 21:10:23] Fixed production build failure caused by mismatched JSX closing tags in ResultsPage by restoring the missing axis-winner grid container closing tag.
+- [2026-04-14 21:02:32] Implemented 8 new masked-voice quiz questions (m6/m7/e6/e7/s6/s7/a6/a7) across all non-shadow axes and wired matching scoring rules so flow and archetype computation remain stable.
+- [2026-04-14 18:02:04] Replaced the results-page Strength/Weakness grid with a 4-card "Philosophers with Similar Patterns" subsection driven by the quiz axis winners.
 - [2026-04-14 12:04:40] Adjusted the mobile Reasoning Temperament pentagram label positioning so Structure no longer clips against the chart.
 - [2026-04-14 12:04:40] Added clickable hub-icon tooltips for each Reasoning Temperament pillar with score-aware explanatory copy (high, medium, low bands) on the results screen.
 - [2026-04-14 11:44:10] Refined stable-thinking copy to avoid pillar terminology in narrative text and emphasize how weak traits constrain reasoning quality and full potential.
@@ -93,6 +117,10 @@ Last Updated: 2026-04-14
 - Draft visual direction board for dark-academia and aspirational mystery tone.
 
 ## Decisions
+- [2026-04-15] During MVP build, Supabase event persistence should gracefully fall back to localStorage when Supabase env variables are missing, so core interruption flow remains testable without backend blocking.
+- [2026-04-15] Post-payment auth is now route-based full-page Clerk UI (`SignUp`/`SignIn`) instead of modal buttons to guarantee deterministic onboarding continuation and avoid missed CTA states.
+- [2026-04-15] RevenueCat integration will be web-first using `@revenuecat/purchases-js`, anonymous app user persistence in localStorage, hosted paywall presentation, and `CustomerInfo.managementURL` for subscription management.
+- [2026-04-14] New subarchetype-signal prompts must stay indirect and philosophical (masked voice), not literal self-improvement wording.
 - [2026-04-10] Use `node ./node_modules/vite/bin/vite.js` in npm scripts to avoid executable-bit issues with `.bin/vite` in Linux deploy environments.
 - [2026-04-10] Keep landing secondary CTA as "Go to the Archive" and treat Dashboard as the Archive destination.
 - [2026-04-10] Results summary copy is now condensed into a two-line block so the share action stays visually primary on mobile.

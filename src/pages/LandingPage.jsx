@@ -1,7 +1,29 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useUser } from "@clerk/react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import AuthHeaderControls from "../components/AuthHeaderControls";
 import GrainOverlay from "../components/GrainOverlay";
+import LegalPolicyLinks from "../components/LegalPolicyLinks";
 
 export default function LandingPage() {
+  const { isLoaded, isSignedIn } = useUser();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const returnTo = searchParams.get("returnTo");
+
+  useEffect(() => {
+    if (!isLoaded || !isSignedIn) {
+      return;
+    }
+
+    if (returnTo) {
+      navigate(returnTo, { replace: true });
+      return;
+    }
+
+    navigate("/dashboard", { replace: true });
+  }, [isLoaded, isSignedIn, navigate, returnTo]);
+
   return (
     <div className="min-h-[100svh] overflow-x-hidden bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary">
       <GrainOverlay variant="grain" />
@@ -11,10 +33,7 @@ export default function LandingPage() {
           <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>flare</span>
           <span>PHILOSIFT</span>
         </div>
-        <div className="flex items-center gap-4 sm:gap-6">
-          <span className="material-symbols-outlined text-[#444748] cursor-pointer hover:text-[#e9c176] transition-all duration-300">history_edu</span>
-          <span className="material-symbols-outlined text-[#444748] cursor-pointer hover:text-[#e9c176] transition-all duration-300">account_circle</span>
-        </div>
+        <AuthHeaderControls />
       </header>
 
       <main className="relative flex min-h-[100svh] flex-col items-center justify-start overflow-hidden px-4 sm:px-6 pt-24 sm:pt-28 md:pt-20 pb-10 md:pb-6">
@@ -27,12 +46,12 @@ export default function LandingPage() {
         <section className="relative z-10 max-w-4xl w-full text-center flex flex-col items-center">
           <div className="mb-10 sm:mb-12 md:mb-10 space-y-5 md:space-y-5">
             <h1 className="font-headline text-[1.95rem] leading-[1.02] sm:text-[2.45rem] md:text-[3.55rem] lg:text-[4.25rem] font-light tracking-tight text-on-surface italic max-w-3xl mx-auto">
-              There is a <span className="inline-block bg-primary text-[#121212] px-2 py-1">pattern</span> behind how you <span className="inline-block bg-primary text-[#121212] px-2 py-1">think</span>
+              There is a <span className="inline-block bg-primary text-[#121212] px-2 py-1">pattern</span> running your <span className="inline-block bg-primary text-[#121212] px-2 py-1">decisions</span>
             </h1>
             <div className="flex flex-col md:flex-row items-center justify-center gap-5 md:gap-6 pt-2 md:pt-2">
               <div className="hidden md:block w-px h-16 bg-gradient-to-b from-transparent via-outline-variant/40 to-transparent" />
               <p className="max-w-xl font-headline text-[0.98rem] sm:text-base md:text-[1.3rem] text-on-surface-variant leading-[1.45] text-center md:text-left italic opacity-80 px-2 sm:px-0">
-                Most people never see it clearly. This will show you what is driving your decisions and what you tend to overlook.
+                Most people never see it clearly. But it shows up in how you think, hesitate, and act. This will reveal what drives your choices and where you lose control.
               </p>
             </div>
           </div>
@@ -47,17 +66,25 @@ export default function LandingPage() {
           </div>
 
           <div className="mt-2 md:mt-6 flex flex-col md:flex-row items-stretch md:items-center gap-4 md:gap-7 w-full justify-center max-w-3xl">
-            <Link to="/quiz" className="group relative min-w-[180px] sm:min-w-[220px] md:min-w-[250px] px-8 md:px-12 py-3.5 md:py-4 bg-primary text-on-primary font-body uppercase tracking-widest text-[11px] md:text-xs font-bold overflow-hidden transition-all duration-300 active:scale-95 text-center">
-              <span className="relative z-10 flex items-center gap-3">
-                See My Pattern
-                <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-primary to-[#997836] opacity-0 group-hover:opacity-100 transition-opacity" />
-            </Link>
-            <Link to="/dashboard" className="font-body uppercase tracking-[0.2em] text-[10px] text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2 group justify-center py-1 md:py-0">
-              Go to the Archive
-              <span className="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all">keyboard_double_arrow_right</span>
-            </Link>
+            <div className="flex flex-col items-center gap-2">
+              <Link to="/quiz" className="group relative min-w-[180px] sm:min-w-[220px] md:min-w-[250px] px-8 md:px-12 py-3.5 md:py-4 bg-primary text-on-primary font-body uppercase tracking-widest text-[11px] md:text-xs font-bold overflow-hidden transition-all duration-300 active:scale-95 text-center">
+                <span className="relative z-10 flex items-center gap-3">
+                  See My Pattern
+                  <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-primary to-[#997836] opacity-0 group-hover:opacity-100 transition-opacity" />
+              </Link>
+              <p className="font-label text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/80">Takes 2-3 minutes</p>
+            </div>
+
+            {returnTo ? (
+              <div className="flex flex-col items-center gap-2">
+                <button type="button" onClick={() => navigate(returnTo)} className="group relative min-w-[180px] sm:min-w-[220px] md:min-w-[250px] px-8 md:px-12 py-3.5 md:py-4 border border-outline-variant/35 text-on-surface font-body uppercase tracking-widest text-[11px] md:text-xs font-bold overflow-hidden transition-all duration-300 active:scale-95 text-center hover:border-primary/45 hover:text-primary">
+                  Continue Where You Left Off
+                </button>
+                <p className="font-label text-[10px] uppercase tracking-[0.14em] text-on-surface-variant/80">Sign in to resume onboarding</p>
+              </div>
+            ) : null}
           </div>
         </section>
       </main>
@@ -70,6 +97,10 @@ export default function LandingPage() {
         <div className="w-[1px] h-32 bg-outline-variant/30" />
         <span className="font-headline italic text-xs -rotate-90 text-outline-variant tracking-widest origin-center whitespace-nowrap">PHILO_SIFT // GATEWAY</span>
       </div>
+
+      <footer className="relative z-10 pb-6 px-4">
+        <LegalPolicyLinks />
+      </footer>
     </div>
   );
 }

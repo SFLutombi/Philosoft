@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 
 const nav = [
   { key: "dashboard", label: "Dashboard", icon: "grid_view", href: "/dashboard" },
-  { key: "rituals", label: "Rituals", icon: "auto_fix_high", href: "/quiz" },
-  { key: "chronicle", label: "Chronicle", icon: "menu_book", href: "/results" },
+  { key: "interrupt", label: "Interrupt", icon: "emergency", href: "/interrupt" },
+  { key: "history", label: "History", icon: "menu_book", href: "/history" },
   { key: "settings", label: "Settings", icon: "settings", href: "/landing" }
 ];
 
-export default function ArchiveSidebar({ active = "rituals", showAvatar = false }) {
+export default function ArchiveSidebar({ active = "dashboard", showAvatar = false }) {
   return (
     <aside className="hidden lg:flex bg-[#131313] flex-col h-screen fixed left-0 top-0 border-r border-[#444748]/15 w-64 z-50">
       <div className="px-8 py-10">
@@ -25,7 +25,7 @@ export default function ArchiveSidebar({ active = "rituals", showAvatar = false 
                 ? "flex items-center gap-4 px-4 py-3 bg-[#353534] text-[#e9c176] font-bold border-r-2 border-[#e9c176] transition-all"
                 : "flex items-center gap-4 px-4 py-3 text-[#444748] opacity-60 hover:bg-[#1a1a1a] hover:text-[#e9c176] transition-all group"}
             >
-              <span className="material-symbols-outlined" style={isActive && item.key === "rituals" ? { fontVariationSettings: "'FILL' 1" } : undefined}>{item.icon}</span>
+              <span className="material-symbols-outlined" style={isActive ? { fontVariationSettings: "'FILL' 1" } : undefined}>{item.icon}</span>
               <span className="font-['Inter'] font-light uppercase tracking-widest text-[10px]">{item.label}</span>
             </Link>
           );

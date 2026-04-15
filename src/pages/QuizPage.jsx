@@ -7,6 +7,7 @@ import {
   computeArchetypeProfile,
   computeAxisWinners
 } from "../data/quizData";
+import { computeSubarchetype } from "../data/subarchetypes";
 
 function toRoman(value) {
   const numerals = [
@@ -138,6 +139,8 @@ export default function QuizPage() {
       axisScores
     });
 
+    const subarchetype = computeSubarchetype(answers);
+
     const payload = {
       finalPhilosopher,
       winners,
@@ -146,11 +149,12 @@ export default function QuizPage() {
       answersByQuestionId: answers,
       archetypeProfile,
       pillarScores: archetypeProfile.pillars,
+      subarchetype,
       answeredAt: Date.now()
     };
 
     localStorage.setItem(RESULTS_STORAGE_KEY, JSON.stringify(payload));
-    navigate("/results");
+    navigate("/results-card");
   }
 
   function onSelectOption(optionId) {

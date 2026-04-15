@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" role="img" aria-label="PhiloSift">
+  <rect width="192" height="192" fill="#131313" />
+  <circle cx="96" cy="96" r="62" fill="none" stroke="#e9c176" stroke-width="3" opacity="0.45" />
+  <path d="M96 44l38 26-14 44H72L58 70z" fill="none" stroke="#e9c176" stroke-width="4" />
+  <circle cx="96" cy="96" r="9" fill="#e9c176" />
+  <text x="96" y="165" text-anchor="middle" fill="#e9c176" font-size="16" font-family="Georgia, serif" letter-spacing="4">PS</text>
+</svg>
