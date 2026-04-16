@@ -1,8 +1,9 @@
 ﻿# PhiloSift Progress Tracker
 
-Last Updated: 2026-04-15
+Last Updated: 2026-04-16
 
 ## Completed
+- [2026-04-16 17:05:06] Redesigned post-quiz screens for focused visual hierarchy: eliminated Clerk modal auth pattern entirely in favor of route-based full-page auth (replaced header SignInButton/SignUpButton with Links to /onboarding-signin and /onboarding-signup), stripped Misalignment, Pricing, and Payment pages to single-column decision flows with clear primary CTAs, removed scattered UI elements and competing sections, reduced Payment form to email-only capture instead of full checkout-like fields with cardholder name/card number/expiry/CVC/country, simplified Pricing from 11+ blocks to 6 essentials (header, 3-col grid, trial terms, CTAs, legal), and ensured deterministic post-auth navigation (Quiz → Results → Misalignment → Pricing → Payment → Onboarding Auth → Dashboard).
 - [2026-04-15 19:10:25] Started PhiloSift interruption-system MVP implementation: enforced auth redirect consistency to dashboard, replaced legacy dashboard with button-first main app surface, added protected `/interrupt` flow and `/history` screens, introduced Supabase-ready pattern event services with local fallback, and added initial Supabase migration for `pattern_events`.
 - [2026-04-15 18:32:03] Optimized Clerk header auth modals for mobile by adding responsive modal appearance overrides (`rootBox`, `cardBox`, `card`) so Sign Up and Sign In modals fit narrow viewports and scroll safely instead of clipping.
 - [2026-04-15 18:18:14] Fixed post-payment onboarding deadlock when Clerk stayed in loading state: added auth-load timeout fallback CTA on payment completion, tightened redirect logic to avoid waiting forever, and wired ClerkProvider to explicit `VITE_CLERK_PUBLISHABLE_KEY` with a clear missing-key console error.
@@ -117,6 +118,8 @@ Last Updated: 2026-04-15
 - Draft visual direction board for dark-academia and aspirational mystery tone.
 
 ## Decisions
+- [2026-04-16] Post-quiz auth entry must be route-based Links instead of modal components to eliminate clipping issues, ensure auth fits the PWA viewport consistently across all mobile widths, and provide deterministic post-auth navigation. This is non-negotiable for mobile PWA reliability.
+- [2026-04-16] Post-quiz page design must ruthlessly prioritize focus: single headline + primary action per screen, remove competing sections and explanatory blocks, and keep visual hierarchy binary (what matters most at top, CTAs at bottom). Dense layouts scatter attention and confuse user decision-making.
 - [2026-04-15] During MVP build, Supabase event persistence should gracefully fall back to localStorage when Supabase env variables are missing, so core interruption flow remains testable without backend blocking.
 - [2026-04-15] Post-payment auth is now route-based full-page Clerk UI (`SignUp`/`SignIn`) instead of modal buttons to guarantee deterministic onboarding continuation and avoid missed CTA states.
 - [2026-04-15] RevenueCat integration will be web-first using `@revenuecat/purchases-js`, anonymous app user persistence in localStorage, hosted paywall presentation, and `CustomerInfo.managementURL` for subscription management.
