@@ -19,6 +19,7 @@ import RefundPolicyPage from "./pages/RefundPolicyPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import InterruptFlowPage from "./pages/InterruptFlowPage";
 import HistoryPage from "./pages/HistoryPage";
+import AlarmsPage from "./pages/AlarmsPage";
 
 export default function App() {
   return (
@@ -43,6 +44,7 @@ export default function App() {
       <Route path="/dashboard" element={<ProtectedRoute element={<DashboardPage />} />} />
       <Route path="/interrupt" element={<ProtectedRoute element={<InterruptFlowPage />} />} />
       <Route path="/history" element={<ProtectedRoute element={<HistoryPage />} />} />
+      <Route path="/alarms" element={<ProtectedRoute element={<AlarmsPage />} />} />
       <Route path="/results-legacy" element={<ResultsPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

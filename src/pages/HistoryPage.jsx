@@ -18,6 +18,13 @@ function formatDate(value) {
   }
 }
 
+function formatActionTaken(value) {
+  if (value === "acted") return "Acted";
+  if (value === "delayed") return "Delayed";
+  if (value === "avoided") return "Avoided";
+  return value || "Unknown";
+}
+
 export default function HistoryPage() {
   const { user } = useUser();
   const [events, setEvents] = useState([]);
@@ -89,8 +96,9 @@ export default function HistoryPage() {
                 {events.map((event) => (
                   <li key={event.id} className="flex flex-col gap-2 border border-outline-variant/20 bg-surface-container-high/60 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                      <p className="font-label text-[10px] uppercase tracking-[0.16em] text-primary/90">{event.action === "interrupt" ? "Interrupted" : "Followed"}</p>
-                      <p className="text-sm text-on-surface-variant">{event.pattern_type}</p>
+                      <p className="font-label text-[10px] uppercase tracking-[0.16em] text-primary/90">{formatActionTaken(event.action_taken || event.action)}</p>
+                      <p className="text-sm text-on-surface-variant">{event.trigger_type}</p>
+                      {event.predicted_outcome ? <p className="mt-1 text-xs text-on-surface-variant/80">Outcome: {event.predicted_outcome}</p> : null}
                     </div>
                     <p className="text-xs uppercase tracking-[0.14em] text-on-surface-variant/80">{formatDate(event.created_at)}</p>
                   </li>

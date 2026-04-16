@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { SignUp, useUser } from "@clerk/react";
 import { Link, Navigate } from "react-router-dom";
 
@@ -16,6 +17,15 @@ export default function OnboardingSignUpPage() {
   const { isLoaded, isSignedIn } = useUser();
   const paymentCompleted = readStorageValue(PAYMENT_COMPLETE_STORAGE_KEY) === "1";
   const billingEmail = readStorageValue(BILLING_EMAIL_STORAGE_KEY);
+
+  useEffect(() => {
+    const previousTitle = document.title;
+    document.title = "Philosoft";
+
+    return () => {
+      document.title = previousTitle;
+    };
+  }, []);
 
   if (!paymentCompleted) {
     return <Navigate to="/payment" replace />;
@@ -49,7 +59,7 @@ export default function OnboardingSignUpPage() {
               </Link>
             </div>
 
-            <div className="rounded-lg border border-primary/25 bg-[#181512] p-5 sm:p-6">
+            <div className="min-w-0 rounded-lg bg-[#181512] p-5 sm:p-6">
               <SignUp
                 routing="path"
                 path="/onboarding-signup"
