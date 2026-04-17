@@ -3,7 +3,6 @@ import { SignUp, useUser } from "@clerk/react";
 import { Link, Navigate, useSearchParams } from "react-router-dom";
 
 const PAYMENT_COMPLETE_STORAGE_KEY = "philosift_onboarding_payment_complete";
-const AUTH_FLOW_IN_PROGRESS_KEY = "philosift_auth_flow_in_progress_v1";
 const BILLING_EMAIL_STORAGE_KEY = "philosift_onboarding_billing_email";
 
 function readStorageValue(key) {
@@ -15,44 +14,28 @@ function readStorageValue(key) {
 }
 
 export default function OnboardingSignUpPage() {
-  function writeAuthFlowInProgress(value) {
-    try {
-      if (value) {
-        sessionStorage.setItem(AUTH_FLOW_IN_PROGRESS_KEY, "1");
-      } else {
-        sessionStorage.removeItem(AUTH_FLOW_IN_PROGRESS_KEY);
-      }
-    } catch {
-      // Ignore storage failures and continue auth flow.
-    }
-  }
-
   const { isLoaded, isSignedIn } = useUser();
   const [searchParams] = useSearchParams();
   const paymentCompleted = readStorageValue(PAYMENT_COMPLETE_STORAGE_KEY) === "1";
   const billingEmail = readStorageValue(BILLING_EMAIL_STORAGE_KEY);
   const returnTo = searchParams.get("returnTo") || "/dashboard";
   const profileRedirect = `/onboarding-profile?returnTo=${encodeURIComponent(returnTo)}`;
+  const signInUrl = `/onboarding-signin?returnTo=${encodeURIComponent(returnTo)}`;
 
   useEffect(() => {
     const previousTitle = document.title;
     document.title = "Philosoft";
 
-    if (paymentCompleted && !isSignedIn) {
-      writeAuthFlowInProgress(true);
-    }
-
     return () => {
       document.title = previousTitle;
     };
-  }, [isSignedIn, paymentCompleted]);
+  }, []);
 
   if (!paymentCompleted) {
     return <Navigate to="/payment" replace />;
   }
 
   if (isLoaded && isSignedIn) {
-    writeAuthFlowInProgress(false);
     return <Navigate to={profileRedirect} replace />;
   }
 
@@ -75,7 +58,7 @@ export default function OnboardingSignUpPage() {
                   Suggested email: {billingEmail}
                 </div>
               ) : null}
-              <Link to="/onboarding-signin" className="block w-full border border-outline-variant/30 px-5 py-3 text-center font-label text-xs uppercase tracking-[0.16em] text-on-surface-variant transition-colors hover:border-primary/35 hover:text-primary">
+              <Link to={signInUrl} className="block w-full border border-outline-variant/30 px-5 py-3 text-center font-label text-xs uppercase tracking-[0.16em] text-on-surface-variant transition-colors hover:border-primary/35 hover:text-primary">
                 I already have an account
               </Link>
             </div>
@@ -84,7 +67,7 @@ export default function OnboardingSignUpPage() {
               <SignUp
                 routing="path"
                 path="/onboarding-signup"
-                signInUrl="/onboarding-signin"
+                signInUrl={signInUrl}
                 forceRedirectUrl={profileRedirect}
                 fallbackRedirectUrl={profileRedirect}
                 initialValues={billingEmail ? { emailAddress: billingEmail } : undefined}

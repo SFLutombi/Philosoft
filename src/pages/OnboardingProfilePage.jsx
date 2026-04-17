@@ -4,21 +4,12 @@ import { Navigate, useSearchParams } from "react-router-dom";
 import { readStoredProfile, writeStoredProfile } from "../services/profileStore";
 
 const PAYMENT_COMPLETE_STORAGE_KEY = "philosift_onboarding_payment_complete";
-const AUTH_FLOW_IN_PROGRESS_KEY = "philosift_auth_flow_in_progress_v1";
 
 function readPaymentComplete() {
   try {
     return localStorage.getItem(PAYMENT_COMPLETE_STORAGE_KEY) === "1";
   } catch {
     return false;
-  }
-}
-
-function clearAuthFlowInProgress() {
-  try {
-    sessionStorage.removeItem(AUTH_FLOW_IN_PROGRESS_KEY);
-  } catch {
-    // Ignore storage failures.
   }
 }
 
@@ -110,7 +101,6 @@ export default function OnboardingProfilePage() {
       // Local profile persistence is enough for launch; metadata sync can fail silently.
     }
 
-    clearAuthFlowInProgress();
     window.location.assign(returnTo);
   }
 

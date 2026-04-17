@@ -24,9 +24,11 @@ export default function PaymentPage() {
   });
   const [paymentReference, setPaymentReference] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [authLoadTimedOut, setAuthLoadTimedOut] = useState(false);
 
   const [billingEmail, setBillingEmail] = useState("");
+  const authRedirectBase = "/dashboard";
+  const signUpPath = `/onboarding-signup?returnTo=${encodeURIComponent(authRedirectBase)}`;
+  const signInPath = `/onboarding-signin?returnTo=${encodeURIComponent(authRedirectBase)}`;
 
   function handleDummyPaymentSubmit(event) {
     event.preventDefault();
@@ -48,11 +50,15 @@ export default function PaymentPage() {
   }
 
   function handleContinueToDashboard() {
-    navigate("/onboarding-profile");
+    navigate(`/onboarding-profile?returnTo=${encodeURIComponent(authRedirectBase)}`);
   }
 
-  function handleContinueToAccountSetup() {
-    navigate("/onboarding-signup");
+  function handleContinueToSignUp() {
+    navigate(signUpPath);
+  }
+
+  function handleContinueToSignIn() {
+    navigate(signInPath);
   }
 
   useEffect(() => {
@@ -73,24 +79,9 @@ export default function PaymentPage() {
     }
 
     if (isLoaded && isSignedIn) {
-      navigate("/onboarding-profile", { replace: true });
+      navigate(`/onboarding-profile?returnTo=${encodeURIComponent(authRedirectBase)}`, { replace: true });
     }
-  }, [isLoaded, isSignedIn, navigate, paymentCompleted]);
-
-  useEffect(() => {
-    if (!paymentCompleted || isLoaded) {
-      setAuthLoadTimedOut(false);
-      return;
-    }
-
-    const timeoutId = window.setTimeout(() => {
-      setAuthLoadTimedOut(true);
-    }, 5000);
-
-    return () => {
-      window.clearTimeout(timeoutId);
-    };
-  }, [isLoaded, paymentCompleted]);
+  }, [authRedirectBase, isLoaded, isSignedIn, navigate, paymentCompleted]);
 
   if (!storedResult) {
     return <Navigate to="/quiz" replace />;
@@ -137,22 +128,15 @@ export default function PaymentPage() {
                 <p className="text-sm leading-relaxed text-on-surface-variant">Dummy payment captured.</p>
                 <p className="text-sm leading-relaxed text-on-surface-variant">Reference: {paymentReference}</p>
 
-                {!isLoaded && !authLoadTimedOut ? (
-                  <p className="text-sm text-on-surface-variant">Checking account session...</p>
-                ) : null}
-
-                {!isLoaded && authLoadTimedOut ? (
-                  <button type="button" onClick={handleContinueToAccountSetup} className="block w-full border border-amber-300/45 bg-amber-300/10 px-5 py-3 text-center font-label text-xs uppercase tracking-[0.16em] text-amber-100 transition-colors hover:bg-amber-300/20">
-                    Continue to account setup
-                  </button>
-                ) : null}
-
                 {isLoaded && !isSignedIn ? (
                   <div className="space-y-3">
-                    <button type="button" onClick={handleContinueToAccountSetup} className="block w-full border border-primary/45 bg-primary/15 px-5 py-3 text-center font-label text-xs uppercase tracking-[0.16em] text-primary transition-colors hover:bg-primary/25">
-                      Continue to account setup
+                    <button type="button" onClick={handleContinueToSignUp} className="block w-full border border-primary/45 bg-primary/15 px-5 py-3 text-center font-label text-xs uppercase tracking-[0.16em] text-primary transition-colors hover:bg-primary/25">
+                      Continue to sign up
                     </button>
-                    <p className="text-xs uppercase tracking-[0.14em] text-on-surface-variant/75">Use the same email for a faster setup.</p>
+                    <button type="button" onClick={handleContinueToSignIn} className="block w-full border border-outline-variant/30 px-5 py-3 text-center font-label text-xs uppercase tracking-[0.16em] text-on-surface-variant transition-colors hover:border-primary/35 hover:text-primary">
+                      I already have an account
+                    </button>
+                    <p className="text-xs uppercase tracking-[0.14em] text-on-surface-variant/75">Email code and magic link are handled by Clerk on the next step.</p>
                   </div>
                 ) : null}
 

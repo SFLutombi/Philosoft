@@ -3,6 +3,7 @@
 Last Updated: 2026-04-17
 
 ## Completed
+- [2026-04-17 21:17:59] Performed hard auth reset and clean rebuild on Clerk: removed all auth-flow session-marker hacks, rebuilt onboarding sign-up/sign-in pages as pure Clerk path-routed flows with returnTo preservation, simplified payment handoff to explicit Sign Up/Sign In actions, and preserved full return paths in ProtectedRoute.
 - [2026-04-17 20:54:42] Removed `React.StrictMode` wrapper around Clerk app bootstrap to prevent double-mount side effects during auth UI initialization, which can trigger duplicate email verification code sends in development-like flows.
 - [2026-04-17 20:34:28] Updated first-time dashboard tutorial overlay: removed notification-access prompt from the button-explanation step, kept notification permission only in the alarms step, and switched both tutorial phases to a fully opaque black full-screen backdrop so dashboard content stays hidden until onboarding is complete.
 - [2026-04-17 20:14:13] Fixed Clerk verification flow reset by changing onboarding auth routes to wildcard paths (`/onboarding-signup/*`, `/onboarding-signin/*`), allowing Clerk path-based subroutes (like verify steps) to resolve instead of falling through the app wildcard redirect.
@@ -145,6 +146,7 @@ Last Updated: 2026-04-17
 - Draft visual direction board for dark-academia and aspirational mystery tone.
 
 ## Decisions
+- [2026-04-17] Auth flow stability policy: avoid automatic cross-page redirects during verification-sensitive steps; payment completion now transitions into auth via explicit user actions (Sign Up / Sign In), while Clerk controls verification state and final redirect to profile/dashboard.
 - [2026-04-16] Post-quiz auth entry must be route-based Links instead of modal components to eliminate clipping issues, ensure auth fits the PWA viewport consistently across all mobile widths, and provide deterministic post-auth navigation. This is non-negotiable for mobile PWA reliability.
 - [2026-04-16] Post-quiz page design must ruthlessly prioritize focus: single headline + primary action per screen, remove competing sections and explanatory blocks, and keep visual hierarchy binary (what matters most at top, CTAs at bottom). Dense layouts scatter attention and confuse user decision-making.
 - [2026-04-15] During MVP build, Supabase event persistence should gracefully fall back to localStorage when Supabase env variables are missing, so core interruption flow remains testable without backend blocking.

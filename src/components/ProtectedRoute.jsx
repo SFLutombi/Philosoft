@@ -5,6 +5,7 @@ import { hasCompletedProfile } from "../services/profileStore";
 export default function ProtectedRoute({ element }) {
   const { isLoaded, isSignedIn, user } = useUser();
   const location = useLocation();
+  const returnTo = `${location.pathname}${location.search}${location.hash}`;
 
   if (!isLoaded) {
     return (
@@ -17,13 +18,13 @@ export default function ProtectedRoute({ element }) {
   }
 
   if (!isSignedIn) {
-    const target = `/onboarding-signin?returnTo=${encodeURIComponent(location.pathname)}`;
+    const target = `/onboarding-signin?returnTo=${encodeURIComponent(returnTo)}`;
     return <Navigate to={target} replace />;
   }
 
   const isProfileRoute = location.pathname === "/onboarding-profile";
   if (!isProfileRoute && !hasCompletedProfile(user?.id)) {
-    const target = `/onboarding-profile?returnTo=${encodeURIComponent(location.pathname)}`;
+    const target = `/onboarding-profile?returnTo=${encodeURIComponent(returnTo)}`;
     return <Navigate to={target} replace />;
   }
 
