@@ -3,6 +3,7 @@
 Last Updated: 2026-04-17
 
 ## Completed
+- [2026-04-17 20:14:13] Fixed Clerk verification flow reset by changing onboarding auth routes to wildcard paths (`/onboarding-signup/*`, `/onboarding-signin/*`), allowing Clerk path-based subroutes (like verify steps) to resolve instead of falling through the app wildcard redirect.
 - [2026-04-17 19:35:33] Removed the PaymentPage auto-redirect that forced unauthenticated users back to sign-up during Clerk session hydration, so the email verification PIN flow can complete without being preempted.
 - [2026-04-17 19:30:48] Removed the landing recovery redirect that was bouncing verified users back to sign-up; confirmed the app relies on Clerk's email sign-up/sign-in components and rebuilt successfully.
 - [2026-04-17 19:03:12] Added onboarding auth-flow recovery for verification bounces: track auth-in-progress in sessionStorage during onboarding sign-up/sign-in, auto-redirect landing back to onboarding when payment is complete and auth is mid-flow, and clear the marker after successful profile completion.

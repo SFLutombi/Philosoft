@@ -37,8 +37,8 @@ export default function App() {
       <Route path="/results-misalignment" element={<ResultsMisalignmentPage />} />
       <Route path="/pricing" element={<PricingPage />} />
       <Route path="/payment" element={<PaymentPage />} />
-      <Route path="/onboarding-signup" element={<OnboardingSignUpPage />} />
-      <Route path="/onboarding-signin" element={<OnboardingSignInPage />} />
+      <Route path="/onboarding-signup/*" element={<OnboardingSignUpPage />} />
+      <Route path="/onboarding-signin/*" element={<OnboardingSignInPage />} />
       <Route path="/onboarding-profile" element={<ProtectedRoute element={<OnboardingProfilePage />} />} />
       <Route path="/terms-of-service" element={<TermsOfServicePage />} />
       <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
