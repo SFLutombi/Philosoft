@@ -16,12 +16,10 @@ if (!clerkPublishableKey) {
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <ClerkProvider publishableKey={clerkPublishableKey} afterSignOutUrl="/landing">
-      <ClerkSupabaseBridge />
-      <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-        <App />
-      </BrowserRouter>
-    </ClerkProvider>
-  </React.StrictMode>
+  <ClerkProvider publishableKey={clerkPublishableKey} afterSignOutUrl="/landing">
+    <ClerkSupabaseBridge />
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <App />
+    </BrowserRouter>
+  </ClerkProvider>
 );
