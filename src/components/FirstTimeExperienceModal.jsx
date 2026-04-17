@@ -47,7 +47,7 @@ export default function FirstTimeExperienceModal({
 
   if (phase === "explain") {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+      <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black">
         <div className="relative mx-4 max-w-md space-y-8 rounded-2xl border border-primary/30 bg-surface-container-low/95 p-8 text-center">
           {/* Decorative blur */}
           <div className="pointer-events-none absolute -top-20 right-[-3rem] h-40 w-40 rounded-full bg-primary/15 blur-3xl" />
@@ -127,35 +127,6 @@ export default function FirstTimeExperienceModal({
             </p>
           </div>
 
-          <div className="space-y-3 border border-primary/40 bg-surface-container-high/60 p-4 text-left">
-            <div className="space-y-1">
-              <p className="font-label text-[9px] uppercase tracking-[0.22em] text-primary/90">
-                Checkpoint Reminders
-              </p>
-              <p className="text-xs text-on-surface-variant">
-                Allow notifications now so the alarm flow can activate the moment you finish setup.
-              </p>
-            </div>
-
-            {notificationPermission === "granted" ? (
-              <div className="rounded border border-primary/30 bg-primary/5 px-3 py-2 text-xs text-primary">
-                Notifications enabled. We can move on to your checkpoints.
-              </div>
-            ) : notificationPermission === "denied" ? (
-              <div className="rounded border border-outline-variant/40 bg-surface-container-low/60 px-3 py-2 text-xs text-on-surface-variant">
-                Notifications are blocked in your browser. You can still continue, but reminders will stay silent until you allow them.
-              </div>
-            ) : (
-              <button
-                onClick={handleRequestNotification}
-                disabled={requestingNotification}
-                className="w-full border border-primary/50 bg-primary/15 px-3 py-2 font-label text-xs uppercase tracking-[0.14em] text-primary transition-all hover:border-primary hover:bg-primary/25 disabled:opacity-50"
-              >
-                {requestingNotification ? "Requesting..." : "Allow Notification Access"}
-              </button>
-            )}
-          </div>
-
           {/* CTA */}
           <button
             onClick={() => setPhase("alarms")}
@@ -170,7 +141,7 @@ export default function FirstTimeExperienceModal({
 
   if (phase === "alarms") {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+      <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black">
         <div className="relative mx-4 max-w-md space-y-6 rounded-2xl border border-primary/30 bg-surface-container-low/95 p-8">
           <div className="pointer-events-none absolute -top-20 right-[-3rem] h-40 w-40 rounded-full bg-primary/15 blur-3xl" />
 
