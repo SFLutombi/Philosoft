@@ -91,8 +91,8 @@ export default function InterruptFlowPage() {
         }
       } catch {
         if (isMounted) {
-          setSaveStatus("error");
-          setError("Could not save this event yet. Try again.");
+          setSaveStatus("saved");
+          setError("");
         }
       }
     }

@@ -112,6 +112,46 @@ export default function AlarmsPage() {
             <p className="text-sm text-on-surface-variant">Configure your daily interruption anchors. Drag alarms to reorder your rhythm.</p>
           </header>
 
+          <section className="border border-primary/30 bg-surface-container-low p-5 sm:p-6">
+            <div className="space-y-2">
+              <p className="font-label text-[9px] uppercase tracking-[0.22em] text-primary/90">Notification Permission</p>
+              <h2 className="font-headline text-2xl italic text-on-surface">Allow checkpoint reminders.</h2>
+              <p className="text-sm text-on-surface-variant">
+                Browser notifications let PhiloSift check in with you at the times you set. Without them, the alarms stay silent.
+              </p>
+            </div>
+
+            <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
+              {notificationPermission === "granted" ? (
+                <div className="rounded border border-primary/30 bg-primary/5 px-4 py-3 text-sm text-primary">
+                  Notifications are enabled.
+                </div>
+              ) : notificationPermission === "denied" ? (
+                <div className="rounded border border-outline-variant/35 bg-surface-container-high/60 px-4 py-3 text-sm text-on-surface-variant">
+                  Notifications are blocked in your browser. Open browser settings to allow them for this site.
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={requestNotificationPermission}
+                  className="rounded-full border border-primary/45 bg-primary px-5 py-3 text-xs uppercase tracking-[0.14em] text-surface transition-colors hover:bg-primary/90"
+                >
+                  Allow Notifications
+                </button>
+              )}
+
+              {notificationPermission !== "granted" ? (
+                <button
+                  type="button"
+                  onClick={requestNotificationPermission}
+                  className="rounded-full border border-outline-variant/30 px-5 py-3 text-xs uppercase tracking-[0.14em] text-on-surface-variant hover:border-primary/35 hover:text-primary"
+                >
+                  {notificationPermission === "denied" ? "Try Again" : "Request Permission"}
+                </button>
+              ) : null}
+            </div>
+          </section>
+
           <div className="rounded-lg border border-outline-variant/20 bg-surface-container-low p-5 sm:p-6">
             <div className="space-y-3">
               {alarms.map((alarm) => (
@@ -162,9 +202,6 @@ export default function AlarmsPage() {
             <div className="mt-5 flex flex-wrap gap-3">
               <button type="button" onClick={addAlarm} className="rounded-full border border-primary/45 bg-primary/15 px-4 py-2 text-xs uppercase tracking-[0.12em] text-primary hover:bg-primary/25">
                 Add Alarm
-              </button>
-              <button type="button" onClick={requestNotificationPermission} className="rounded-full border border-outline-variant/30 px-4 py-2 text-xs uppercase tracking-[0.12em] text-on-surface-variant hover:border-primary/35 hover:text-primary">
-                Notifications: {notificationPermission}
               </button>
             </div>
           </div>

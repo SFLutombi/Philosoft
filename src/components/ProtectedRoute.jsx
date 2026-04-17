@@ -16,7 +16,7 @@ export default function ProtectedRoute({ element }) {
   }
 
   if (!isSignedIn) {
-    const target = `/landing?returnTo=${encodeURIComponent(location.pathname)}`;
+    const target = `/onboarding-signin?returnTo=${encodeURIComponent(location.pathname)}`;
     return <Navigate to={target} replace />;
   }
 

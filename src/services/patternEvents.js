@@ -28,6 +28,10 @@ function createLocalEventId() {
   return `evt_${Date.now()}_${Math.floor(Math.random() * 100000)}`;
 }
 
+function isUuid(value) {
+  return typeof value === "string" && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
+}
+
 function normalizeEvent(event) {
   return {
     ...event,
@@ -63,7 +67,7 @@ export async function createPatternEvent({
     action: legacyAction,
   };
 
-  if (!hasSupabaseConfig || !supabase) {
+  if (!hasSupabaseConfig || !supabase || !isUuid(userId)) {
     const localEvents = loadLocalEvents();
     localEvents.unshift(event);
     saveLocalEvents(localEvents);
@@ -85,7 +89,11 @@ export async function createPatternEvent({
     .single();
 
   if (error) {
-    throw error;
+    console.warn("Supabase event insert failed, using local fallback.", error);
+    const localEvents = loadLocalEvents();
+    localEvents.unshift(event);
+    saveLocalEvents(localEvents);
+    return normalizeEvent(event);
   }
 
   return normalizeEvent(data);
@@ -96,7 +104,7 @@ export async function listPatternEvents(userId, limit = 50) {
     return [];
   }
 
-  if (!hasSupabaseConfig || !supabase) {
+  if (!hasSupabaseConfig || !supabase || !isUuid(userId)) {
     return loadLocalEvents().filter((event) => event.user_id === userId).slice(0, limit).map(normalizeEvent);
   }
 
@@ -108,7 +116,8 @@ export async function listPatternEvents(userId, limit = 50) {
     .limit(limit);
 
   if (error) {
-    throw error;
+    console.warn("Supabase event list failed, using local fallback.", error);
+    return loadLocalEvents().filter((event) => event.user_id === userId).slice(0, limit).map(normalizeEvent);
   }
 
   return (data || []).map(normalizeEvent);

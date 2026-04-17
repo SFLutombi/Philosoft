@@ -4,6 +4,7 @@ import { ClerkProvider } from "@clerk/react";
 import { BrowserRouter } from "react-router-dom";
 import { registerSW } from "virtual:pwa-register";
 import App from "./App";
+import ClerkSupabaseBridge from "./components/ClerkSupabaseBridge";
 import "./index.css";
 
 registerSW({ immediate: true });
@@ -17,7 +18,8 @@ if (!clerkPublishableKey) {
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ClerkProvider publishableKey={clerkPublishableKey} afterSignOutUrl="/landing">
-      <BrowserRouter>
+      <ClerkSupabaseBridge />
+      <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <App />
       </BrowserRouter>
     </ClerkProvider>

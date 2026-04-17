@@ -104,4 +104,4 @@ export default function ArchiveSidebar({ active = "dashboard", showAvatar = fals
       </aside>
     </>
   );
-      </div>
+}

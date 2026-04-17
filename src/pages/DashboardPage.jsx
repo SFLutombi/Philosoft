@@ -5,6 +5,7 @@ import { loadStoredResult, resolveSubarchetype } from "../data/resultFlow";
 import { listPatternEvents } from "../services/patternEvents";
 import { getRevenueCatCustomerInfo, hasAlignmentSystemAccess } from "../services/revenuecat";
 import ArchiveSidebar from "../components/ArchiveSidebar";
+import FirstTimeExperienceModal from "../components/FirstTimeExperienceModal";
 
 const INTRO_SEEN_KEY = "philosift_dashboard_intro_seen_v1";
 const ALARMS_STORAGE_KEY = "philosift_alarm_schedule_v1";
@@ -153,7 +154,7 @@ function reorderAlarms(alarms, draggedId, targetId) {
 export default function DashboardPage() {
   const { user } = useUser();
   const storedResult = loadStoredResult();
-  const [introPhase, setIntroPhase] = useState("hidden");
+  const [fteModalOpen, setFteModalOpen] = useState(false);
   const [alarms, setAlarms] = useState(() => readAlarms());
   const [isAlarmModalOpen, setIsAlarmModalOpen] = useState(false);
   const [notificationPermission, setNotificationPermission] = useState(typeof Notification === "undefined" ? "unsupported" : Notification.permission);
@@ -166,21 +167,10 @@ export default function DashboardPage() {
   const subarchetype = useMemo(() => resolveSubarchetype(storedResult), [storedResult]);
 
   useEffect(() => {
-    if (readIntroSeen()) {
-      setIntroPhase("hidden");
-      return;
+    if (!readIntroSeen()) {
+      setFteModalOpen(true);
+      writeIntroSeen();
     }
-
-    setIntroPhase("explain");
-    writeIntroSeen();
-
-    const timeoutId = window.setTimeout(() => {
-      setIntroPhase("alarms");
-    }, 4300);
-
-    return () => {
-      window.clearTimeout(timeoutId);
-    };
   }, []);
 
   useEffect(() => {
@@ -322,8 +312,8 @@ export default function DashboardPage() {
     }
   }
 
-  function closeAlarmIntro() {
-    setIntroPhase("hidden");
+  function handleFteComplete() {
+    setFteModalOpen(false);
   }
 
   function addAlarm() {
@@ -367,96 +357,14 @@ export default function DashboardPage() {
         </>
       ) : null}
 
-      {introPhase === "explain" ? (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-[#111111]/92 px-4">
-          <div className="relative w-full max-w-xl overflow-hidden rounded-[2rem] border border-primary/30 bg-[#161413] p-7 text-center shadow-[0_24px_90px_rgba(0,0,0,0.55)] sm:p-10">
-            <div className="pointer-events-none absolute -top-24 right-[-4rem] h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-24 left-[-4rem] h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
-
-            <p className="font-label text-[10px] uppercase tracking-[0.26em] text-primary/85">Guided Start</p>
-            <h2 className="mt-4 font-headline text-3xl italic text-on-surface sm:text-4xl">This is your Pattern Interrupt Button.</h2>
-            <p className="mt-4 text-sm leading-relaxed text-on-surface-variant sm:text-base">
-              Tap it the moment you feel the loop beginning. The flow is short, fast, and built to turn awareness into action.
-            </p>
-
-            <div className="mt-8 flex justify-center">
-              <div className="relative flex h-40 w-40 items-center justify-center rounded-full border-2 border-primary/60 bg-primary/15 shadow-[0_0_40px_rgba(233,193,118,0.2)]">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full border border-primary/45" />
-                <img src="/favicon.svg" alt="" className="relative h-20 w-20" />
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : null}
-
-      {introPhase === "alarms" ? (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-[#111111]/94 px-4">
-          <div className="relative w-full max-w-2xl overflow-hidden rounded-[2rem] border border-primary/30 bg-[#161413] p-6 shadow-[0_24px_90px_rgba(0,0,0,0.55)] sm:p-8">
-            <p className="font-label text-[10px] uppercase tracking-[0.24em] text-primary/85">Daily Alarms</p>
-            <h2 className="mt-3 font-headline text-3xl italic text-on-surface">Set your 3 anchor reminders.</h2>
-            <p className="mt-3 text-sm leading-relaxed text-on-surface-variant">Drag to reorder and set times for morning, lunch, and evening. You can edit these anytime from the bottom bar.</p>
-
-            <div className="mt-6 space-y-3">
-              {alarms.map((alarm) => (
-                <div
-                  key={alarm.id}
-                  draggable
-                  onDragStart={() => {
-                    dragAlarmIdRef.current = alarm.id;
-                  }}
-                  onDragOver={(event) => {
-                    event.preventDefault();
-                  }}
-                  onDrop={() => {
-                    setAlarms((current) => reorderAlarms(current, dragAlarmIdRef.current, alarm.id));
-                  }}
-                  className="grid grid-cols-[1fr_auto_auto] items-center gap-3 rounded-xl border border-outline-variant/25 bg-surface-container-high/70 px-3 py-3"
-                >
-                  <input
-                    type="text"
-                    value={alarm.label}
-                    onChange={(event) => updateAlarm(alarm.id, "label", event.target.value.slice(0, 26))}
-                    className="w-full rounded-md border border-transparent bg-transparent px-2 py-1 text-sm text-on-surface outline-none transition-colors focus:border-primary/35"
-                  />
-                  <input
-                    type="time"
-                    value={alarm.time}
-                    onChange={(event) => updateAlarm(alarm.id, "time", event.target.value)}
-                    className="rounded-md border border-outline-variant/35 bg-[#1a1a1a] px-2 py-1 text-sm text-on-surface"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => updateAlarm(alarm.id, "enabled", !alarm.enabled)}
-                    className={`rounded-full border px-3 py-1 text-[10px] uppercase tracking-[0.12em] ${alarm.enabled ? "border-primary/45 bg-primary/15 text-primary" : "border-outline-variant/30 text-on-surface-variant"}`}
-                  >
-                    {alarm.enabled ? "On" : "Off"}
-                  </button>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-6 flex flex-wrap gap-3">
-              <button
-                type="button"
-                onClick={async () => {
-                  await requestNotificationPermission();
-                  closeAlarmIntro();
-                }}
-                className="rounded-full border border-primary/45 bg-primary/15 px-5 py-3 text-xs uppercase tracking-[0.14em] text-primary transition-colors hover:bg-primary/25"
-              >
-                Enable and Continue
-              </button>
-              <button
-                type="button"
-                onClick={closeAlarmIntro}
-                className="rounded-full border border-outline-variant/30 px-5 py-3 text-xs uppercase tracking-[0.14em] text-on-surface-variant transition-colors hover:border-primary/35 hover:text-primary"
-              >
-                Skip for now
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : null}
+      <FirstTimeExperienceModal
+        isOpen={fteModalOpen}
+        alarms={alarms}
+        onAlarmsChange={setAlarms}
+        onComplete={handleFteComplete}
+        notificationPermission={notificationPermission}
+        onRequestNotificationPermission={requestNotificationPermission}
+      />
 
       {isAlarmModalOpen ? (
         <div className="fixed inset-0 z-[75] flex items-center justify-center bg-[#0d0d0d]/88 px-4">

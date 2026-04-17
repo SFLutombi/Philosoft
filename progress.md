@@ -3,6 +3,16 @@
 Last Updated: 2026-04-17
 
 ## Completed
+- [2026-04-17 04:00:18] Switched the local Clerk publishable key to the live production key so the app can load the production Clerk instance during deployment checks.
+- [2026-04-17 03:52:10] Deployed PhiloSift to Vercel production and connected the live hosting path so the app can be validated on the real domain.
+- [2026-04-17 03:44:10] Confirmed Clerk setup is in place for production configuration, so the next deployment step is validating the live domain and auth flow.
+- [2026-04-17 03:38:12] Moved notification permission messaging into the dashboard intro so the first-time modal explicitly requests reminder access before the alarm setup step.
+- [2026-04-17 03:31:08] Added a UUID guard in pattern-event persistence so Clerk string user IDs bypass the UUID-backed Supabase path and stay on the local fallback, preventing the live 400 Bad Request.
+- [2026-04-17 03:22:41] Switched Supabase to Clerk accessToken auth, made pattern-event persistence always fall back locally on Supabase failures, and changed the interrupt final step to continue to the dashboard even if the save errors.
+- [2026-04-17 03:14:28] Wired a Clerk token bridge into Supabase requests so authenticated sessions can send a bearer token to PostgREST, reducing pattern-event writes from anonymous 401s to authenticated requests when the Supabase JWT template is configured.
+- [2026-04-17 03:07:12] Added graceful local fallback for Supabase pattern-event writes and reads when auth returns 401/403, and upgraded the alarms page to present a branded notification permission prompt instead of only a passive off state.
+- [2026-04-17 02:58:41] Refined first-time experience branding by removing the extra explanatory sentence from the button copy and replacing the lightning glyph with the PhiloSift brand icon in the glowing intro button.
+- [2026-04-17 02:52:18] Fixed DashboardPage runtime crash by restoring the missing `isAlarmModalOpen` state used by the existing alarm settings modal; production build passes again.
 - [2026-04-17 01:27:13] Added app-wide sidebar navigation with mobile drawer (dashboard/interrupt/history/alarms/settings), integrated account details and user menu into sidebar, created dedicated protected `/alarms` page for reminder management, and rewired dashboard alarm actions to route-based navigation for reliable return paths between pages.
 - [2026-04-17 01:17:41] Added progression-reactive dashboard behavior and reminder system: unlock visual "come alive" effects after session milestones, introduced first-run 3-alarm setup (morning/lunch/evening) with drag reordering and editable times, added persistent alarm manager (add/remove/reorder) from the bottom menu, replaced Access button with Alarms, and updated interrupt feedback to reinforce cumulative progress so slips do not erase prior gains.
 - [2026-04-17 01:08:59] Implemented guided dashboard experience: first-visit animated intro explaining the interrupt button, restored full dashboard with key stats, added account/subscription/resources sidebar, and added a fixed bottom dock with center interrupt action button.
