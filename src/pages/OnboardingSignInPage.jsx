@@ -41,8 +41,8 @@ export default function OnboardingSignInPage() {
 
   return (
     <div className="font-body min-h-[100svh] bg-[#131313] text-on-surface antialiased" style={{ backgroundImage: "radial-gradient(#201f1f 0.5px, transparent 0.5px)", backgroundSize: "24px 24px" }}>
-      <main className="mx-auto flex min-h-[100svh] w-full max-w-5xl flex-col justify-center px-4 py-10 sm:px-6 lg:px-8">
-        <section className="relative overflow-hidden border border-primary/30 bg-surface-container-low/90 p-5 sm:p-7 md:p-8">
+      <main className="mx-auto flex min-h-[100svh] w-full max-w-5xl flex-col justify-center px-3 py-6 sm:px-5 sm:py-8 lg:px-8">
+        <section className="relative overflow-hidden bg-surface-container-low/90 p-4 sm:p-6 md:p-8">
           <div className="pointer-events-none absolute -top-24 right-[-5rem] h-52 w-52 rounded-full bg-primary/10 blur-2xl" />
           <div className="pointer-events-none absolute -bottom-20 left-[-4rem] h-40 w-40 rounded-full bg-primary/10 blur-2xl" />
 
@@ -63,7 +63,7 @@ export default function OnboardingSignInPage() {
               </Link>
             </div>
 
-            <div className="min-w-0 rounded-lg bg-[#181512] p-5 sm:p-6">
+            <div className="min-w-0 bg-[#181512] p-2 sm:p-3">
               <SignIn
                 routing="path"
                 path="/onboarding-signin"
@@ -71,6 +71,13 @@ export default function OnboardingSignInPage() {
                 forceRedirectUrl={profileRedirect}
                 fallbackRedirectUrl={profileRedirect}
                 initialValues={billingEmail ? { identifier: billingEmail } : undefined}
+                appearance={{
+                  elements: {
+                    rootBox: "w-full",
+                    cardBox: "w-full",
+                    card: "w-full bg-transparent shadow-none border-0 rounded-none",
+                  },
+                }}
               />
             </div>
           </div>

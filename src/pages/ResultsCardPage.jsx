@@ -114,9 +114,9 @@ export default function ResultsCardPage() {
                 <span className="material-symbols-outlined text-lg">download</span>
                 Download
               </button>
-              <Link to="/results-description" className="flex w-full items-center justify-center gap-3 bg-primary py-4 font-label text-xs font-bold uppercase tracking-[0.2em] text-on-primary transition-colors hover:bg-on-primary-container">
-                <span className="material-symbols-outlined text-lg">auto_stories</span>
-                Find Out More
+              <Link to="/results-description" className="flex w-full items-center justify-center gap-2.5 bg-primary px-2 py-4 font-label text-xs font-bold uppercase tracking-[0.16em] text-on-primary transition-colors hover:bg-on-primary-container sm:gap-3.5">
+                <span className="material-symbols-outlined shrink-0 text-lg">auto_stories</span>
+                <span className="whitespace-nowrap">Find Out More</span>
               </Link>
             </div>
           </div>
