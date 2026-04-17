@@ -3,6 +3,8 @@
 Last Updated: 2026-04-17
 
 ## Completed
+- [2026-04-17 19:35:33] Removed the PaymentPage auto-redirect that forced unauthenticated users back to sign-up during Clerk session hydration, so the email verification PIN flow can complete without being preempted.
+- [2026-04-17 19:30:48] Removed the landing recovery redirect that was bouncing verified users back to sign-up; confirmed the app relies on Clerk's email sign-up/sign-in components and rebuilt successfully.
 - [2026-04-17 19:03:12] Added onboarding auth-flow recovery for verification bounces: track auth-in-progress in sessionStorage during onboarding sign-up/sign-in, auto-redirect landing back to onboarding when payment is complete and auth is mid-flow, and clear the marker after successful profile completion.
 - [2026-04-17 05:22:36] Simplified profile onboarding by removing birth time and birth place collection; kept only first name, last name, and birth date for required personalization.
 - [2026-04-17 05:15:22] Added personal-details onboarding step (name and birth details), routed post-auth users through profile setup, enforced profile completion before protected app routes, and introduced first-name personalization in dashboard and interrupt feedback.

@@ -74,11 +74,6 @@ export default function PaymentPage() {
 
     if (isLoaded && isSignedIn) {
       navigate("/onboarding-profile", { replace: true });
-      return;
-    }
-
-    if (isLoaded && !isSignedIn) {
-      navigate("/onboarding-signup", { replace: true });
     }
   }, [isLoaded, isSignedIn, navigate, paymentCompleted]);
 
