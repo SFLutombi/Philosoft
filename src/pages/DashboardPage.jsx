@@ -6,6 +6,7 @@ import { listPatternEvents } from "../services/patternEvents";
 import { getRevenueCatCustomerInfo, hasAlignmentSystemAccess } from "../services/revenuecat";
 import ArchiveSidebar from "../components/ArchiveSidebar";
 import FirstTimeExperienceModal from "../components/FirstTimeExperienceModal";
+import { readStoredProfile } from "../services/profileStore";
 
 const INTRO_SEEN_KEY = "philosift_dashboard_intro_seen_v1";
 const ALARMS_STORAGE_KEY = "philosift_alarm_schedule_v1";
@@ -165,6 +166,8 @@ export default function DashboardPage() {
   const dragAlarmIdRef = useRef("");
 
   const subarchetype = useMemo(() => resolveSubarchetype(storedResult), [storedResult]);
+  const profile = useMemo(() => readStoredProfile(user?.id), [user?.id]);
+  const firstName = profile?.firstName || user?.firstName || "";
 
   useEffect(() => {
     if (!readIntroSeen()) {
@@ -501,7 +504,7 @@ export default function DashboardPage() {
           <section className="rounded-2xl border border-primary/20 bg-surface-container-low/85 p-5 sm:p-6">
             <header className="space-y-2">
               <p className="font-label text-[10px] uppercase tracking-[0.22em] text-primary/85">Dashboard</p>
-              <h1 className="font-headline text-3xl italic text-on-surface sm:text-4xl">Pattern Command Center</h1>
+              <h1 className="font-headline text-3xl italic text-on-surface sm:text-4xl">{firstName ? `${firstName}'s Pattern Command Center` : "Pattern Command Center"}</h1>
               <p className="text-sm leading-relaxed text-on-surface-variant">Use the center button whenever you detect the loop beginning. The fastest interruption wins.</p>
             </header>
 

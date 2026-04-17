@@ -5,14 +5,44 @@ import AuthHeaderControls from "../components/AuthHeaderControls";
 import GrainOverlay from "../components/GrainOverlay";
 import LegalPolicyLinks from "../components/LegalPolicyLinks";
 
+const PAYMENT_COMPLETE_STORAGE_KEY = "philosift_onboarding_payment_complete";
+const AUTH_FLOW_IN_PROGRESS_KEY = "philosift_auth_flow_in_progress_v1";
+
+function readStorageFlag(key) {
+  try {
+    return localStorage.getItem(key) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function readSessionFlag(key) {
+  try {
+    return sessionStorage.getItem(key) === "1";
+  } catch {
+    return false;
+  }
+}
+
 export default function LandingPage() {
   const { isLoaded, isSignedIn } = useUser();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const returnTo = searchParams.get("returnTo");
+  const paymentCompleted = readStorageFlag(PAYMENT_COMPLETE_STORAGE_KEY);
+  const authFlowInProgress = readSessionFlag(AUTH_FLOW_IN_PROGRESS_KEY);
 
   useEffect(() => {
-    if (!isLoaded || !isSignedIn) {
+    if (!isLoaded) {
+      return;
+    }
+
+    if (!isSignedIn && paymentCompleted && authFlowInProgress) {
+      navigate("/onboarding-signup", { replace: true });
+      return;
+    }
+
+    if (!isSignedIn) {
       return;
     }
 
@@ -22,7 +52,7 @@ export default function LandingPage() {
     }
 
     navigate("/dashboard", { replace: true });
-  }, [isLoaded, isSignedIn, navigate, returnTo]);
+  }, [authFlowInProgress, isLoaded, isSignedIn, navigate, paymentCompleted, returnTo]);
 
   return (
     <div className="min-h-[100svh] overflow-x-hidden bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary">

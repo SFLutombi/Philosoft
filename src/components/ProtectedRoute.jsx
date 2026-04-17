@@ -1,8 +1,9 @@
 import { useUser } from "@clerk/react";
 import { Navigate, useLocation } from "react-router-dom";
+import { hasCompletedProfile } from "../services/profileStore";
 
 export default function ProtectedRoute({ element }) {
-  const { isLoaded, isSignedIn } = useUser();
+  const { isLoaded, isSignedIn, user } = useUser();
   const location = useLocation();
 
   if (!isLoaded) {
@@ -17,6 +18,12 @@ export default function ProtectedRoute({ element }) {
 
   if (!isSignedIn) {
     const target = `/onboarding-signin?returnTo=${encodeURIComponent(location.pathname)}`;
+    return <Navigate to={target} replace />;
+  }
+
+  const isProfileRoute = location.pathname === "/onboarding-profile";
+  if (!isProfileRoute && !hasCompletedProfile(user?.id)) {
+    const target = `/onboarding-profile?returnTo=${encodeURIComponent(location.pathname)}`;
     return <Navigate to={target} replace />;
   }
 

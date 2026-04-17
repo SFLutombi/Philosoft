@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { SignIn, useUser } from "@clerk/react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useSearchParams } from "react-router-dom";
 
 const PAYMENT_COMPLETE_STORAGE_KEY = "philosift_onboarding_payment_complete";
+const AUTH_FLOW_IN_PROGRESS_KEY = "philosift_auth_flow_in_progress_v1";
 const BILLING_EMAIL_STORAGE_KEY = "philosift_onboarding_billing_email";
 
 function readStorageValue(key) {
@@ -14,25 +15,45 @@ function readStorageValue(key) {
 }
 
 export default function OnboardingSignInPage() {
+  function writeAuthFlowInProgress(value) {
+    try {
+      if (value) {
+        sessionStorage.setItem(AUTH_FLOW_IN_PROGRESS_KEY, "1");
+      } else {
+        sessionStorage.removeItem(AUTH_FLOW_IN_PROGRESS_KEY);
+      }
+    } catch {
+      // Ignore storage failures and continue auth flow.
+    }
+  }
+
   const { isLoaded, isSignedIn } = useUser();
+  const [searchParams] = useSearchParams();
   const paymentCompleted = readStorageValue(PAYMENT_COMPLETE_STORAGE_KEY) === "1";
   const billingEmail = readStorageValue(BILLING_EMAIL_STORAGE_KEY);
+  const returnTo = searchParams.get("returnTo") || "/dashboard";
+  const profileRedirect = `/onboarding-profile?returnTo=${encodeURIComponent(returnTo)}`;
 
   useEffect(() => {
     const previousTitle = document.title;
     document.title = "Philosoft";
 
+    if (paymentCompleted && !isSignedIn) {
+      writeAuthFlowInProgress(true);
+    }
+
     return () => {
       document.title = previousTitle;
     };
-  }, []);
+  }, [isSignedIn, paymentCompleted]);
 
   if (!paymentCompleted) {
     return <Navigate to="/payment" replace />;
   }
 
   if (isLoaded && isSignedIn) {
-    return <Navigate to="/dashboard" replace />;
+    writeAuthFlowInProgress(false);
+    return <Navigate to={profileRedirect} replace />;
   }
 
   return (
@@ -64,8 +85,8 @@ export default function OnboardingSignInPage() {
                 routing="path"
                 path="/onboarding-signin"
                 signUpUrl="/onboarding-signup"
-                forceRedirectUrl="/dashboard"
-                fallbackRedirectUrl="/dashboard"
+                forceRedirectUrl={profileRedirect}
+                fallbackRedirectUrl={profileRedirect}
                 initialValues={billingEmail ? { identifier: billingEmail } : undefined}
               />
             </div>

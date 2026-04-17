@@ -13,6 +13,7 @@ import PricingPage from "./pages/PricingPage";
 import PaymentPage from "./pages/PaymentPage";
 import OnboardingSignUpPage from "./pages/OnboardingSignUpPage";
 import OnboardingSignInPage from "./pages/OnboardingSignInPage";
+import OnboardingProfilePage from "./pages/OnboardingProfilePage";
 import TermsOfServicePage from "./pages/TermsOfServicePage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import RefundPolicyPage from "./pages/RefundPolicyPage";
@@ -38,6 +39,7 @@ export default function App() {
       <Route path="/payment" element={<PaymentPage />} />
       <Route path="/onboarding-signup" element={<OnboardingSignUpPage />} />
       <Route path="/onboarding-signin" element={<OnboardingSignInPage />} />
+      <Route path="/onboarding-profile" element={<ProtectedRoute element={<OnboardingProfilePage />} />} />
       <Route path="/terms-of-service" element={<TermsOfServicePage />} />
       <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
       <Route path="/refund-policy" element={<RefundPolicyPage />} />

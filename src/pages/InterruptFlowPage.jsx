@@ -5,6 +5,7 @@ import { loadStoredResult, resolveSubarchetype } from "../data/resultFlow";
 import { createPatternEvent, listPatternEvents } from "../services/patternEvents";
 import { getInterruptPromptSet } from "../data/interruptPrompts";
 import ArchiveSidebar from "../components/ArchiveSidebar";
+import { readStoredProfile } from "../services/profileStore";
 
 const DECISION_OPTIONS = [
   { id: "acted", label: "Acted" },
@@ -19,6 +20,8 @@ export default function InterruptFlowPage() {
   const storedResult = useMemo(() => loadStoredResult(), []);
   const subarchetype = useMemo(() => resolveSubarchetype(storedResult), [storedResult]);
   const promptSet = useMemo(() => getInterruptPromptSet(subarchetype?.id), [subarchetype?.id]);
+  const profile = useMemo(() => readStoredProfile(user?.id), [user?.id]);
+  const firstName = profile?.firstName || user?.firstName || "";
 
   const [step, setStep] = useState(1);
   const [triggerType, setTriggerType] = useState("");
@@ -141,7 +144,9 @@ export default function InterruptFlowPage() {
 
   const isSaving = saveStatus === "saving";
   const projectedSessions = completedSessionsBefore + 1;
-  const feedbackMessage = actionTaken === "acted" ? "You interrupted the pattern." : "You observed the pattern.";
+  const feedbackMessage = actionTaken === "acted"
+    ? `${firstName ? `${firstName}, ` : ""}you interrupted the pattern.`
+    : `${firstName ? `${firstName}, ` : ""}you observed the pattern.`;
   const feedbackDetail = actionTaken === "acted"
     ? `Session ${projectedSessions} logged. You are already progressing, and that momentum is what matters.`
     : `Session ${projectedSessions} logged. Progress is cumulative; one fall never erases what you already built.`;

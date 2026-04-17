@@ -48,7 +48,7 @@ export default function PaymentPage() {
   }
 
   function handleContinueToDashboard() {
-    navigate("/dashboard");
+    navigate("/onboarding-profile");
   }
 
   function handleContinueToAccountSetup() {
@@ -73,7 +73,7 @@ export default function PaymentPage() {
     }
 
     if (isLoaded && isSignedIn) {
-      navigate("/dashboard", { replace: true });
+      navigate("/onboarding-profile", { replace: true });
       return;
     }
 
@@ -163,7 +163,7 @@ export default function PaymentPage() {
 
                 {isLoaded && isSignedIn ? (
                   <button type="button" onClick={handleContinueToDashboard} className="block w-full border border-primary/45 bg-primary/15 px-5 py-3 text-center font-label text-xs uppercase tracking-[0.16em] text-primary transition-colors hover:bg-primary/25">
-                    Continue to dashboard
+                    Continue to profile setup
                   </button>
                 ) : null}
               </div>

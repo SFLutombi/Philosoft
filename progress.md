@@ -3,6 +3,11 @@
 Last Updated: 2026-04-17
 
 ## Completed
+- [2026-04-17 19:03:12] Added onboarding auth-flow recovery for verification bounces: track auth-in-progress in sessionStorage during onboarding sign-up/sign-in, auto-redirect landing back to onboarding when payment is complete and auth is mid-flow, and clear the marker after successful profile completion.
+- [2026-04-17 05:22:36] Simplified profile onboarding by removing birth time and birth place collection; kept only first name, last name, and birth date for required personalization.
+- [2026-04-17 05:15:22] Added personal-details onboarding step (name and birth details), routed post-auth users through profile setup, enforced profile completion before protected app routes, and introduced first-name personalization in dashboard and interrupt feedback.
+- [2026-04-17 05:05:40] Chose fastest launch path: keep Clerk as primary auth, disable Google OAuth for launch, and use email/password (or email code) sign-in first; defer social OAuth configuration to post-launch.
+- [2026-04-17 04:58:42] Confirmed Vercel environment variables are in place and narrowed the remaining production auth blocker to Google OAuth credentials and redirect URI setup in Clerk/Google Cloud.
 - [2026-04-17 04:00:18] Switched the local Clerk publishable key to the live production key so the app can load the production Clerk instance during deployment checks.
 - [2026-04-17 03:52:10] Deployed PhiloSift to Vercel production and connected the live hosting path so the app can be validated on the real domain.
 - [2026-04-17 03:44:10] Confirmed Clerk setup is in place for production configuration, so the next deployment step is validating the live domain and auth flow.
@@ -119,6 +124,7 @@ Last Updated: 2026-04-17
 - [2026-04-10 02:35:00] Added section headers to quiz questions and verified all 20 questions are correctly aligned with their philosophical axes. Updated axis labels to preferred wording (Truth & Knowledge, Ethics & Power, Drive).
 
 ## Ideas / Backlog
+- Post-launch: configure production Google OAuth in Clerk (client ID/secret, verified redirect URIs, consent screen) and re-enable Google social sign-in.
 - Replace results-page premium placeholders with real gated content after integrating Clerk auth, Supabase storage, and LemonSqueezy subscription entitlements.
 - Build onboarding quiz with philosophical prompts that map users to a current philosophy archetype and a target rare-self archetype.
 - Generate quiz results that reference historical thinker metaphors (optional toggle).
