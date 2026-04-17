@@ -205,7 +205,7 @@ export default function DashboardPage() {
         }
 
         if (Notification.permission === "granted") {
-          new Notification("PhiloSift Checkpoint", {
+          new Notification("Philosift Checkpoint", {
             body: `${alarm.label}: your interrupt window is open. Progress counts.`,
             icon: "/favicon.svg",
           });

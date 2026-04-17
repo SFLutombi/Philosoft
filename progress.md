@@ -3,6 +3,7 @@
 Last Updated: 2026-04-17
 
 ## Completed
+- [2026-04-17 23:52:42] Confirmed and standardized legal/support contact email as support@philosift.com across Privacy Policy, Terms of Service, and Refund Policy pages.
 - [2026-04-17 23:09:30] Improved onboarding auth readability by removing decorative color-glow overlays behind Clerk forms and applying explicit high-contrast Clerk appearance variables/elements for text, labels, inputs, and primary actions on both sign-up and sign-in pages.
 - [2026-04-17 22:54:33] Refined onboarding/results mobile UX and performance: increased icon-text spacing on the "Find Out More" CTA, removed auth wrapper borders and clipping constraints while keeping the Clerk surface color, tuned onboarding page spacing for small screens, and added route-level lazy loading plus lazy/async loading hints for non-critical landing images to improve mobile load behavior.
 - [2026-04-17 21:17:59] Performed hard auth reset and clean rebuild on Clerk: removed all auth-flow session-marker hacks, rebuilt onboarding sign-up/sign-in pages as pure Clerk path-routed flows with returnTo preservation, simplified payment handoff to explicit Sign Up/Sign In actions, and preserved full return paths in ProtectedRoute.

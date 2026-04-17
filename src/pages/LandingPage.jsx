@@ -35,7 +35,7 @@ export default function LandingPage() {
       <header className="fixed top-0 left-0 w-full z-40 bg-[#0e0e0e]/80 backdrop-blur-xl flex justify-between items-center px-4 sm:px-5 md:px-8 py-3 md:py-2.5 max-w-none transition-colors duration-500">
         <div className="flex items-center gap-2 font-['Newsreader'] text-[1.05rem] sm:text-xl font-light tracking-[0.18em] sm:tracking-[0.2em] text-[#e9c176]">
           <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>flare</span>
-          <span>PHILOSIFT</span>
+          <span>Philosift</span>
         </div>
         <AuthHeaderControls />
       </header>

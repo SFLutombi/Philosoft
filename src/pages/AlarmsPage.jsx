@@ -117,7 +117,7 @@ export default function AlarmsPage() {
               <p className="font-label text-[9px] uppercase tracking-[0.22em] text-primary/90">Notification Permission</p>
               <h2 className="font-headline text-2xl italic text-on-surface">Allow checkpoint reminders.</h2>
               <p className="text-sm text-on-surface-variant">
-                Browser notifications let PhiloSift check in with you at the times you set. Without them, the alarms stay silent.
+                Browser notifications let Philosift check in with you at the times you set. Without them, the alarms stay silent.
               </p>
             </div>
 

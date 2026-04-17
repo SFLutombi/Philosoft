@@ -50,7 +50,7 @@ export default function ArchiveSidebar({ active = "dashboard", showAvatar = fals
           <aside className="absolute left-0 top-0 h-full w-[84vw] max-w-xs border-r border-[#444748]/20 bg-[#131313]">
             <div className="flex items-center justify-between px-6 py-6">
               <div>
-                <span className="font-['Newsreader'] text-lg italic text-[#e9c176]">PHILOSIFT</span>
+                <span className="font-['Newsreader'] text-lg italic text-[#e9c176]">Philosift</span>
                 <p className="mt-1 font-['Inter'] text-[10px] uppercase tracking-widest text-[#444748]">Archive Navigation</p>
               </div>
               <button type="button" onClick={() => setIsMobileOpen(false)} className="rounded-full border border-outline-variant/30 px-2 py-1 text-xs text-on-surface-variant">
@@ -71,7 +71,7 @@ export default function ArchiveSidebar({ active = "dashboard", showAvatar = fals
 
       <aside className="hidden lg:flex bg-[#131313] flex-col h-screen fixed left-0 top-0 border-r border-[#444748]/15 w-64 z-50">
         <div className="px-8 py-10">
-          <span className="font-['Newsreader'] text-lg italic text-[#e9c176]">PHILOSIFT</span>
+          <span className="font-['Newsreader'] text-lg italic text-[#e9c176]">Philosift</span>
           <p className="font-['Inter'] font-light uppercase tracking-widest text-[10px] text-[#444748] mt-1">Level IX Initiate</p>
         </div>
         <nav className="flex-1 px-4 space-y-2">{renderNavLinks()}</nav>

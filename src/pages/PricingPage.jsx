@@ -22,7 +22,7 @@ export default function PricingPage() {
             <div className="space-y-3">
               <p className="font-label text-[10px] uppercase tracking-[0.28em] text-primary/90">Start Here</p>
               <h1 className="font-headline text-3xl leading-tight italic text-on-surface sm:text-4xl">The pattern is still active.</h1>
-              <p className="max-w-xl text-sm leading-relaxed text-on-surface-variant sm:text-base">PhiloSift gives you one immediate interruption point instead of another long explanation.</p>
+              <p className="max-w-xl text-sm leading-relaxed text-on-surface-variant sm:text-base">Philosift gives you one immediate interruption point instead of another long explanation.</p>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-3">
