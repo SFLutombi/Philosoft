@@ -21,6 +21,29 @@ export default function OnboardingSignUpPage() {
   const returnTo = searchParams.get("returnTo") || "/dashboard";
   const profileRedirect = `/onboarding-profile?returnTo=${encodeURIComponent(returnTo)}`;
   const signInUrl = `/onboarding-signin?returnTo=${encodeURIComponent(returnTo)}`;
+  const clerkAppearance = {
+    variables: {
+      colorBackground: "#181512",
+      colorText: "#f5f1e8",
+      colorTextSecondary: "#c9c1b2",
+      colorPrimary: "#e9c176",
+      colorInputBackground: "#211c17",
+      colorInputText: "#f5f1e8",
+      colorDanger: "#fca5a5",
+    },
+    elements: {
+      rootBox: "w-full",
+      cardBox: "w-full",
+      card: "w-full bg-transparent shadow-none border-0 rounded-none",
+      headerTitle: "text-on-surface",
+      headerSubtitle: "text-on-surface-variant",
+      formFieldLabel: "text-on-surface-variant",
+      formFieldInput: "border border-outline-variant/35 bg-[#211c17] text-on-surface",
+      footerActionText: "text-on-surface-variant",
+      footerActionLink: "text-primary hover:text-primary/80",
+      formButtonPrimary: "bg-primary text-on-primary hover:bg-on-primary-container",
+    },
+  };
 
   useEffect(() => {
     const previousTitle = document.title;
@@ -43,9 +66,6 @@ export default function OnboardingSignUpPage() {
     <div className="font-body min-h-[100svh] bg-[#131313] text-on-surface antialiased" style={{ backgroundImage: "radial-gradient(#201f1f 0.5px, transparent 0.5px)", backgroundSize: "24px 24px" }}>
       <main className="mx-auto flex min-h-[100svh] w-full max-w-5xl flex-col justify-center px-3 py-6 sm:px-5 sm:py-8 lg:px-8">
         <section className="relative bg-surface-container-low/90 p-4 sm:p-6 md:p-8">
-          <div className="pointer-events-none absolute -top-24 right-[-5rem] h-52 w-52 rounded-full bg-primary/10 blur-2xl" />
-          <div className="pointer-events-none absolute -bottom-20 left-[-4rem] h-40 w-40 rounded-full bg-primary/10 blur-2xl" />
-
           <div className="relative grid gap-6 lg:grid-cols-[1fr_1fr]">
             <div className="space-y-4">
               <p className="font-label text-[9px] uppercase tracking-[0.22em] text-primary/90">Final onboarding step</p>
@@ -71,13 +91,7 @@ export default function OnboardingSignUpPage() {
                 forceRedirectUrl={profileRedirect}
                 fallbackRedirectUrl={profileRedirect}
                 initialValues={billingEmail ? { emailAddress: billingEmail } : undefined}
-                appearance={{
-                  elements: {
-                    rootBox: "w-full",
-                    cardBox: "w-full",
-                    card: "w-full bg-transparent shadow-none border-0 rounded-none",
-                  },
-                }}
+                appearance={clerkAppearance}
               />
             </div>
           </div>
