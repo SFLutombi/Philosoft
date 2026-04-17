@@ -62,10 +62,10 @@ export default function LandingPage() {
 
           <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-4 mb-8 md:mb-8 opacity-90 grayscale hover:grayscale-0 transition-all duration-1000">
             <div className="md:col-span-8 h-44 sm:h-48 md:h-48 lg:h-52 bg-surface-container-highest relative overflow-hidden">
-              <img alt="" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAu7IS8jfZ1tfyAdBTvQ883-CgZ3ITgYgqWG6nwV5-mBhrrnl4wpNwz6jS9j3PKEL7lv_eftvIZU5wOJom7KjOs4B-5epuhTamlegKBztkjLgZjhnKAO5HgzlMMLq0zCC7qnwtsm2Rz7fnWYyOY2HW6v4m_Wh3Z5d3H_c4UZ-TPZFR4Ov_5FJ1xZGUQtgC2B29UClm755KZfyodrXMT7cXDqQhBivRHGA1zo3fycGJ6MaZbTgJl5HS3Lxv88F7Qb0Ig_Zoi_7PyL3o" />
+              <img alt="" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAu7IS8jfZ1tfyAdBTvQ883-CgZ3ITgYgqWG6nwV5-mBhrrnl4wpNwz6jS9j3PKEL7lv_eftvIZU5wOJom7KjOs4B-5epuhTamlegKBztkjLgZjhnKAO5HgzlMMLq0zCC7qnwtsm2Rz7fnWYyOY2HW6v4m_Wh3Z5d3H_c4UZ-TPZFR4Ov_5FJ1xZGUQtgC2B29UClm755KZfyodrXMT7cXDqQhBivRHGA1zo3fycGJ6MaZbTgJl5HS3Lxv88F7Qb0Ig_Zoi_7PyL3o" loading="lazy" decoding="async" fetchPriority="low" />
             </div>
             <div className="md:col-span-4 h-44 sm:h-48 md:h-48 lg:h-52 bg-surface-container-highest relative overflow-hidden">
-              <img alt="" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdA49zO555dEeEgJhd3OR1HYj_PmKVhQ8KGnoN0-XoNJdSDRkVx7HmBGz-EujyJpfnRaIkuRWUXHsF_OBHqw8xXZXcOfd9Kmt1L9mIw_MlxWgW2cWRzuZwkgVWJE-WHWpx9F35eZBR9HR-fIlu2MFhQK4qqnl7s_qE5DkaasOybZMj2nUbzepGL6ERpfIeJ99qk812bkt6TebnhX_nwmQmlr0Cvrk8LN-g0VMXMROzYLrg4YvpQB5b4eVg7T_yXujy8VoIofudteA" />
+              <img alt="" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdA49zO555dEeEgJhd3OR1HYj_PmKVhQ8KGnoN0-XoNJdSDRkVx7HmBGz-EujyJpfnRaIkuRWUXHsF_OBHqw8xXZXcOfd9Kmt1L9mIw_MlxWgW2cWRzuZwkgVWJE-WHWpx9F35eZBR9HR-fIlu2MFhQK4qqnl7s_qE5DkaasOybZMj2nUbzepGL6ERpfIeJ99qk812bkt6TebnhX_nwmQmlr0Cvrk8LN-g0VMXMROzYLrg4YvpQB5b4eVg7T_yXujy8VoIofudteA" loading="lazy" decoding="async" fetchPriority="low" />
             </div>
           </div>
 

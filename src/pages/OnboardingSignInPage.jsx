@@ -42,7 +42,7 @@ export default function OnboardingSignInPage() {
   return (
     <div className="font-body min-h-[100svh] bg-[#131313] text-on-surface antialiased" style={{ backgroundImage: "radial-gradient(#201f1f 0.5px, transparent 0.5px)", backgroundSize: "24px 24px" }}>
       <main className="mx-auto flex min-h-[100svh] w-full max-w-5xl flex-col justify-center px-3 py-6 sm:px-5 sm:py-8 lg:px-8">
-        <section className="relative overflow-hidden bg-surface-container-low/90 p-4 sm:p-6 md:p-8">
+        <section className="relative bg-surface-container-low/90 p-4 sm:p-6 md:p-8">
           <div className="pointer-events-none absolute -top-24 right-[-5rem] h-52 w-52 rounded-full bg-primary/10 blur-2xl" />
           <div className="pointer-events-none absolute -bottom-20 left-[-4rem] h-40 w-40 rounded-full bg-primary/10 blur-2xl" />
 
