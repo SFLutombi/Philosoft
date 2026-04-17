@@ -23,25 +23,25 @@ export default function OnboardingSignInPage() {
   const signUpUrl = `/onboarding-signup?returnTo=${encodeURIComponent(returnTo)}`;
   const clerkAppearance = {
     variables: {
-      colorBackground: "#181512",
-      colorText: "#f5f1e8",
-      colorTextSecondary: "#c9c1b2",
-      colorPrimary: "#e9c176",
-      colorInputBackground: "#211c17",
-      colorInputText: "#f5f1e8",
+      colorBackground: "#ffffff",
+      colorText: "#1a1714",
+      colorTextSecondary: "#5d554a",
+      colorPrimary: "#1a1714",
+      colorInputBackground: "#ffffff",
+      colorInputText: "#1a1714",
       colorDanger: "#fca5a5",
     },
     elements: {
-      rootBox: "w-full",
-      cardBox: "w-full",
-      card: "w-full bg-transparent shadow-none border-0 rounded-none",
-      headerTitle: "text-on-surface",
-      headerSubtitle: "text-on-surface-variant",
-      formFieldLabel: "text-on-surface-variant",
-      formFieldInput: "border border-outline-variant/35 bg-[#211c17] text-on-surface",
-      footerActionText: "text-on-surface-variant",
+      rootBox: "relative z-30 w-full",
+      cardBox: "relative z-30 w-full",
+      card: "w-full rounded-xl border border-black/10 bg-white shadow-2xl",
+      headerTitle: "text-[#1a1714]",
+      headerSubtitle: "text-[#5d554a]",
+      formFieldLabel: "text-[#5d554a]",
+      formFieldInput: "border border-[#d8d3ca] bg-white text-[#1a1714]",
+      footerActionText: "text-[#5d554a]",
       footerActionLink: "text-primary hover:text-primary/80",
-      formButtonPrimary: "bg-primary text-on-primary hover:bg-on-primary-container",
+      formButtonPrimary: "bg-[#1a1714] text-white hover:bg-[#2a2520]",
     },
   };
 
@@ -83,7 +83,7 @@ export default function OnboardingSignInPage() {
               </Link>
             </div>
 
-            <div className="min-w-0 bg-[#181512] p-2 sm:p-3">
+            <div className="relative z-20 min-w-0 bg-transparent p-1 sm:p-2">
               <SignIn
                 routing="path"
                 path="/onboarding-signin"

@@ -6,49 +6,87 @@ export default function PrivacyPolicyPage() {
       <main className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
         <section className="border border-primary/30 bg-surface-container-low/90 p-6 sm:p-8">
           <h1 className="font-headline text-3xl italic text-on-surface sm:text-4xl">Privacy Policy</h1>
-          <p className="mt-2 text-sm text-on-surface-variant">Last updated: April 17, 2026</p>
+          <p className="mt-2 text-sm text-on-surface-variant">Last updated: April 18, 2026</p>
 
           <div className="mt-6 space-y-6 text-sm leading-relaxed text-on-surface-variant">
             <div className="space-y-2">
-              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">1. Scope</h2>
+              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">Welcome</h2>
               <p>
-                This Privacy Policy explains how PhiloSift ("PhiloSift", "we", "us", "our") collects, uses, stores, and shares
-                personal information when you use our website, applications, and related services (collectively, the "Service").
+                This Privacy Policy describes how Philosift ("Philosift", "we", "us", "our") collects, uses, shares, and protects
+                Personal Data when you use our website, applications, and related services (collectively, the "Services").
+              </p>
+              <p>
+                This Policy also explains your rights and choices and how to contact us regarding privacy.
               </p>
             </div>
 
             <div className="space-y-2">
-              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">2. Information We Collect</h2>
-              <p>We collect information in the following categories:</p>
+              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">1. Definitions</h2>
               <ul className="list-disc space-y-1 pl-5">
-                <li>Account and identity data: name, email address, authentication identifiers, and account metadata.</li>
-                <li>Profile and content data: onboarding responses, settings, and user-provided profile information.</li>
-                <li>Usage and diagnostics data: event logs, device/browser details, IP address, and session activity.</li>
-                <li>Subscription and transaction data: plan status, billing metadata, and purchase history from payment providers.</li>
+                <li>"Personal Data" means information that identifies or can reasonably identify an individual.</li>
+                <li>"Business User" means an organization account using Philosift for internal use.</li>
+                <li>"End User" means an individual using Philosift directly for personal use.</li>
+                <li>"Services" includes our sites, apps, APIs, communications, and support operations.</li>
               </ul>
             </div>
 
             <div className="space-y-2">
-              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">3. How We Use Information</h2>
-              <ul className="list-disc space-y-1 pl-5">
-                <li>Provide, operate, maintain, and secure the Service.</li>
-                <li>Authenticate users and manage access to protected features.</li>
-                <li>Process subscriptions, prevent fraud, and support customer requests.</li>
-                <li>Improve product functionality, performance, and reliability.</li>
-                <li>Comply with legal obligations and enforce our Terms of Service.</li>
-              </ul>
-            </div>
-
-            <div className="space-y-2">
-              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">4. Legal Bases (Where Applicable)</h2>
+              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">2. Our Role: Controller and Processor</h2>
               <p>
-                Where required by law, we process personal information on the basis of contract performance, legitimate interests,
-                legal compliance, and your consent when consent is required.
+                Depending on context, Philosift may act as a data controller (deciding why/how data is processed) or a data processor
+                (processing on behalf of a Business User under instructions).
+              </p>
+              <p>
+                If you are using Philosift through a business account, that business may be the controller for certain processing. In
+                those cases, please also review that business's privacy notice.
               </p>
             </div>
 
             <div className="space-y-2">
-              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">5. Cookies and Similar Technologies</h2>
+              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">3. Personal Data We Collect</h2>
+              <p>We may collect:</p>
+              <ul className="list-disc space-y-1 pl-5">
+                <li>Account data: name, email, auth identifiers, account settings, and profile fields.</li>
+                <li>Service data: onboarding responses, usage events, preferences, and in-app activity.</li>
+                <li>Device and technical data: IP address, browser/device type, OS, log files, and diagnostics.</li>
+                <li>Billing and subscription data: plan, transaction metadata, payment status, and renewal state.</li>
+                <li>Support and communications data: messages, tickets, and associated troubleshooting records.</li>
+              </ul>
+            </div>
+
+            <div className="space-y-2">
+              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">4. Sources of Personal Data</h2>
+              <p>We collect Personal Data directly from you, automatically through your use of Services, and from third parties such as:</p>
+              <ul className="list-disc space-y-1 pl-5">
+                <li>Authentication providers</li>
+                <li>Billing/payment providers</li>
+                <li>Analytics and infrastructure providers</li>
+                <li>Fraud/security and compliance service providers</li>
+              </ul>
+            </div>
+
+            <div className="space-y-2">
+              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">5. How We Use Personal Data</h2>
+              <ul className="list-disc space-y-1 pl-5">
+                <li>Provide, secure, and operate the Services.</li>
+                <li>Authenticate accounts and manage access controls.</li>
+                <li>Process subscriptions, billing, fraud checks, and dispute handling.</li>
+                <li>Deliver customer support and service communications.</li>
+                <li>Improve performance, quality, and product experience.</li>
+                <li>Comply with legal obligations and enforce our terms and policies.</li>
+              </ul>
+            </div>
+
+            <div className="space-y-2">
+              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">6. Legal Bases for Processing</h2>
+              <p>
+                Where required by applicable law, we rely on one or more legal bases: contract necessity, legitimate interests,
+                consent, and legal obligation.
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">7. Cookies and Similar Technologies</h2>
               <p>
                 We use cookies and similar technologies for authentication, security, analytics, and performance. You may control
                 cookies through your browser settings, but disabling certain cookies may affect core functionality.
@@ -56,17 +94,32 @@ export default function PrivacyPolicyPage() {
             </div>
 
             <div className="space-y-2">
-              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">6. Sharing of Information</h2>
-              <p>We do not sell personal information. We may share information with:</p>
+              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">8. Sharing of Personal Data</h2>
+              <p>We do not sell Personal Data. We may share data with:</p>
               <ul className="list-disc space-y-1 pl-5">
-                <li>Authentication, infrastructure, analytics, support, and billing providers acting as service processors.</li>
-                <li>Professional advisors and authorities when required for legal or compliance reasons.</li>
-                <li>Successors in connection with a merger, financing, acquisition, reorganization, or asset sale.</li>
+                <li>Vendors and processors that support hosting, authentication, billing, analytics, notifications, and support.</li>
+                <li>Professional advisors and authorities where required by law or to protect rights and safety.</li>
+                <li>Corporate transaction counterparties in merger, financing, acquisition, or reorganization events.</li>
               </ul>
             </div>
 
             <div className="space-y-2">
-              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">7. Data Retention</h2>
+              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">9. Your Rights and Choices</h2>
+              <p>Depending on jurisdiction, you may have rights to:</p>
+              <ul className="list-disc space-y-1 pl-5">
+                <li>Access, correct, update, or delete Personal Data.</li>
+                <li>Restrict or object to certain processing.</li>
+                <li>Request portability where technically feasible.</li>
+                <li>Withdraw consent where processing is consent-based.</li>
+                <li>Appeal decisions and lodge complaints with regulators.</li>
+              </ul>
+              <p>
+                To exercise rights, contact <a className="text-primary hover:text-primary/80" href="mailto:support@philosift.com">support@philosift.com</a>.
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">10. Data Retention</h2>
               <p>
                 We retain personal information only as long as necessary to provide the Service, maintain records, resolve disputes,
                 enforce agreements, and satisfy legal obligations.
@@ -74,7 +127,7 @@ export default function PrivacyPolicyPage() {
             </div>
 
             <div className="space-y-2">
-              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">8. Security</h2>
+              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">11. Security</h2>
               <p>
                 We implement administrative, technical, and organizational safeguards designed to protect personal information.
                 However, no system is completely secure, and we cannot guarantee absolute security.
@@ -82,7 +135,7 @@ export default function PrivacyPolicyPage() {
             </div>
 
             <div className="space-y-2">
-              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">9. International Transfers</h2>
+              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">12. International Data Transfers</h2>
               <p>
                 Your information may be processed in countries other than your own. Where required, we apply appropriate safeguards
                 for cross-border data transfers.
@@ -90,40 +143,34 @@ export default function PrivacyPolicyPage() {
             </div>
 
             <div className="space-y-2">
-              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">10. Your Privacy Rights</h2>
-              <p>Subject to applicable law, you may have rights to:</p>
-              <ul className="list-disc space-y-1 pl-5">
-                <li>Access, correct, update, or delete your personal information.</li>
-                <li>Object to or restrict certain processing.</li>
-                <li>Request portability of your information.</li>
-                <li>Withdraw consent where processing is based on consent.</li>
-                <li>Appeal certain privacy decisions or lodge a complaint with a supervisory authority.</li>
-              </ul>
+              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">13. Minors</h2>
               <p>
-                To exercise rights, contact us at <a className="text-primary hover:text-primary/80" href="mailto:support@philosift.com">support@philosift.com</a>.
+                Services are not directed to children under 13 (or higher minimum age required by local law). If you believe a child
+                submitted Personal Data, contact us so we can review and remove data where appropriate.
               </p>
             </div>
 
             <div className="space-y-2">
-              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">11. Children</h2>
+              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">14. Jurisdiction-Specific Notices</h2>
               <p>
-                The Service is not directed to children under 13 (or the minimum age in your jurisdiction). We do not knowingly
-                collect personal information from children. If you believe a child has provided information, contact us for removal.
+                Depending on your location, additional rights and disclosures may apply under regional laws (for example, EEA/UK,
+                certain US states, Canada, Brazil, and other jurisdictions). Where those laws apply, we honor required rights and
+                obligations.
               </p>
             </div>
 
             <div className="space-y-2">
-              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">12. Policy Updates</h2>
+              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">15. Changes to This Policy</h2>
               <p>
-                We may update this Privacy Policy periodically. Material changes will be reflected by updating the "Last updated"
-                date and, where required, by additional notice.
+                We may update this Privacy Policy from time to time. We will update the "Last updated" date and provide additional
+                notice where required by law.
               </p>
             </div>
 
             <div className="space-y-2">
-              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">13. Contact</h2>
+              <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">16. Contact Us</h2>
               <p>
-                Questions about this Privacy Policy can be sent to <a className="text-primary hover:text-primary/80" href="mailto:support@philosift.com">support@philosift.com</a>.
+                Questions or requests about this Policy can be sent to <a className="text-primary hover:text-primary/80" href="mailto:support@philosift.com">support@philosift.com</a>.
               </p>
             </div>
           </div>

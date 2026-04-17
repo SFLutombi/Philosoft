@@ -53,7 +53,7 @@ export default function ResultsCardPage() {
 
         ctx.fillStyle = "rgba(233, 193, 118, 0.7)";
         ctx.font = "bold 22px sans-serif";
-        ctx.fillText("PHILOSIFT", centerX, MARGIN + CARD_HEIGHT - 20);
+        ctx.fillText("Philosift", centerX, MARGIN + CARD_HEIGHT - 20);
 
         canvas.toBlob((canvasBlob) => {
           const link = document.createElement("a");
@@ -104,7 +104,7 @@ export default function ResultsCardPage() {
                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center justify-center py-3">
                   <span className="material-symbols-outlined text-primary/80 text-xl mb-1">hub</span>
                   <div className="h-px w-5 bg-primary/40 mb-2" />
-                  <span className="font-headline text-[10px] tracking-[0.2em] text-primary/70">PHILOSIFT</span>
+                  <span className="font-headline text-[10px] tracking-[0.2em] text-primary/70">Philosift</span>
                 </div>
               </div>
             </div>

@@ -23,7 +23,7 @@ export default function ResultsMisalignmentPage() {
               <p className="font-label text-[10px] uppercase tracking-[0.28em] text-primary/90">Contradiction Alert</p>
               <h1 className="font-headline text-3xl leading-tight italic text-on-surface sm:text-4xl">Your thinking is clear. Your behavior is still slipping.</h1>
               <p className="max-w-xl text-sm leading-relaxed text-on-surface-variant sm:text-base">
-                PhiloSift isolates the break point so you can catch it before the loop closes.
+                Philosift isolates the break point so you can catch it before the loop closes.
               </p>
             </div>
 

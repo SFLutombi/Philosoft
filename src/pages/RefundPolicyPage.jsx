@@ -12,7 +12,7 @@ export default function RefundPolicyPage() {
             <div className="space-y-2">
               <h2 className="font-label text-xs uppercase tracking-[0.16em] text-primary">1. Scope</h2>
               <p>
-                This Refund Policy applies to paid subscriptions and purchases made for PhiloSift through our authorized billing
+                This Refund Policy applies to paid subscriptions and purchases made for Philosift through our authorized billing
                 channels.
               </p>
             </div>

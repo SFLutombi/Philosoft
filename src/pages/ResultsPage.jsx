@@ -175,7 +175,7 @@ export default function ResultsPage() {
   async function handleShare() {
     const baseShareData = {
       title: "Philosift Result",
-      text: `${shareCaption} #PhiloSift`,
+      text: `${shareCaption} #Philosift`,
       url: window.location.href
     };
 
@@ -205,7 +205,7 @@ export default function ResultsPage() {
         if (navigator.canShare({ files: [file] })) {
           await navigator.share({
             title: "Philosift Result",
-            text: `${shareCaption} #PhiloSift`,
+            text: `${shareCaption} #Philosift`,
             files: [file]
           });
           return;
@@ -296,11 +296,11 @@ export default function ResultsPage() {
         ctx.lineTo(textCenterX + 24, MARGIN + CARD_HEIGHT - 60);
         ctx.stroke();
 
-        // Draw "PHILOSIFT" branding (small, letter-spaced)
+        // Draw "Philosift" branding (small, letter-spaced)
         ctx.fillStyle = "rgba(233, 193, 118, 0.7)";
         ctx.font = "bold 22px sans-serif";
         ctx.letterSpacing = "3px";
-        ctx.fillText("PHILOSIFT", textCenterX, MARGIN + CARD_HEIGHT - 20);
+        ctx.fillText("Philosift", textCenterX, MARGIN + CARD_HEIGHT - 20);
 
         // Convert canvas to blob and download
         canvas.toBlob((canvasBlob) => {
@@ -330,7 +330,7 @@ export default function ResultsPage() {
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3">
             <span className="material-symbols-outlined text-[#e9c176]">hub</span>
-            <h1 className="font-headline text-lg sm:text-2xl font-light tracking-[-0.02em] text-[#e9c176] italic">PHILOSIFT</h1>
+            <h1 className="font-headline text-lg sm:text-2xl font-light tracking-[-0.02em] text-[#e9c176] italic">Philosift</h1>
           </div>
 
           <nav className="hidden md:flex items-center gap-8">
@@ -378,7 +378,7 @@ export default function ResultsPage() {
                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center justify-center py-4">
                   <span className="material-symbols-outlined text-primary/80 text-2xl mb-2">hub</span>
                   <div className="h-px w-5 bg-primary/40 mb-2" />
-                  <span className="font-headline text-xs tracking-[0.2em] text-primary/70">PHILOSIFT</span>
+                  <span className="font-headline text-xs tracking-[0.2em] text-primary/70">Philosift</span>
                 </div>
               </div>
             </div>
@@ -551,7 +551,7 @@ export default function ResultsPage() {
 
               <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <p className="text-sm leading-relaxed text-on-surface-variant sm:max-w-2xl">
-                  PhiloSift turns this pattern into an actionable path by showing what to stop repeating and what to practice next.
+                  Philosift turns this pattern into an actionable path by showing what to stop repeating and what to practice next.
                 </p>
                 <button
                   type="button"
