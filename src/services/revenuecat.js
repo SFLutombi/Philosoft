@@ -1,5 +1,3 @@
-import { ErrorCode, Purchases, PurchasesError } from "@revenuecat/purchases-js";
-
 const STORAGE_KEY = "philosift_revenuecat_app_user_id";
 const ALIGNMENT_ENTITLEMENT_ID = "Alignment System Access";
 const MONTHLY_PACKAGE_ID = "monthly";
@@ -7,8 +5,17 @@ const REVENUECAT_API_KEY = import.meta.env.VITE_REVENUECAT_WEB_API_KEY || "test_
 
 let client = null;
 let configurePromise = null;
+let purchasesModulePromise = null;
 
-function getAnonymousAppUserId() {
+function loadPurchasesModule() {
+  if (!purchasesModulePromise) {
+    purchasesModulePromise = import("@revenuecat/purchases-js");
+  }
+
+  return purchasesModulePromise;
+}
+
+function getAnonymousAppUserId(Purchases) {
   if (typeof window === "undefined") {
     return Purchases.generateRevenueCatAnonymousAppUserId();
   }
@@ -40,7 +47,7 @@ export function hasAlignmentSystemAccess(customerInfo) {
 }
 
 export function isRevenueCatCancelledError(error) {
-  return error instanceof PurchasesError && error.errorCode === ErrorCode.UserCancelledError;
+  return Boolean(error && typeof error === "object" && "errorCode" in error && error.errorCode === 1);
 }
 
 export async function configureRevenueCat() {
@@ -49,10 +56,10 @@ export async function configureRevenueCat() {
   }
 
   if (!configurePromise) {
-    configurePromise = Promise.resolve().then(() => {
+    configurePromise = loadPurchasesModule().then(({ Purchases }) => {
       client = Purchases.configure({
         apiKey: REVENUECAT_API_KEY,
-        appUserId: getAnonymousAppUserId(),
+        appUserId: getAnonymousAppUserId(Purchases),
       });
 
       return client;

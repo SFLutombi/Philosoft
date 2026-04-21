@@ -2,8 +2,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { UserButton, useUser } from "@clerk/react";
 import { loadStoredResult, resolveSubarchetype } from "../data/resultFlow";
-import { listPatternEvents } from "../services/patternEvents";
-import { getRevenueCatCustomerInfo, hasAlignmentSystemAccess } from "../services/revenuecat";
 import ArchiveSidebar from "../components/ArchiveSidebar";
 import FirstTimeExperienceModal from "../components/FirstTimeExperienceModal";
 import { readStoredProfile } from "../services/profileStore";
@@ -235,6 +233,7 @@ export default function DashboardPage() {
       }
 
       try {
+        const { listPatternEvents } = await import("../services/patternEvents");
         const data = await listPatternEvents(user.id, 100);
         if (!isMounted) {
           return;
@@ -264,6 +263,7 @@ export default function DashboardPage() {
 
     async function run() {
       try {
+        const { getRevenueCatCustomerInfo, hasAlignmentSystemAccess } = await import("../services/revenuecat");
         const customerInfo = await getRevenueCatCustomerInfo();
         if (!isMounted) {
           return;

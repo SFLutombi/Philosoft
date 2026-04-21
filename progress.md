@@ -3,6 +3,14 @@
 Last Updated: 2026-04-17
 
 ## Completed
+- [2026-04-21 04:46:28] Reduced dashboard route bundle size by lazy-loading RevenueCat SDK internals in `src/services/revenuecat.js`, shrinking `DashboardPage` from ~638 kB to ~24.5 kB in production output and removing the dashboard-specific large-chunk warning.
+- [2026-04-21 02:59:59] Integrated Vercel Speed Insights in the Vite React app by installing `@vercel/speed-insights` and mounting `<SpeedInsights />` in the root render tree for deployment telemetry capture.
+- [2026-04-18 01:21:02] Drafted an enhanced favicon generation prompt for AI image tools, preserving Philosift brand identity while increasing clarity and premium detail for reference use.
+- [2026-04-18 00:59:17] Drafted branded post-purchase email receipt copy (thank-you note, button text, and destination link) aligned with pattern-interrupt positioning.
+- [2026-04-18 00:57:06] Refined post-purchase CTA copy with pattern-focused button text options aligned to Philosift brand language.
+- [2026-04-18 00:55:12] Delivered community-first branding copy direction to make post-purchase and onboarding language feel like joining a shared movement, not just buying access.
+- [2026-04-18 00:53:52] Drafted production-ready purchase confirmation modal copy (title, message, button text, and button link target) for post-checkout customer handoff.
+- [2026-04-18 00:51:08] Drafted SEO-optimized short product naming copy for the subscription offer "Pattern Interrupt Access" with search-friendly 50-60 character title guidance.
 - [2026-04-17 23:52:42] Confirmed and standardized legal/support contact email as support@philosift.com across Privacy Policy, Terms of Service, and Refund Policy pages.
 - [2026-04-17 23:09:30] Improved onboarding auth readability by removing decorative color-glow overlays behind Clerk forms and applying explicit high-contrast Clerk appearance variables/elements for text, labels, inputs, and primary actions on both sign-up and sign-in pages.
 - [2026-04-17 22:54:33] Refined onboarding/results mobile UX and performance: increased icon-text spacing on the "Find Out More" CTA, removed auth wrapper borders and clipping constraints while keeping the Clerk surface color, tuned onboarding page spacing for small screens, and added route-level lazy loading plus lazy/async loading hints for non-critical landing images to improve mobile load behavior.
@@ -149,6 +157,7 @@ Last Updated: 2026-04-17
 - Draft visual direction board for dark-academia and aspirational mystery tone.
 
 ## Decisions
+- [2026-04-21] Bundle strategy: keep the dashboard route lightweight by deferring `@revenuecat/purchases-js` loading until RevenueCat functions are invoked, isolating SDK weight into async chunks instead of route UI chunks.
 - [2026-04-17] Auth flow stability policy: avoid automatic cross-page redirects during verification-sensitive steps; payment completion now transitions into auth via explicit user actions (Sign Up / Sign In), while Clerk controls verification state and final redirect to profile/dashboard.
 - [2026-04-16] Post-quiz auth entry must be route-based Links instead of modal components to eliminate clipping issues, ensure auth fits the PWA viewport consistently across all mobile widths, and provide deterministic post-auth navigation. This is non-negotiable for mobile PWA reliability.
 - [2026-04-16] Post-quiz page design must ruthlessly prioritize focus: single headline + primary action per screen, remove competing sections and explanatory blocks, and keep visual hierarchy binary (what matters most at top, CTAs at bottom). Dense layouts scatter attention and confuse user decision-making.

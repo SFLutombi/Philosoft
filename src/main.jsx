@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { ClerkProvider } from "@clerk/react";
 import { BrowserRouter } from "react-router-dom";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { registerSW } from "virtual:pwa-register";
 import App from "./App";
 import ClerkSupabaseBridge from "./components/ClerkSupabaseBridge";
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <ClerkSupabaseBridge />
     <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <App />
+      <SpeedInsights />
     </BrowserRouter>
   </ClerkProvider>
 );
