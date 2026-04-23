@@ -3,6 +3,7 @@
 Last Updated: 2026-04-17
 
 ## Completed
+- [2026-04-23 12:12:40] Updated app favicon to use `public/philosift.jpg` by changing the root HTML icon link in `index.html`.
 - [2026-04-21 04:46:28] Reduced dashboard route bundle size by lazy-loading RevenueCat SDK internals in `src/services/revenuecat.js`, shrinking `DashboardPage` from ~638 kB to ~24.5 kB in production output and removing the dashboard-specific large-chunk warning.
 - [2026-04-21 02:59:59] Integrated Vercel Speed Insights in the Vite React app by installing `@vercel/speed-insights` and mounting `<SpeedInsights />` in the root render tree for deployment telemetry capture.
 - [2026-04-18 01:21:02] Drafted an enhanced favicon generation prompt for AI image tools, preserving Philosift brand identity while increasing clarity and premium detail for reference use.
